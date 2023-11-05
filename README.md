@@ -34,36 +34,39 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
    - After creating the project, click on "Add app" to add your Android app to Firebase.
    - Follow the setup instructions and download the `google-services.json` file.
 
-3. **Configure the App**:
-   - Place the `google-services.json` file in the `app` directory of your Android project.
+3. **Configure Firestore**:
+   - In the Firebase Console, navigate to the "Firestore Database" section.
+   - Create a new Firestore database or use an existing one.
 
-4. **Add Dependencies**:
-   - Open the project-level `build.gradle` file and add the following dependency:
-     ```gradle
-     classpath 'com.google.gms:google-services:4.3.10'
-     ```
-   - Open the app-level `build.gradle` file and add the following dependency:
-     ```gradle
-     implementation 'com.google.firebase:firebase-core:19.0.0'
+4. **Security Rules**:
+   - Configure security rules to ensure data privacy and security. Here's an example of basic rules:
+     ```json
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /{document=**} {
+           allow read, write: true;
+         }
+       }
+     }
      ```
 
-5. **Initialize Firebase**:
-   - In your Android application code, make sure to initialize Firebase as follows:
+5. **Initialize Firestore**:
+   - In your Android application code, make sure to initialize Firestore as follows:
      ```java
-     import com.google.firebase.FirebaseApp;
+     import com.google.firebase.firestore.FirebaseFirestore;
 
      // ...
 
-     // Initialize Firebase
-     FirebaseApp.initializeApp(this);
+     // Initialize Firestore
+     FirebaseFirestore db = FirebaseFirestore.getInstance();
      ```
 
-6. **You're All Set!**:
-   - With Firebase integration, you can now take advantage of Firebase services like Analytics and Crash Reporting for your VPN app.
+6. **Use Firestore in the Project**:
+   - This project uses Firestore to manage server configurations. You can find the code related to Firestore in [this file](https://github.com/doxart/iVPN/blob/master/firestore-collection-template.json).
 
-For more information on Firebase, including documentation and additional features, please refer to the [Firebase Documentation](https://firebase.google.com/docs).
-
-Feel free to explore and leverage Firebase's powerful tools to gain insights into your app's usage and performance.
+7. **You're All Set!**:
+   - With Firestore integration, you can easily manage server configurations and other data for the VPN app.
 
 
 ### Contributions:
