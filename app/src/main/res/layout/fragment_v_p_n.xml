@@ -52,7 +52,7 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@id/countryLay"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_test_id"/>
+        ads:adUnitId="@string/banner_id"/>
 
     <include
         layout="@layout/country_view"

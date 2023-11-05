@@ -1,0 +1,41 @@
+{
+  "parameters": {
+    "delayTimeBetweenAds": {
+      "defaultValue": {
+        "value": "5"
+      },
+      "description": "Minimum delay time between adverts. (In minutes)",
+      "valueType": "NUMBER"
+    },
+    "showBannerAds": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "description": "Show banner ad on activities.",
+      "valueType": "BOOLEAN"
+    },
+    "vpnButtonAdMode": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "description": "Ad type of vpn button onClick.",
+      "valueType": "NUMBER"
+    },
+    "showPaywallCloseAd": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "description": "Show ad on close paywall event.",
+      "valueType": "BOOLEAN"
+    }
+  },
+  "version": {
+    "versionNumber": "7",
+    "updateTime": "2023-11-05T14:35:11.536578Z",
+    "updateUser": {
+      "email": "gokdeniz.gs41@gmail.com"
+    },
+    "updateOrigin": "CONSOLE",
+    "updateType": "INCREMENTAL_UPDATE"
+  }
+}

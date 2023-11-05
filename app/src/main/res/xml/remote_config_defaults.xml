@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <defaults>
   <entry>
-    <key>vpnButtonAdMode</key>
-    <value>0</value>
-  </entry>
-  <entry>
-    <key>showPaywallCloseAd</key>
-    <value>true</value>
+    <key>delayTimeBetweenAds</key>
+    <value>5</value>
   </entry>
   <entry>
     <key>showBannerAds</key>
-    <value>true</value>
+    <value>false</value>
+  </entry>
+  <entry>
+    <key>vpnButtonAdMode</key>
+    <value>1</value>
+  </entry>
+  <entry>
+    <key>showPaywallCloseAd</key>
+    <value>false</value>
   </entry>
 </defaults>

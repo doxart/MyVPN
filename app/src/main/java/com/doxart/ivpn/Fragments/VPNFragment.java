@@ -122,7 +122,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
     private void buildRewarded() {
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(context, "ca-app-pub-3940256099942544/5224354917",
+        RewardedAd.load(context, getString(R.string.rewarded_id),
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
@@ -177,6 +177,8 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
+                    long m = (long) sharePrefs.getInt("delayTimeBetweenAds") * 1000 * 60;
+                    sharePrefs.putLong("lastAd", new Date().getTime() + m);
                     if (vpnRunning) {
                         stopVpn();
                     } else {
@@ -185,7 +187,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 }
             });
 
-            mInterstitialAd.show(getActivity());
+            mInterstitialAd.show(requireActivity());
         } else {
             showTry++;
             if (showTry < 3) showInterstitial();
@@ -205,13 +207,14 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
         if (new Date().getTime() >= lastAd) {
             if (rewardedAd != null) {
-                rewardedAd.show(getActivity(), rewardItem -> {
+                rewardedAd.show(requireActivity(), rewardItem -> {
                     if (vpnRunning) {
                         stopVpn();
                     } else {
                         prepareVpn();
                     }
-                    sharePrefs.putLong("lastAd", new Date().getTime() + 350000);
+                    long m = (long) sharePrefs.getInt("delayTimeBetweenAds") * 1000 * 60;
+                    sharePrefs.putLong("lastAd", new Date().getTime() + m);
                     buildRewarded();
                 });
             } else {
