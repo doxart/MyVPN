@@ -51,21 +51,10 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
      }
      ```
 
-5. **Initialize Firestore**:
-   - In your Android application code, make sure to initialize Firestore as follows:
-     ```java
-     import com.google.firebase.firestore.FirebaseFirestore;
-
-     // ...
-
-     // Initialize Firestore
-     FirebaseFirestore db = FirebaseFirestore.getInstance();
-     ```
-
-6. **Use Firestore in the Project**:
+5. **Use Firestore in the Project**:
    - This project uses Firestore to manage server configurations. You can find the code related to Firestore in [this file](https://github.com/doxart/iVPN/blob/master/firestore-collection-template.json).
 
-7. **You're All Set!**:
+6. **You're All Set!**:
    - With Firestore integration, you can easily manage server configurations and other data for the VPN app.
 
 
