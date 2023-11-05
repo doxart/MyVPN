@@ -1,15 +1,19 @@
 {
-  "collection": "servers",
-  "document": "3GxqibdvSjall2NrR9Rg",
-  "active": true,
-  "country": "Russia",
-  "flagUrl": "ru",
-  "ipv4": "95.154.70.171",
-  "ovpn": "ru.ovpn",
-  "ovpnUserName": "freeopenvpn",
-  "ovpnUserPassword": "freeopenvpn",
-  "port": 1259,
-  "premium": false,
-  "region": "Vladivostok",
-  "urlToOVPN": "https://www.doxart.com.tr/storage/ru.ovpn"
+  "collections":{
+    "servers":[
+      {
+        "active":true, //Server is visible in app
+        "country":"Russia", //OVPN country name
+        "flagUrl":"ru", //OVPN country id
+        "ipv4":"95.154.70.171", //OVPN IP address
+        "ovpn":"ru.ovpn", //Saved file name
+        "ovpnUserName":"freeopenvpn", //OVPN username
+        "ovpnUserPassword":"freeopenvpn", //OVPN password
+        "port":1259, //OVPN port
+        "premium":false, //OVPN file has need premium acces for your app
+        "region":"Vladivostok", //OVPN region
+        "urlToOVPN":"https://www.doxart.com.tr/db/ru.ovpn" //URL of your OVPN file
+      }
+    ]
+  }
 }
