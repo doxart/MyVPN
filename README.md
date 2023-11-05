@@ -56,16 +56,16 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 
 ![Document template](https://github.com/doxart/iVPN/blob/master/firestore-document-template.png)   
 
-3. **Enable Remote Config**:
+6. **Enable Remote Config**:
    - In the Firebase Console, navigate to the "Remote Config" section.
    - Click on "Get Started" and follow the on-screen instructions to set up Remote Config for your project.
 
-4. **Add Default Parameters**:
+7. **Add Default Parameters**:
    - To get started, upload [this file](https://github.com/doxart/iVPN/blob/master/remote_config_ivpn.json) to Remote Config.
    - Upload remote_config.json to remote config.
 
-6. **You're All Set!**:
-   - With Firestore integration, you can easily manage server configurations and other data for the VPN app.
+11. **You're All Set!**:
+   - With Firebase integration, you can easily manage server configurations and other data for the VPN app.
 
 
 ### Contributions:
