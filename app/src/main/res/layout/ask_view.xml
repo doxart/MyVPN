@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="13dp"
+        android:id="@+id/askBG"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:clipToPadding="false">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:contentDescription="@string/icon"
+                android:src="@drawable/ic_check_circle_24"
+                android:id="@+id/checkImg"
+                android:visibility="gone"
+                app:tint="@color/green" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:maxWidth="320dp"
+                android:id="@+id/askTitle"
+                android:textSize="16dp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:maxWidth="320dp"
+                android:textIsSelectable="true"
+                android:textColor="?attr/colorSecondary"
+                android:id="@+id/askContain"
+                android:textSize="14dp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconPadding="10dp"
+                android:id="@+id/askPositive"
+                android:layout_marginTop="10dp"
+                android:maxWidth="320dp"
+                android:textAllCaps="false"
+                android:layout_marginHorizontal="10dp"
+                app:rippleColor="@color/colorWhite"
+                android:backgroundTint="@color/primary"
+                app:cornerRadius="9dp"
+                android:textSize="14dp"
+                android:gravity="center"
+                android:text="@string/yes"
+                android:textColor="@color/colorWhite"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconPadding="10dp"
+                android:id="@+id/askNegative"
+                android:layout_marginHorizontal="10dp"
+                app:rippleColor="@color/colorWhite"
+                android:maxWidth="320dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cornerRadius="9dp"
+                android:textSize="14dp"
+                android:gravity="center"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:text="@string/no"
+                android:textColor="?attr/colorSecondary"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:iconPadding="10dp"
+                android:id="@+id/askOther"
+                android:layout_marginHorizontal="10dp"
+                app:rippleColor="@color/colorWhite"
+                android:maxWidth="320dp"
+                android:textSize="14dp"
+                android:backgroundTint="@android:color/transparent"
+                app:cornerRadius="9dp"
+                android:gravity="center"
+                android:visibility="gone"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:text="@string/later"
+                android:textColor="?attr/colorSecondary"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

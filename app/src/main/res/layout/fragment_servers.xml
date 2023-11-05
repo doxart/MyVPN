@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.ServersFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:contentInsetEnd="10dp"
+            app:contentInsetStart="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="15dp"
+                    android:id="@+id/topLay">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_close_24"
+                        android:foreground="@drawable/ripple"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        app:tint="@color/plat1"
+                        app:contentPadding="5dp"
+                        android:id="@+id/closeBT"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location"
+                        android:layout_centerInParent="true"
+                        android:textSize="18dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.2"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_trans_bg"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="center|start"
+                    android:layout_marginVertical="10dp"
+                    android:clipToPadding="false">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_search_24"
+                        app:contentPadding="6dp"
+                        android:background="@color/blat1"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
+                        app:tint="@color/colorWhite"/>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="@string/search_location"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginStart="10dp"
+                        android:textColorHint="@color/blat1"
+                        android:inputType="text"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:id="@+id/serverRecycler"/>
+
+</LinearLayout>

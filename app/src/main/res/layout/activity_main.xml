@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/main_background2"
+    tools:context=".Activities.MainActivity">
+
+    <include
+        layout="@layout/app_bar_main"
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar"
+        android:layout_above="@id/mainNav"
+        android:id="@+id/mainPager"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mainNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/card_bg"
+        android:visibility="gone"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconSize="26dp"
+        app:itemTextAppearanceActive="@style/TextAppearance.MaterialComponents.Subtitle2"
+        app:itemTextAppearanceInactive="@style/TextAppearance.MaterialComponents.Subtitle2"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemIconTint="@color/menu_item_tint"
+        app:itemTextColor="@color/menu_item_tint"
+        app:menu="@menu/main_menu" />
+
+</RelativeLayout>

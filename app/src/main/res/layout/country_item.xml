@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="15dp"
+    android:clipToPadding="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.05"
+        android:visibility="gone"
+        android:src="@drawable/card_bg" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
+        android:id="@+id/cFlagImg"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/cMsTxt"
+        android:layout_toEndOf="@id/cFlagImg"
+        android:layout_marginHorizontal="10dp"
+        android:gravity="center|start">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center|start">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/cCountryTxt"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:id="@+id/cStatusTxt"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="1dp"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/plat"
+            android:id="@+id/cRegionTxt"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/poppins_medium"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/plat"
+        android:id="@+id/cMsTxt"
+        android:textStyle="bold"
+        android:textSize="10dp"
+        android:layout_toStartOf="@id/signalLay"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/poppins_medium"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/signalLay"
+        android:orientation="horizontal"
+        android:layout_marginEnd="10dp"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="3dp"
+            android:layout_height="12dp"
+            app:cardCornerRadius="1.5dp"
+            app:cardElevation="0dp"
+            android:id="@+id/s1"
+            app:cardBackgroundColor="@color/colorPrimary"/>
+
+        <Space
+            android:layout_width="7dp"
+            android:layout_height="match_parent"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="3dp"
+            android:layout_height="12dp"
+            app:cardElevation="0dp"
+            android:id="@+id/s2"
+            app:cardCornerRadius="1.5dp"
+            app:cardBackgroundColor="@color/colorPrimary"/>
+
+        <Space
+            android:layout_width="7dp"
+            android:layout_height="match_parent"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="3dp"
+            android:layout_height="12dp"
+            app:cardCornerRadius="1.5dp"
+            android:id="@+id/s3"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

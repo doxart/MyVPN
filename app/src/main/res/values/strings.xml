@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Doxy VPN</string>
+
+    <string name="banner_id">ca-app-pub-5937643397203975/3364000711</string>
+    <string name="banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="rewarded_id">ca-app-pub-5937643397203975/6301989399</string>
+    <string name="rewarded_test_id">ca-app-pub-3940256099942544/5224354917</string>
+
+    <string name="interstitial_id">ca-app-pub-5937643397203975/1297074729</string>
+    <string name="interstitial_test_id">ca-app-pub-3940256099942544/1033173712</string>
+
+    <string name="connecting">Connecting</string>
+    <string name="image">image</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="tap_to_connect">Tap to connect</string>
+    <string name="connected">Connected</string>
+    <string name="try_different_server">Try different server</string>
+    <string name="loading">Loading..</string>
+    <string name="invalid_device">Invalid Device</string>
+    <string name="authenticating">Authenticating</string>
+    <string name="vpn">VPN</string>
+    <string name="browser">Browser</string>
+    <string name="settings">Settings</string>
+    <string name="starting">Starting</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vpn_is_running">VPN is running. Please stop VPN first.</string>
+    <string name="launch_phase_0">Checking internet connection…</string>
+    <string name="launch_phase_1">Bringing up settings…</string>
+    <string name="launch_phase_2">Receiving remote configuration…</string>
+    <string name="launch_phase_3">Accessing the servers…</string>
+    <string name="launch_phase_4">Checking your subscription…</string>
+    <string name="launch_phase_5">Done</string>
+    <string name="auto_ms_format">Auto . %s</string>
+    <string name="premium">Premium</string>
+    <string name="basic">Basic</string>
+    <string name="location">Location</string>
+    <string name="search_location">Search Location</string>
+    <string name="connection">Connection</string>
+    <string name="statistics">Statistics</string>
+    <string name="dynamic_background">Dynamic Background</string>
+    <string name="auto_connect">Auto Connect</string>
+    <string name="usage">Usage</string>
+    <string name="icon">icon</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="later">Later</string>
+    <string name="no_connection">No Connection</string>
+    <string name="no_connection_detail">You have no Internet connection. Please check your connections and try again.</string>
+    <string name="go_network_settings">Go Network Settings</string>
+    <string name="try_again">Try Again</string>
+    <string name="exit">Exit to App</string>
+</resources>

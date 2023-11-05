@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/switch_bg"
+        android:id="@+id/switchLay"
+        android:gravity="center|bottom"
+        android:padding="10dp"
+        android:clipToPadding="false">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/switchBtn"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
+            android:background="@color/colorWhite"
+            app:contentPadding="20dp"
+            android:src="@drawable/ic_power_24"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1D1E1E</color>
+    <color name="colorPrimaryDark">#151515</color>
+    <color name="colorAccent">#20A39E</color>
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="green">#33CA7F</color>
+    <color name="red">#EC4E43</color>
+    <color name="orange">#FF9800</color>
+    <color name="plat">#D1D3D1</color>
+    <color name="plat1">#C1C5C1</color>
+
+    <color name="primary">#5E41D1</color>
+    <color name="blat">#837C7C</color>
+    <color name="blat1">#706C6C</color>
+</resources>

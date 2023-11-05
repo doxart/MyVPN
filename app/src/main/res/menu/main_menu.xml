@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/navVpn"
+        android:title="@string/vpn"
+        android:icon="@drawable/ic_power_24"/>
+
+    <item android:id="@+id/navBrowser"
+        android:title="@string/browser"
+        android:icon="@drawable/ic_compass_24"/>
+
+    <item android:id="@+id/navSettings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings_24"/>
+
+</menu>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.skydoves.progressview.ProgressView
+        android:layout_width="24dp"
+        android:layout_height="128dp"
+        app:progressView_min="0"
+        app:progressView_max="24"
+        app:progressView_radius="12dp"
+        app:progressView_colorBackground="@color/plat"
+        app:progressView_colorProgress="@color/primary"
+        app:progressView_orientation="vertical"
+        app:progressView_progress="0"
+        app:progressView_autoAnimate="true"
+        android:id="@+id/usageProgress"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_dark"
+        android:layout_marginTop="5dp"
+        android:id="@+id/usageDate"/>
+
+</LinearLayout>
