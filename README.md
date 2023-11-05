@@ -54,7 +54,8 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 5. **Use Firestore in the Project**:
    - This project uses Firestore to manage server configurations. You can find the code related to Firestore in [this file](https://github.com/doxart/iVPN/blob/master/firestore-collection-template.json). You need to create Firestore documents like that if you want to change it (collection id, document fields e.g..) you need to change codes inside of app. 
 
-![Document template](https://github.com/doxart/iVPN/blob/master/firestore-document-template.png)   
+**Your Firestore Document should be like that!
+![Document template](https://github.com/doxart/iVPN/blob/master/firestore-document-template.png)**   
 
 6. **You're All Set!**:
    - With Firestore integration, you can easily manage server configurations and other data for the VPN app.
