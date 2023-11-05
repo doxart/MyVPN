@@ -61,7 +61,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
    - Click on "Get Started" and follow the on-screen instructions to set up Remote Config for your project.
 
 4. **Add Default Parameters**:
-   - To get started, upload [this file](https://github.com/doxart/iVPN/blob/master/firestore-collection-template.json) to Remote Config.
+   - To get started, upload [this file](https://github.com/doxart/iVPN/blob/master/remote_config_ivpn.json) to Remote Config.
    - Upload remote_config.json to remote config.
 
 6. **You're All Set!**:
