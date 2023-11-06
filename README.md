@@ -71,7 +71,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 We appreciate any contributions to this project, whether it's fixing a bug, improving the user interface, or adding new features. Please check our [Contribution Guidelines](CONTRIBUTING.md) for more information on how to get involved.
 
 ### License:
-This project is open-source and licensed under the [MIT License](LICENSE.md). Feel free to use, modify, and distribute it as per the license terms.
+This project is open-source and licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the license terms.
 
 ### Contact:
 If you have any questions or need assistance, please [open an issue](https://github.com/doxart/iVPN/issues) or reach out to us via email at [gkdnzssmn@doxart.com.tr].
