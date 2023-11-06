@@ -91,13 +91,13 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
         Adapty.activate(this, "Insert your Adapty App Key", false, SharePrefs.getInstance(this).getUid());
      }
      }
-    ```
+     ```
    - And add app class in your [AndroidManifest.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/AndroidManifest.xml).
      ```xml
-   <application
-        android:name=".MyApplication"
-   </application>
-   ```
+     <application
+          android:name=".MyApplication"
+     </application>
+     ```
    - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
 
 11. **You're All Set!**:
