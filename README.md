@@ -84,8 +84,8 @@ We appreciate any contributions to this project, whether it's fixing a bug, impr
 - Submit separate pull requests for code changes or feature additions.
 - Communicate with sensitivity and respect and try to help other contributors.
 
-- If you need assistance while contributing, you can send a message to [your GitHub username](https://github.com/doxart).
-- If you have any questions about the project, you can send an email to your project contact email address at [your email address](mailto:gkdnzssmn@doxart.com.tr).
+- If you need assistance while contributing, you can send a message to [me](https://github.com/doxart).
+- If you have any questions about the project, you can send an email to your project contact email address at [my email address](mailto:gkdnzssmn@doxart.com.tr).
 
 ### License:
 This project is open-source and licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the license terms.
