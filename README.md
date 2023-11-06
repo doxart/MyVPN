@@ -1,4 +1,6 @@
-## iVPN
+![Doxy VPN](https://ibb.co/C94XGmz)  
+
+## Doxy VPN
 
 Welcome to my VPN application for Android, an open-source project that aims to provide a seamless and secure VPN experience on your Android device. This project was born out of the need for a reliable VPN solution with a focus on ease of use and privacy.
 
