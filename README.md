@@ -1,4 +1,4 @@
-![badge](https://flat.badgen.net/badge/DoxyVPN/Still in development/red) ![badge](https://badgen.net/badge/API/24+/blue)
+![badge](https://flat.badgen.net/badge/DoxyVPN/Still%20in%20development/red) ![badge](https://badgen.net/badge/API/24+/blue)
 
 ![Doxy VPN](https://i.ibb.co/NNfkBts/Frame-100.png)  
 
