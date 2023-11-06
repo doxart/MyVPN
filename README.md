@@ -124,7 +124,7 @@ We appreciate any contributions to this project, whether it's fixing a bug, impr
 This project is open-source and licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the license terms.
 
 ### Contact:
-If you have any questions or need assistance, please [open an issue](https://github.com/doxart/iVPN/issues) or reach out to us via email at [gkdnzssmn@doxart.com.tr].
+If you have any questions or need assistance, please [open an issue](https://github.com/doxart/iVPN/issues) or reach out to us via email at [here](mailto:gkdnzssmn@doxart.com.tr).
 
 We hope you find this VPN application useful, and thank you for your support!
 
