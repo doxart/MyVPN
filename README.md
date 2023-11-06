@@ -63,6 +63,10 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 7. **Add Default Parameters**:
    - To get started, upload [this file](https://github.com/doxart/iVPN/blob/master/remote_config_ivpn.json) to Remote Config.
 
+8. **Add Google AdMob**:
+   - Create AdMob interstitial, rewarded and banner ads
+   - Enter the ad IDs in the field specified in the [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
+
 11. **You're All Set!**:
    - With Firebase integration, you can easily manage server configurations and other data for the VPN app.
 
