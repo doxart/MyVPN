@@ -54,7 +54,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 5. **Use Firestore in the Project**:
    - This project uses Firestore to manage server configurations. You can find the code related to Firestore in [this file](https://github.com/doxart/iVPN/blob/master/firestore-collection-template.json). You need to create Firestore documents like that if you want to change it (collection id, document fields e.g..) you need to change codes inside of app. 
 
-![Document template](https://github.com/doxart/iVPN/blob/master/firestore-document-template.png)   
+     ![Document template](https://github.com/doxart/iVPN/blob/master/firestore-document-template.png)   
 
 6. **Enable Remote Config**:
    - In the Firebase Console, navigate to the "Remote Config" section.
@@ -66,36 +66,36 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 8. **Add Google AdMob (Optional)**:
    - Create AdMob interstitial, rewarded and banner ads
    - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
-```java
-public class DoxyVPN extends Application {
-    @Override
-    public void onCreate() {
+     ```java
+     public class DoxyVPN extends Application {
+     @Override
+     public void onCreate() {
         super.onCreate();
 
         MobileAds.initialize(this);
-    }
-}
-```
+      }
+     }
+     ```
 
 8. **Add Adapty Paywall SDK (Optional)**:
    - Create Adapty account and follow documentation about installing app.
    - Create Application class to app.
-```java
-public class MyApplication extends Application {
-    @Override
-    public void onCreate() {
+     ```java
+     public class MyApplication extends Application {
+     @Override
+     public void onCreate() {
         super.onCreate();
 
         MobileAds.initialize(this);
         Adapty.activate(this, "Insert your Adapty App Key", false, SharePrefs.getInstance(this).getUid());
-    }
-}
-```
+     }
+     }
+    ```
    - And add app class in your [AndroidManifest.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/AndroidManifest.xml).
-```xml
-<application
-  android:name=".MyApplication"
-</application>
+     ```xml
+   <application
+        android:name=".MyApplication"
+   </application>
    ```
    - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
 
