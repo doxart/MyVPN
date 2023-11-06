@@ -68,9 +68,16 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 8. **Add Google AdMob (Optional)**:
    - Create AdMob interstitial, rewarded and banner ads
    - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
+     ```xml
+     <resources
+          <string name="banner_id">Insert your banner ad id</string>
+          <string name="rewarded_id">Insert your rewarded ad id</string>
+          <string name="interstitial_id">Insert your interstitial ad id</string>
+     </resources>
+     ```
    - Create Application class to app.
      ```java
-     public class DoxyVPN extends Application {
+     public class MyApplication extends Application {
      @Override
      public void onCreate() {
         super.onCreate();
@@ -101,6 +108,11 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
      </application>
      ```
    - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
+      ```xml
+     <resources
+          <string name="adapty_placement_id">tpid</string>
+     </resources>
+     ```
 
 11. **You're All Set!**:
    - With Firebase integration, you can easily manage server configurations and other data for the VPN app.
