@@ -1,4 +1,4 @@
-![Doxy VPN](https://ibb.co/C94XGmz)  
+![Doxy VPN](https://i.ibb.co/NNfkBts/Frame-100.png)  
 
 ## Doxy VPN
 
