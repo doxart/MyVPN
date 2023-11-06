@@ -66,6 +66,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 8. **Add Google AdMob (Optional)**:
    - Create AdMob interstitial, rewarded and banner ads
    - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
+   - Create Application class to app.
      ```java
      public class DoxyVPN extends Application {
      @Override
