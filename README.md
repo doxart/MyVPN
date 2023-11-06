@@ -62,7 +62,6 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 
 7. **Add Default Parameters**:
    - To get started, upload [this file](https://github.com/doxart/iVPN/blob/master/remote_config_ivpn.json) to Remote Config.
-   - Upload remote_config.json to remote config.
 
 11. **You're All Set!**:
    - With Firebase integration, you can easily manage server configurations and other data for the VPN app.
