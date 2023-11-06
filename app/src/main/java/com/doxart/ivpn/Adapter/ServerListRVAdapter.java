@@ -1,6 +1,7 @@
 package com.doxart.ivpn.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +17,11 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.doxart.ivpn.Activities.PaywallActivity;
 import com.doxart.ivpn.Model.ServerModel;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Interfaces.NavItemClickListener;
+import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
 
 import java.util.List;
@@ -63,8 +66,11 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
         Utils.setSignalView(context, h.s1, h.s2, h.s3, m.getLatency());
 
         h.itemView.setOnClickListener(v -> {
-            Log.d("SAGASGASGASGASGASG", "onBindViewHolder: " + m.getOvpn());
-            listener.clickedItem(p);
+            if (m.isPremium()) {
+                if (SharePrefs.getInstance(context).getBoolean("premium")) {
+                    listener.clickedItem(p);
+                } else context.startActivity(new Intent(context, PaywallActivity.class));
+            } else listener.clickedItem(p);
         });
     }
 

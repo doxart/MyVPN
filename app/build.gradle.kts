@@ -11,8 +11,8 @@ android {
         applicationId = "com.doxart.ivpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 10
-        versionName = "0.0.10"
+        versionCode = 11
+        versionName = "0.0.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -55,12 +55,12 @@ dependencies {
 
     implementation ("commons-io:commons-io:2.6")
 
-    implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation ("com.airbnb.android:lottie:6.1.0")
 
     implementation ("io.adapty:android-sdk:2.7.0")
     implementation ("io.adapty:android-ui:2.0.1")
 
-    implementation ("com.squareup.retrofit2:retrofit:2.7.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.firebase:firebase-firestore:24.9.1")

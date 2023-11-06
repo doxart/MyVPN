@@ -83,7 +83,9 @@ public class PaywallActivity extends AppCompatActivity {
             b.payFrame.setEventListener(eventListener);
             b.payFrame.showPaywall(paywall, PaywallViewUtils.getInstance().getPaywallHolder().getProducts(),
                     PaywallViewUtils.getInstance().getPaywallHolder().getViewConfiguration(),
-                    AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + 20), adaptyPaywallProduct -> false);
+                    AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
+
+            Adapty.logShowPaywall(paywall);
 
             //b.payFrame.setPadding(0, statusBarHeight, 0, navigationBarHeight + pxToDp);
             //b.payFrame.addView(paywallView);
