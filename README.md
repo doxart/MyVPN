@@ -68,7 +68,20 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 
 
 ### Contributions:
-We appreciate any contributions to this project, whether it's fixing a bug, improving the user interface, or adding new features. Please check our [Contribution Guidelines](CONTRIBUTING.md) for more information on how to get involved.
+We appreciate any contributions to this project, whether it's fixing a bug, improving the user interface, or adding new features.
+
+- **Code Contributions:** You can submit a pull request to add code to the project or fix existing code.
+- **Bug Fixes:** You can use issues to report or fix bugs.
+- **Documentation:** You can make documentation updates or corrections.
+- **New Feature Suggestions:** You can open issues to propose new features for the project.
+
+- Please open an issue before making any code changes and let's discuss your proposal.
+- Try to include appropriate tests for all code fixes.
+- Submit separate pull requests for code changes or feature additions.
+- Communicate with sensitivity and respect and try to help other contributors.
+
+- If you need assistance while contributing, you can send a message to [your GitHub username](https://github.com/doxart).
+- If you have any questions about the project, you can send an email to your project contact email address at [your email address](mailto:gkdnzssmn@doxart.com.tr).
 
 ### License:
 This project is open-source and licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the license terms.
