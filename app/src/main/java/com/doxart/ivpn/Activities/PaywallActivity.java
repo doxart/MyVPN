@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.adapty.Adapty;
 import com.adapty.errors.AdaptyError;
 import com.adapty.models.AdaptyPaywall;
 import com.adapty.models.AdaptyPaywallProduct;
