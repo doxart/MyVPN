@@ -63,9 +63,31 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 7. **Add Default Parameters**:
    - To get started, upload [this file](https://github.com/doxart/iVPN/blob/master/remote_config_ivpn.json) to Remote Config.
 
-8. **Add Google AdMob**:
+8. **Add Google AdMob (Optional)**:
    - Create AdMob interstitial, rewarded and banner ads
-   - Enter the ad IDs in the field specified in the [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
+   - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
+
+8. **Add Adapty Paywall SDK (Optional)**:
+   - Create Adapty account and follow documentation about installing app.
+   - Create Application class to app.
+   ```java
+   public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        MobileAds.initialize(this);
+        Adapty.activate(this, "Insert your Adapty public app key", false, SharePrefs.getInstance(this).getUid());
+    }
+   }
+   ```
+   - And add app class in your [AndroidManifest.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/AndroidManifest.xml).
+   ```xml
+   <application
+   android:name=".MyApplication"
+   </application>
+   ```
+   - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/iVPN/blob/master/app/src/main/res/values/strings.xml) file.
 
 11. **You're All Set!**:
    - With Firebase integration, you can easily manage server configurations and other data for the VPN app.
