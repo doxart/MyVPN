@@ -50,4 +50,6 @@
     <string name="go_network_settings">Go Network Settings</string>
     <string name="try_again">Try Again</string>
     <string name="exit">Exit to App</string>
+    <string name="adapty_placement_id">tpid</string>
+    <string name="no_statistics_found_start_the_vpn_now">No statistics found. Start the VPN now!</string>
 </resources>

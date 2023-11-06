@@ -16,12 +16,13 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 
-import com.doxart.ivpn.DB.UsageDB;
 import com.doxart.ivpn.Interfaces.OnAnswerListener;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.databinding.AskViewBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Utils {
 
@@ -73,11 +74,13 @@ public class Utils {
         }
     }
 
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yy ", Locale.US);
+
     public static String getToday() {
         Date today = new Date();
         today.setTime(today.getTime()+100000);
 
-        return UsageDB.dateFormat.format(today);
+        return dateFormat.format(today);
     }
 
     public static Dialog askQuestion(Context context, String title, String contain,

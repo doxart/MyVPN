@@ -102,7 +102,7 @@ public class LauncherActivity extends AppCompatActivity {
         b.adjustingTxt.setText(getString(R.string.launch_phase_1));
 
         executorService.execute(() -> {
-            PaywallViewUtils.getInstance().getPaywallView("tpid");
+            PaywallViewUtils.getInstance().getPaywallView(getString(R.string.adapty_placement_id));
 
             handler.post(() -> PaywallViewUtils.getInstance().setPaywallLoadFinishListener(new PaywallViewUtils.OnPaywallLoadFinishListener() {
                 @Override

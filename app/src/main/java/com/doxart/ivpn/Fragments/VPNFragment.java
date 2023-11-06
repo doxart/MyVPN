@@ -27,13 +27,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.bumptech.glide.Glide;
 import com.doxart.ivpn.Activities.MainActivity;
 import com.doxart.ivpn.DB.ServerDB;
-import com.doxart.ivpn.DB.UsageDB;
+import com.doxart.ivpn.DB.Usage;
 import com.doxart.ivpn.Interfaces.ChangeServer;
 import com.doxart.ivpn.Model.ServerModel;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.Util.VPNCountdownTimer;
+import com.doxart.ivpn.Util.ViewModelHolder;
 import com.doxart.ivpn.databinding.FragmentVPNBinding;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -86,8 +87,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
     private SharePrefs sharePrefs;
 
-    private UsageDB usageDB;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +99,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
         context = getContext();
 
         sharePrefs = new SharePrefs(context);
-        usageDB = new UsageDB(context);
-        usageDB.open();
 
         adMode = sharePrefs.getInt("vpnButtonAdMode");
         premium = sharePrefs.getBoolean("premium");
@@ -368,8 +365,17 @@ public class VPNFragment extends Fragment implements ChangeServer {
             String today = Utils.getToday();
             Log.d(TAG, "startVpn: " + today);
 
-            if (!usageDB.isExist(today))
-                usageDB.insertUsage(today, System.currentTimeMillis(), 0);
+            new Thread(() -> {
+                Usage usage = ViewModelHolder.getInstance().getUsageViewModel().getUsageRepository().getUsage(today);
+
+                if (usage == null) {
+                    usage = new Usage();
+                    usage.setDate(today);
+                    usage.setDateTime(System.currentTimeMillis());
+                    usage.setUsageInMinutes(0);
+                }
+
+            });
 
             OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
 

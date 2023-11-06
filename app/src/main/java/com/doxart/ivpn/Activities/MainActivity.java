@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.doxart.ivpn.Interfaces.OnAnswerListener;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
+import com.doxart.ivpn.Util.ViewModelHolder;
 import com.doxart.ivpn.databinding.ActivityMainBinding;
 
 import java.util.Random;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (instance == null) instance = this;
+        ViewModelHolder.getInstance().createViewModels(getInstance(), this);
         setupNetworkListener();
         inflate();
     }
@@ -63,7 +66,11 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
 
             @Override
             public void onLost(@NonNull Network network) {
-                showConnectionDialog();
+                new Handler().postDelayed(() -> {
+                    if (!Utils.checkConnection(MainActivity.this)) {
+                        showConnectionDialog();
+                    }
+                }, 1000);
             }
         };
 

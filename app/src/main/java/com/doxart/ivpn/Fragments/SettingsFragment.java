@@ -1,34 +1,26 @@
 package com.doxart.ivpn.Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.doxart.ivpn.Activities.MainActivity;
 import com.doxart.ivpn.Adapter.UsageAdapter;
-import com.doxart.ivpn.DB.UsageDB;
-import com.doxart.ivpn.Model.UsageModel;
-import com.doxart.ivpn.R;
+import com.doxart.ivpn.DB.Usage;
+import com.doxart.ivpn.DB.UsageViewModel;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.databinding.FragmentSettingsBinding;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsFragment extends Fragment {
@@ -39,8 +31,6 @@ public class SettingsFragment extends Fragment {
 
     SharePrefs sharePrefs;
 
-    UsageDB usageDB;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
@@ -50,8 +40,6 @@ public class SettingsFragment extends Fragment {
         context = getContext();
 
         sharePrefs = new SharePrefs(context);
-        usageDB = new UsageDB(context);
-        usageDB.open();
 
         adjustMargin();
         getUsage();
@@ -75,12 +63,30 @@ public class SettingsFragment extends Fragment {
     }
 
     private void getUsage() {
-        List<UsageModel> usageList = usageDB.getAllUsageData();
-
-        UsageAdapter adapter = new UsageAdapter(context, usageList);
+        UsageAdapter adapter = new UsageAdapter(context, () -> b.usageRecycler.smoothScrollToPosition(Gravity.END));
 
         b.usageRecycler.setHasFixedSize(true);
         b.usageRecycler.setAdapter(adapter);
+
+        b.usageRecycler.smoothScrollToPosition(Gravity.END);
+
+        UsageViewModel usageViewModel = new ViewModelProvider(requireActivity()).get(UsageViewModel.class);
+        LiveData<List<Usage>> allUsages = usageViewModel.getAllUsages();
+
+        allUsages.observe(requireActivity(), usages -> {
+            adapter.setUsageList(usages);
+
+            if (usages.isEmpty()) {
+                b.noStatistics.setVisibility(View.VISIBLE);
+                b.usageRecycler.setVisibility(View.GONE);
+            }
+            else {
+                b.noStatistics.setVisibility(View.GONE);
+                b.usageRecycler.setVisibility(View.VISIBLE);
+            }
+
+            b.usageRecycler.smoothScrollToPosition(Gravity.END);
+        });
     }
 
     private void init() {

@@ -10,8 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.doxart.ivpn.BuildConfig;
-import com.doxart.ivpn.DB.UsageDB;
-import com.doxart.ivpn.Model.UsageModel;
+import com.doxart.ivpn.DB.Usage;
 
 public class VPNCountdownTimer extends Service {
     private Handler handler;
@@ -19,7 +18,6 @@ public class VPNCountdownTimer extends Service {
     private boolean isServiceRunning = false;
     private int usageMinutes, usageSeconds, inUsageSeconds = 0;
     private int oneMinute;
-    private UsageDB usageDB;
 
     @Nullable
     @Override
@@ -33,8 +31,6 @@ public class VPNCountdownTimer extends Service {
         if (BuildConfig.DEBUG) oneMinute = 10;
         else oneMinute = 60;
 
-        usageDB = new UsageDB(this);
-        usageDB.open();
         handler = new Handler();
 
         runnable = new Runnable() {
@@ -49,12 +45,8 @@ public class VPNCountdownTimer extends Service {
                         inUsageSeconds = 0;
 
                         String today = Utils.getToday();
-                        UsageModel m = usageDB.getUsageDataByDate(today);
 
-                        if (m != null) {
-                            if (BuildConfig.DEBUG) usageMinutes += 59;
-                            usageDB.updateUsage(today, m.getUsage() + usageMinutes);
-                        }
+                        new Thread(() -> insertToDB(today, usageMinutes)).start();
                     }
 
                     Intent intent = new Intent("usage_data_updated");
@@ -68,6 +60,22 @@ public class VPNCountdownTimer extends Service {
         };
     }
 
+    private void insertToDB(String today, int usageMinutes) {
+        if (BuildConfig.DEBUG) usageMinutes += 59;
+        Usage usage = ViewModelHolder.getInstance().getUsageViewModel().getUsageRepository().getUsage(today);
+
+        if (usage == null) {
+            usage = new Usage();
+            usage.setDate(today);
+            usage.setDateTime(System.currentTimeMillis());
+            usage.setUsageInMinutes(usageMinutes);
+        } else usage.setUsageInMinutes(usage.getUsageInMinutes() + usageMinutes);
+
+        Log.d("ADGADGASFASDASD", "run: " + usage.getUsageInMinutes());
+
+        ViewModelHolder.getInstance().getUsageViewModel().insertUsage(usage);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         isServiceRunning = true;
@@ -79,7 +87,6 @@ public class VPNCountdownTimer extends Service {
     public void onDestroy() {
         super.onDestroy();
         isServiceRunning = false;
-        usageDB.close();
         handler.removeCallbacks(runnable);
     }
 }

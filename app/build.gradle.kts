@@ -41,6 +41,13 @@ dependencies {
     implementation("com.google.firebase:firebase-config")
     implementation("com.google.android.gms:play-services-ads:22.5.0")
 
+    implementation ("androidx.room:room-runtime:2.6.0")
+    annotationProcessor ("androidx.room:room-compiler:2.6.0")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2")
+
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.github.PhilJay:MPAndroidChart-Realm:v3.0.3@aar")
 

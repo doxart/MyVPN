@@ -8,24 +8,42 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:padding="0dp"
+        android:includeFontPadding="false"
+        android:text="Pazartesi"
+        android:gravity="center"
+        android:textSize="10dp"
+        android:id="@+id/usageDate"/>
+
     <com.skydoves.progressview.ProgressView
         android:layout_width="24dp"
         android:layout_height="128dp"
         app:progressView_min="0"
         app:progressView_max="24"
         app:progressView_radius="12dp"
-        app:progressView_colorBackground="@color/plat"
+        android:layout_marginVertical="10dp"
+        app:progressView_colorBackground="#0DFFFFFF"
         app:progressView_colorProgress="@color/primary"
         app:progressView_orientation="vertical"
         app:progressView_progress="0"
-        app:progressView_autoAnimate="true"
+        app:progressView_autoAnimate="false"
         android:id="@+id/usageProgress"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/primary_dark"
-        android:layout_marginTop="5dp"
-        android:id="@+id/usageDate"/>
+        android:textColor="@color/colorWhite"
+        android:includeFontPadding="false"
+        android:text="45dk"
+        android:gravity="center"
+        android:background="@drawable/card_basic_bg"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="3dp"
+        android:textSize="16dp"
+        android:id="@+id/usageHour"/>
 
 </LinearLayout>
