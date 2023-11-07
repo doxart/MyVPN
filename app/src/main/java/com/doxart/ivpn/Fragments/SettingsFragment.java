@@ -21,6 +21,8 @@ import com.doxart.ivpn.DB.UsageViewModel;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.databinding.FragmentSettingsBinding;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SettingsFragment extends Fragment {

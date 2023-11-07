@@ -1,6 +1,7 @@
 package com.doxart.ivpn.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class UsageAdapter extends RecyclerView.Adapter<UsageAdapter.UHolder> {
     Context context;
     List<Usage> usageList = new ArrayList<>();
 
+    Date myDate = new Date();
     SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
 
     public UsageAdapter(Context context, OnViewCreated onViewCreated) {
@@ -46,6 +48,9 @@ public class UsageAdapter extends RecyclerView.Adapter<UsageAdapter.UHolder> {
 
     public void setUsageList(List<Usage> usageList) {
         this.usageList = usageList;
+        for (Usage u : usageList) {
+            Log.d("aAFASFASDASD", "setUsageList: " + u.getDateTime());
+        }
         notifyDataSetChanged();
     }
 
@@ -61,31 +66,17 @@ public class UsageAdapter extends RecyclerView.Adapter<UsageAdapter.UHolder> {
     public void onBindViewHolder(@NonNull UHolder h, int p) {
         Usage m = usageList.get(p);
 
-        Date date = new Date();
-        date.setTime(m.getDateTime());
+        Date date = new Date(m.getDateTime());
+
+        Log.d("aAFASFASDASD", "onBindViewHolder: " + System.currentTimeMillis());
 
         float usage = m.getUsageInMinutes()/60f;
 
         h.usage.setProgress(usage);
 
-        if (!checkDateIsNowWeek(date)) {
-            h.date.setText(dayFormat.format(date));
-        } else h.date.setText(DateFormat.getDateInstance().format(date));
+        h.date.setText(DateFormat.getDateInstance().format(date));
 
         h.hour.setText(String.format("%sh", new DecimalFormat("#.#").format(usage)));
-    }
-
-    private boolean checkDateIsNowWeek(Date usageDate) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        Date startOfWeek = cal.getTime();
-
-        cal.setTime(usageDate);
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        Date startOfWeekSpecified = cal.getTime();
-
-        return startOfWeek.equals(startOfWeekSpecified);
     }
 
     @Override

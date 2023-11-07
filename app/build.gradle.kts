@@ -15,11 +15,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.doxart.doxy.vpn"
+        applicationId = "com.doxart.ivpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 12
-        versionName = "0.0.12"
+        versionCode = 14
+        versionName = "0.0.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -57,6 +57,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:22.5.0")
 
     implementation ("androidx.room:room-runtime:2.6.0")
+    implementation("com.google.firebase:firebase-messaging:23.3.1")
     annotationProcessor ("androidx.room:room-compiler:2.6.0")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")

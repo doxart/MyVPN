@@ -51,7 +51,6 @@ public class ServerDB {
                     serverModel.setIpv4(snapshot.getString("ipv4"));
                     serverModel.setPort(Objects.requireNonNull(snapshot.getLong("port")).intValue());
 
-
                     Thread thread = new Thread(() -> serverModel.setLatency(getPing(serverModel.getIpv4(),  serverModel.getPort())));
                     thread.start();
 
