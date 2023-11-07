@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.doxart.ivpn.DB.Usage;
-import com.doxart.ivpn.Model.UsageModel;
 import com.doxart.ivpn.R;
 import com.skydoves.progressview.ProgressView;
 

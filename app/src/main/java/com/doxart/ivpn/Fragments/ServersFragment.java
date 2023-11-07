@@ -4,11 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import com.doxart.ivpn.Adapter.ServerListRVAdapter;
 import com.doxart.ivpn.DB.ServerDB;
 import com.doxart.ivpn.Interfaces.NavItemClickListener;
 import com.doxart.ivpn.Model.ServerModel;
-import com.doxart.ivpn.R;
 import com.doxart.ivpn.databinding.FragmentServersBinding;
 
 import java.util.ArrayList;

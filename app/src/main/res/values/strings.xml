@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Doxy VPN</string>
 
+    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
+
     <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
     <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 

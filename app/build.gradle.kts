@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.doxart.ivpn"
+        applicationId = "com.doxart.doxy.vpn"
         minSdk = 24
         targetSdk = 34
         versionCode = 12
