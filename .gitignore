@@ -15,4 +15,4 @@
 local.properties
 /app/google-services.json
 /app/src/main/java/com/doxart/ivpn/DoxyVPN.java
-/app/release/
+/release
