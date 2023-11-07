@@ -21,11 +21,11 @@ import com.adapty.models.AdaptyProfile;
 import com.adapty.utils.AdaptyResult;
 import com.doxart.ivpn.DB.ServerDB;
 import com.doxart.ivpn.Interfaces.OnAnswerListener;
-import com.doxart.ivpn.vpn.R;
+import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.PaywallViewUtils;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
-import com.doxart.ivpn.vpn.databinding.ActivityLauncherBinding;
+import com.doxart.ivpn.databinding.ActivityLauncherBinding;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import java.util.concurrent.ExecutorService;
