@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Doxy VPN</string>
+
+    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
+
+    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
+
+    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
+
+    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
+
+    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
+
+    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+
+    <string name="adapty_placement_id" translatable="false">tpid</string>
+
+    <string name="connecting">Connessione</string>
+
+    <string name="image">Immagine</string>
+
+    <string name="disconnected">Disconnesso</string>
+
+    <string name="tap_to_connect">Tocca per connetterti</string>
+
+    <string name="connected">Collegato</string>
+
+    <string name="try_different_server">Prova un server diverso</string>
+
+    <string name="loading">Caricamento..</string>
+
+    <string name="invalid_device">Dispositivo non valido</string>
+
+    <string name="authenticating">Autenticazione</string>
+
+    <string name="vpn">VPN</string>
+
+    <string name="browser">Navigatore</string>
+
+    <string name="settings">Impostazioni</string>
+
+    <string name="starting">Di partenza</string>
+
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="vpn_is_running">La VPN è in esecuzione. Per favore, interrompi prima la VPN.</string>
+
+    <string name="launch_phase_0">Verifica della connessione Internet in corso…</string>
+
+    <string name="launch_phase_1">Visualizzazione delle impostazioni…</string>
+
+    <string name="launch_phase_2">Ricezione della configurazione remota…</string>
+
+    <string name="launch_phase_3">Accesso ai server...</string>
+
+    <string name="launch_phase_4">Verifica del tuo abbonamento…</string>
+
+    <string name="launch_phase_5">Fatto</string>
+
+    <string name="auto_ms_format">Automatico . %s</string>
+
+    <string name="premium">Premio</string>
+
+    <string name="basic">Di base</string>
+
+    <string name="location">Posizione</string>
+
+    <string name="search_location">Cerca posizione</string>
+
+    <string name="connection">Connessione</string>
+
+    <string name="statistics">Statistiche</string>
+
+    <string name="dynamic_background">Sfondo dinamico</string>
+
+    <string name="auto_connect">Connessione automatica</string>
+
+    <string name="usage">Utilizzo</string>
+
+    <string name="icon">icona</string>
+
+    <string name="yes">SÌ</string>
+
+    <string name="no">NO</string>
+
+    <string name="later">Dopo</string>
+
+    <string name="no_connection">Nessuna connessione</string>
+
+    <string name="no_connection_detail">Non hai connessione Internet. Controlla le connessioni e riprova.</string>
+
+    <string name="go_network_settings">Vai alle Impostazioni di rete</string>
+
+    <string name="try_again">Riprova</string>
+
+    <string name="exit">Esci sull\'app</string>
+
+    <string name="no_statistics_found_start_the_vpn_now">Nessuna statistica trovata. Avvia subito la VPN!</string>
+
+</resources>

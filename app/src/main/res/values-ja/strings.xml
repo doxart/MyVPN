@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name" translatable="false">Doxy VPN</string>
+
+    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
+
+    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
+
+    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
+
+    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
+
+    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
+
+    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+
+    <string name="adapty_placement_id" translatable="false">tpid</string>
+
+    <string name="connecting">接続中</string>
+
+    <string name="image">画像</string>
+
+    <string name="disconnected">切断されました</string>
+
+    <string name="tap_to_connect">タップして接続します</string>
+
+    <string name="connected">接続済み</string>
+
+    <string name="try_different_server">別のサーバーを試してみる</string>
+
+    <string name="loading">読み込み中..</string>
+
+    <string name="invalid_device">無効なデバイス</string>
+
+    <string name="authenticating">認証中</string>
+
+    <string name="vpn">VPN</string>
+
+    <string name="browser">ブラウザ</string>
+
+    <string name="settings">設定</string>
+
+    <string name="starting">起動</string>
+
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="vpn_is_running">VPN が実行中です。まず VPN を停止してください。</string>
+
+    <string name="launch_phase_0">インターネット接続を確認しています…</string>
+
+    <string name="launch_phase_1">設定を表示しています…</string>
+
+    <string name="launch_phase_2">リモート構成を受信して​​います…</string>
+
+    <string name="launch_phase_3">サーバーにアクセス中…</string>
+
+    <string name="launch_phase_4">サブスクリプションを確認しています…</string>
+
+    <string name="launch_phase_5">終わり</string>
+
+    <string name="auto_ms_format">自動。%s</string>
+
+    <string name="premium">プレミアム</string>
+
+    <string name="basic">基本</string>
+
+    <string name="location">位置</string>
+
+    <string name="search_location">検索場所</string>
+
+    <string name="connection">繋がり</string>
+
+    <string name="statistics">統計</string>
+
+    <string name="dynamic_background">ダイナミックな背景</string>
+
+    <string name="auto_connect">自動接続</string>
+
+    <string name="usage">使用法</string>
+
+    <string name="icon">アイコン</string>
+
+    <string name="yes">はい</string>
+
+    <string name="no">いいえ</string>
+
+    <string name="later">後で</string>
+
+    <string name="no_connection">接続がありません</string>
+
+    <string name="no_connection_detail">インターネット接続がありません。接続を確認して再試行してください。</string>
+
+    <string name="go_network_settings">ネットワーク設定に移動</string>
+
+    <string name="try_again">もう一度やり直してください</string>
+
+    <string name="exit">終了してアプリに戻る</string>
+
+    <string name="no_statistics_found_start_the_vpn_now">統計が見つかりませんでした。今すぐ VPN を開始してください!</string>
+
+</resources>
