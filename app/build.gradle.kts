@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 @Suppress("unstableapiusage")
@@ -52,6 +53,7 @@ android {
 
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-config")
     implementation("com.google.android.gms:play-services-ads:22.5.0")

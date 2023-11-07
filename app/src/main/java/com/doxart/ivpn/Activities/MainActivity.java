@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     }
 
     private void inflate() {
+
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     private void setBackground() {
         int[] bg = new int[] {R.drawable.main_background1, R.drawable.main_background2, R.drawable.main_background3, R.drawable.main_background4};
 
-        b.getRoot().setBackgroundResource(bg[new Random().nextInt(3 - 0) + 0]);
+        b.getRoot().setBackgroundResource(bg[new Random().nextInt(bg.length-1)]);
     }
 
     private final ActivityResultLauncher<String> resultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), o -> {});
