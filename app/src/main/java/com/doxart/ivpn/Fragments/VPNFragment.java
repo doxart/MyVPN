@@ -362,21 +362,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
             br.readLine();
 
-            String today = Utils.getToday();
-            Log.d(TAG, "startVpn: " + today);
-
-            new Thread(() -> {
-                Usage usage = ViewModelHolder.getInstance().getUsageViewModel().getUsageRepository().getUsage(today);
-
-                if (usage == null) {
-                    usage = new Usage();
-                    usage.setDate(today);
-                    usage.setDateTime(System.currentTimeMillis());
-                    usage.setUsageInMinutes(0);
-                }
-
-            });
-
             OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
 
 

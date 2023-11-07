@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">Doxy VPN</string>
+    <string name="app_name" translatable="false">Doxy VPN</string>
 
-    <string name="banner_id">ca-app-pub-5937643397203975/3364000711</string>
-    <string name="banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
+    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
-    <string name="rewarded_id">ca-app-pub-5937643397203975/6301989399</string>
-    <string name="rewarded_test_id">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
+    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
 
-    <string name="interstitial_id">ca-app-pub-5937643397203975/1297074729</string>
-    <string name="interstitial_test_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
+    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
 
-    <string name="adapty_placement_id">tpid</string>
+    <string name="adapty_placement_id" translatable="false">tpid</string>
 
     <string name="connecting">Connecting</string>
     <string name="image">image</string>
@@ -25,7 +25,7 @@
     <string name="browser">Browser</string>
     <string name="settings">Settings</string>
     <string name="starting">Starting</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="vpn_is_running">VPN is running. Please stop VPN first.</string>
     <string name="launch_phase_0">Checking internet connection…</string>
     <string name="launch_phase_1">Bringing up settings…</string>

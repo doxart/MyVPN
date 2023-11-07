@@ -65,13 +65,8 @@ public class VPNCountdownTimer extends Service {
         Usage usage = ViewModelHolder.getInstance().getUsageViewModel().getUsageRepository().getUsage(today);
 
         if (usage == null) {
-            usage = new Usage();
-            usage.setDate(today);
-            usage.setDateTime(System.currentTimeMillis());
-            usage.setUsageInMinutes(usageMinutes);
+            usage = new Usage(today, System.currentTimeMillis(), usageMinutes);
         } else usage.setUsageInMinutes(usage.getUsageInMinutes() + usageMinutes);
-
-        Log.d("ADGADGASFASDASD", "run: " + usage.getUsageInMinutes());
 
         ViewModelHolder.getInstance().getUsageViewModel().insertUsage(usage);
     }

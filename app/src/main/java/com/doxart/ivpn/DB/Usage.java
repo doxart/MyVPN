@@ -18,9 +18,7 @@ public class Usage {
     @ColumnInfo(name = "usage_in_minutes")
     private int usageInMinutes;
 
-    public Usage() {}
-    public Usage(int id, String date, long dateTime, int usageInMinutes) {
-        this.id = id;
+    public Usage(String date, long dateTime, int usageInMinutes) {
         this.date = date;
         this.dateTime = dateTime;
         this.usageInMinutes = usageInMinutes;

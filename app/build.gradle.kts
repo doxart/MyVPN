@@ -3,18 +3,32 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+@Suppress("unstableapiusage")
 android {
     namespace = "com.doxart.ivpn"
     compileSdk = 34
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 
     defaultConfig {
         applicationId = "com.doxart.ivpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 11
-        versionName = "0.0.11"
+        versionCode = 12
+        versionName = "0.0.12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] =
+                        "$projectDir/schemas"
+            }
+        }
     }
 
     buildTypes {
@@ -23,6 +37,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     buildFeatures {
         buildConfig = true
         dataBinding = true
