@@ -24,12 +24,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] =
-                        "$projectDir/schemas"
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments["room.schemaLocation"] =
+                            "$projectDir/schemas"
+                }
             }
-        }
     }
 
     buildTypes {

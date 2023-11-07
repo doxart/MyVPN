@@ -25,8 +25,6 @@ public class UsageRepository {
     }
 
     public void insertUsage(Usage usage) {
-        UsageDatabase.databaseWriteExecutor.execute(() -> {
-            usageDao.insertUsage(usage);
-        });
+        UsageDatabase.databaseWriteExecutor.execute(() -> usageDao.insertUsage(usage));
     }
 }
