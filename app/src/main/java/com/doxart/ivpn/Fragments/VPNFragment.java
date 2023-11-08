@@ -231,14 +231,28 @@ public class VPNFragment extends Fragment implements ChangeServer {
         }
     }
 
+
+    int initTry = 0;
     private void init() {
         changeServer = this;
 
         serverList = new ArrayList<>();
         List<ServerModel> nativeList = ServerDB.getInstance().getServerList();
 
-        for (ServerModel sv : nativeList) {
-            if (sv.getLatency() > 0) serverList.add(sv);
+        if (nativeList != null) {
+            for (ServerModel sv : nativeList) {
+                if (sv.getLatency() > 0) serverList.add(sv);
+            }
+        } else {
+            initTry++;
+
+            if (initTry < 3) init();
+            else {
+                ServerDB.getInstance().getServers(context, () -> {
+                    initTry = 0;
+                    init();
+                });
+            }
         }
 
         serverList.sort(Comparator.comparing(ServerModel::getLatency));
@@ -512,12 +526,14 @@ public class VPNFragment extends Fragment implements ChangeServer {
     }
 
     public void updateCurrentServerLay(ServerModel m, boolean auto) {
-        Glide.with(context).load("https://flagcdn.com/h80/" + m.getFlagUrl() + ".png").centerCrop().into(b.countryLay.cFlagImg);
-        if (auto) b.countryLay.cMsTxt.setText(String.format(getString(R.string.auto_ms_format), m.getLatency() + "ms"));
-        else b.countryLay.cMsTxt.setText(String.format("%sms", m.getLatency()));
-        b.countryLay.cCountryTxt.setText(m.getCountry());
+        if (m != null) {
+            if (m.getFlagUrl() != null) Glide.with(context).load("https://flagcdn.com/h80/" + m.getFlagUrl() + ".png").centerCrop().into(b.countryLay.cFlagImg);
+            if (auto) b.countryLay.cMsTxt.setText(String.format(getString(R.string.auto_ms_format), m.getLatency() + "ms"));
+            else b.countryLay.cMsTxt.setText(String.format("%sms", m.getLatency()));
+            b.countryLay.cCountryTxt.setText(m.getCountry());
 
-        Utils.setSignalView(context, b.countryLay.s1, b.countryLay.s2, b.countryLay.s3, m.getLatency());
+            Utils.setSignalView(context, b.countryLay.s1, b.countryLay.s2, b.countryLay.s3, m.getLatency());
+        }
     }
 
     @Override

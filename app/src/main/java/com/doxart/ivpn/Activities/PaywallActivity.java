@@ -16,9 +16,11 @@ import com.adapty.errors.AdaptyError;
 import com.adapty.models.AdaptyPaywall;
 import com.adapty.models.AdaptyPaywallProduct;
 import com.adapty.models.AdaptyProfile;
+import com.adapty.models.AdaptyViewConfiguration;
 import com.adapty.ui.AdaptyPaywallInsets;
 import com.adapty.ui.AdaptyPaywallView;
 import com.adapty.ui.AdaptyUI;
+import com.adapty.ui.internal.Products;
 import com.adapty.ui.listeners.AdaptyUiEventListener;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.PaywallViewUtils;
@@ -30,6 +32,8 @@ import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
+import java.util.List;
 
 public class PaywallActivity extends AppCompatActivity {
 
@@ -68,25 +72,29 @@ public class PaywallActivity extends AppCompatActivity {
         b.payFrame.removeAllViews();
 
         AdaptyPaywall paywall = PaywallViewUtils.getInstance().getPaywallHolder().getAdaptyPaywall();
+        List<AdaptyPaywallProduct> products = PaywallViewUtils.getInstance().getPaywallHolder().getProducts();
+        AdaptyViewConfiguration viewConfiguration = PaywallViewUtils.getInstance().getPaywallHolder().getViewConfiguration();
 
-        if (paywall != null) {
-            getInsets(paywall);
+        if (paywall != null & products != null & viewConfiguration != null) {
+            getInsets(paywall, products, viewConfiguration);
         } else finish();
     }
 
-    private void getInsets(AdaptyPaywall paywall) {
+    private void getInsets(AdaptyPaywall paywall, List<AdaptyPaywallProduct> products, AdaptyViewConfiguration viewConfiguration) {
         ViewCompat.setOnApplyWindowInsetsListener(b.getRoot(), (v, insets) -> {
             final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top; // in px
             final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom; // in px
 
             int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-            b.payFrame.setEventListener(eventListener);
-            b.payFrame.showPaywall(paywall, PaywallViewUtils.getInstance().getPaywallHolder().getProducts(),
-                    PaywallViewUtils.getInstance().getPaywallHolder().getViewConfiguration(),
-                    AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
+            if (paywall != null) {
+                b.payFrame.setEventListener(eventListener);
+                b.payFrame.showPaywall(paywall, products,
+                        viewConfiguration,
+                        AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
 
-            Adapty.logShowPaywall(paywall);
+                Adapty.logShowPaywall(paywall);
+            }
 
             //b.payFrame.setPadding(0, statusBarHeight, 0, navigationBarHeight + pxToDp);
             //b.payFrame.addView(paywallView);
