@@ -19,8 +19,8 @@ android {
         applicationId = "com.doxart.ivpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 16
-        versionName = "0.0.14"
+        versionCode = 17
+        versionName = "0.0.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
