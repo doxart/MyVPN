@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
 
-    <string name="app_name" translatable="false">Doxy VPN</string>
-
-    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
-
-    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
-
-    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-
-    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
-
-    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-
-    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
-
-    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-
-    <string name="adapty_placement_id" translatable="false">tpid</string>
-
     <string name="connecting">连接中</string>
 
     <string name="image">图像</string>
@@ -44,19 +26,17 @@
 
     <string name="starting">开始</string>
 
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
     <string name="vpn_is_running">VPN 正在运行。请先停止 VPN。</string>
 
-    <string name="launch_phase_0">正在检查互联网连接...</string>
+    <string name="launch_phase_0">正在检查互联网连接…</string>
 
-    <string name="launch_phase_1">调出设置...</string>
+    <string name="launch_phase_1">调出设置…</string>
 
-    <string name="launch_phase_2">正在接收远程配置...</string>
+    <string name="launch_phase_2">正在接收远程配置…</string>
 
-    <string name="launch_phase_3">访问服务器...</string>
+    <string name="launch_phase_3">访问服务器…</string>
 
-    <string name="launch_phase_4">正在检查您的订阅...</string>
+    <string name="launch_phase_4">正在检查您的订阅…</string>
 
     <string name="launch_phase_5">完毕</string>
 
@@ -99,5 +79,35 @@
     <string name="exit">退出到应用程序</string>
 
     <string name="no_statistics_found_start_the_vpn_now">没有找到统计数据。立即启动 VPN！</string>
+
+    <string name="region">地区</string>
+
+    <string name="city">城市</string>
+
+    <string name="country">国家</string>
+
+    <string name="speed_test">速度测试</string>
+
+    <string name="latency">潜伏</string>
+
+    <string name="start">开始</string>
+
+    <string name="stop">停止</string>
+
+    <string name="server">服务器</string>
+
+    <string name="time">时间</string>
+
+    <string name="connection_successful">连接成功</string>
+
+    <string name="connection_report">连接报告</string>
+
+    <string name="rating_text">您喜欢我们的免费 VPN 应用程序吗？\n给我们评分。</string>
+
+    <string name="share_with_your_friends">与你的朋友分享</string>
+
+    <string name="limitless_fast_secure">无限、快速、便捷安全的</string>
+
+    <string name="share">分享</string>
 
 </resources>

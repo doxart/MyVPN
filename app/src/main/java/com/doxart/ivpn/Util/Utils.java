@@ -2,6 +2,7 @@ package com.doxart.ivpn.Util;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -20,6 +21,10 @@ import com.doxart.ivpn.Interfaces.OnAnswerListener;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.databinding.AskViewBinding;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -43,6 +48,48 @@ public class Utils {
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.alert_dialog_background);
 
         return dialog;
+    }
+
+    public static void shareApp(Context context) {
+        final String appPackageName = context.getPackageName();
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + appPackageName);
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        context.startActivity(shareIntent);
+    }
+
+    public static void openAppInPlayStore(Context context) {
+        final String appPackageName = context.getPackageName();
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+    public static double getNetSpeed(String urlStr) {
+        double downloadSpeed = 0.0;
+        try {
+            URL url = new URL("https://www.google.com");
+            URLConnection connection = url.openConnection();
+
+            long startTime = System.currentTimeMillis();
+            connection.connect();
+            long endTime = System.currentTimeMillis();
+
+            long fileSize = connection.getContentLength();
+
+            if (fileSize > 0) {
+                double downloadTime = (endTime - startTime) / 1000.0;
+                downloadSpeed = (fileSize / downloadTime) * 8 / 1000000;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return downloadSpeed;
     }
 
     public static String getImgURL(int resourceId) {

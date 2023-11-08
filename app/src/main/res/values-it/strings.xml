@@ -1,23 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
-
-    <string name="app_name" translatable="false">Doxy VPN</string>
-
-    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
-
-    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
-
-    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-
-    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
-
-    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-
-    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
-
-    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-
-    <string name="adapty_placement_id" translatable="false">tpid</string>
-
     <string name="connecting">Connessione</string>
 
     <string name="image">Immagine</string>
@@ -44,8 +25,6 @@
 
     <string name="starting">Di partenza</string>
 
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
     <string name="vpn_is_running">La VPN è in esecuzione. Per favore, interrompi prima la VPN.</string>
 
     <string name="launch_phase_0">Verifica della connessione Internet in corso…</string>
@@ -54,7 +33,7 @@
 
     <string name="launch_phase_2">Ricezione della configurazione remota…</string>
 
-    <string name="launch_phase_3">Accesso ai server...</string>
+    <string name="launch_phase_3">Accesso ai server…</string>
 
     <string name="launch_phase_4">Verifica del tuo abbonamento…</string>
 
@@ -99,5 +78,35 @@
     <string name="exit">Esci sull\'app</string>
 
     <string name="no_statistics_found_start_the_vpn_now">Nessuna statistica trovata. Avvia subito la VPN!</string>
+
+    <string name="region">Regione</string>
+
+    <string name="city">Città</string>
+
+    <string name="country">Paese</string>
+
+    <string name="speed_test">Test di velocità</string>
+
+    <string name="latency">Latenza</string>
+
+    <string name="start">Inizio</string>
+
+    <string name="stop">Fermare</string>
+
+    <string name="server">server</string>
+
+    <string name="time">Tempo</string>
+
+    <string name="connection_successful">Connessione riuscita</string>
+
+    <string name="connection_report">Rapporto di connessione</string>
+
+    <string name="rating_text">Ti piace la nostra app VPN gratuita?\nDacci una valutazione.</string>
+
+    <string name="share_with_your_friends">condividi con i tuoi amici</string>
+
+    <string name="limitless_fast_secure">Senza limiti, veloce e veloce sicuro</string>
+
+    <string name="share">Condividere</string>
 
 </resources>

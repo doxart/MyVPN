@@ -14,6 +14,8 @@ dependencyResolutionManagement {
         maven (url = "https://maven.google.com")
         maven ( url = "https://jitpack.io" )
         maven (url = "https://repository-achartengine.forge.cloudbees.com/snapshot/")
+
+        gradlePluginPortal()
     }
 }
 

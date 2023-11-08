@@ -38,12 +38,58 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:src="@drawable/ic_gem_24"
+            android:foreground="@drawable/ripple"
+            android:layout_gravity="end|center"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
+            app:tint="@color/primary"
+            android:layout_marginStart="5dp"
+            app:contentPadding="5dp"
+            android:id="@+id/premiumBT"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/ic_settings_24"
             android:foreground="@drawable/ripple"
             android:layout_gravity="end|center"
             app:tint="@color/colorWhite"
+            android:layout_marginStart="5dp"
             app:contentPadding="5dp"
             android:id="@+id/settingsBT"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_speed_gauge_24"
+            android:foreground="@drawable/ripple"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="end|center"
+            app:tint="@color/colorWhite"
+            app:contentPadding="5dp"
+            android:id="@+id/speedTestBT"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_share_24"
+            android:foreground="@drawable/ripple"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="end|center"
+            app:tint="@color/colorWhite"
+            app:contentPadding="5dp"
+            android:id="@+id/shareBT"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_location_pin_24"
+            android:foreground="@drawable/ripple"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="end|center"
+            app:tint="@color/colorWhite"
+            app:contentPadding="5dp"
+            android:id="@+id/locationBT"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 

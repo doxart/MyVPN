@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Doxy VPN</string>
 
-    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
+    <string name="admob_id" translatable="false">ca-app-pub-5937643397203975~8036074590</string>
 
     <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
     <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
@@ -27,7 +27,7 @@
     <string name="browser">Browser</string>
     <string name="settings">Settings</string>
     <string name="starting">Starting</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">fragment</string>
     <string name="vpn_is_running">VPN is running. Please stop VPN first.</string>
     <string name="launch_phase_0">Checking internet connection…</string>
     <string name="launch_phase_1">Bringing up settings…</string>
@@ -55,4 +55,21 @@
     <string name="try_again">Try Again</string>
     <string name="exit">Exit to App</string>
     <string name="no_statistics_found_start_the_vpn_now">No statistics found. Start the VPN now!</string>
+    <string name="lng_d" translatable="false">Lng: %s</string>
+    <string name="lat_d" translatable="false">Lat: %s</string>
+    <string name="region">Region</string>
+    <string name="city">City</string>
+    <string name="country">Country</string>
+    <string name="speed_test">Speed Test</string>
+    <string name="latency">Latency</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="server">Server</string>
+    <string name="time">Time</string>
+    <string name="connection_successful">Connection successful</string>
+    <string name="connection_report">Connection report</string>
+    <string name="rating_text">Do you like our free VPN app?\nGive us rating.</string>
+    <string name="share_with_your_friends">Share with your friends</string>
+    <string name="limitless_fast_secure"><![CDATA[Limitless, fast & secure]]></string>
+    <string name="share">Share</string>
 </resources>

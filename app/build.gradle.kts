@@ -19,8 +19,8 @@ android {
         applicationId = "com.doxart.ivpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 15
-        versionName = "1.0"
+        versionCode = 16
+        versionName = "0.0.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -60,7 +60,10 @@ dependencies {
 
     implementation ("androidx.room:room-runtime:2.6.0")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation("com.android.volley:volley:1.2.1")
     annotationProcessor ("androidx.room:room-compiler:2.6.0")
+
+    implementation ("org.osmdroid:osmdroid-android:6.1.17")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata:2.6.2")
@@ -79,6 +82,11 @@ dependencies {
     implementation ("io.adapty:android-ui:2.0.1")
 
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.3.0")
+    implementation ("com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0")
+
+    implementation ("fr.bmartel:jspeedtest:1.32.1")
+    implementation ("com.github.Gruzer:simple-gauge-android:0.3.1")
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.firebase:firebase-firestore:24.9.1")

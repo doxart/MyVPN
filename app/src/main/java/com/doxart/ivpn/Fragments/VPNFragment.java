@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
+import com.doxart.ivpn.Activities.ConnectionReportActivity;
 import com.doxart.ivpn.Activities.MainActivity;
 import com.doxart.ivpn.DB.ServerDB;
 import com.doxart.ivpn.Interfaces.ChangeServer;
@@ -317,7 +318,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
     public boolean stopVpn() {
         try {
             OpenVPNThread.stop();
-            context.stopService(new Intent(context, VPNCountdownTimer.class));
 
             status("connect");
 
@@ -362,7 +362,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
             OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
 
-
             b.vpnStatus.setText(getString(R.string.starting));
             vpnRunning = true;
         } catch (IOException | RemoteException e) {
@@ -379,11 +378,29 @@ public class VPNFragment extends Fragment implements ChangeServer {
                     vpnRunning = false;
                     OpenVPNService.setDefaultStatus();
 
+                    context.stopService(new Intent(context, VPNCountdownTimer.class));
+
+                    if (server != null) {
+                        Intent i = new Intent(context, ConnectionReportActivity.class);
+                        i.putExtra("isConnection", false);
+                        i.putExtra("sessionM", m);
+                        i.putExtra("sessionS", s);
+                        startActivity(i);
+                        ConnectionReportActivity.server = server;
+                    }
+
                     break;
                 case "CONNECTED":
                     vpnRunning = true;
                     status("connected");
                     context.startService(new Intent(context, VPNCountdownTimer.class));
+
+                    if (server != null) {
+                        Intent i = new Intent(context, ConnectionReportActivity.class);
+                        i.putExtra("isConnection", true);
+                        startActivity(i);
+                        ConnectionReportActivity.server = server;
+                    }
                     break;
                 case "WAIT":
                     status("connecting");
@@ -470,20 +487,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 e.printStackTrace();
             }
 
-            try {
-
-                String duration = intent.getStringExtra("duration");
-                String lastPacketReceive = intent.getStringExtra("lastPacketReceive");
-                double byteIn = intent.getDoubleExtra("byteIn", 0);
-                double byteOut = intent.getDoubleExtra("byteOut", 0);
-
-                if (duration == null) duration = "00:00:00";
-                if (lastPacketReceive == null) lastPacketReceive = "0";
-                updateConnectionStatus(duration, lastPacketReceive, byteIn, byteOut);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             if (intent.getAction().equals("usage_data_updated")) {
                 int m = intent.getIntExtra("usageMinutes", 0);
                 int s = intent.getIntExtra("usageSeconds", 0);
@@ -492,14 +495,16 @@ public class VPNFragment extends Fragment implements ChangeServer {
         }
     };
 
-    public void updateConnectionStatus(String duration, String lastPacketReceive, double byteIn, double byteOut) {
-        //if (vpnRunning) b.durationTxt.setText(duration);
-    }
-
-    public void updateConnectionStatus(int m, int s) {
-        int totalSeconds = m * 60 + s;
-        String formattedTime = String.format("%02d.%02d", totalSeconds / 60, totalSeconds % 60);
-        if (vpnRunning) b.durationTxt.setText(formattedTime);
+    int m = 0;
+    int s = 0;
+    public void updateConnectionStatus(int mm, int ss) {
+        int totalSeconds = mm * 60 + ss;
+        m = totalSeconds / 60;
+        s = totalSeconds % 60;
+        String formattedTime = String.format("%02d.%02d", m, s);
+        if (vpnRunning) {
+            b.durationTxt.setText(formattedTime);
+        }
     }
 
     public void showToast(String message) {

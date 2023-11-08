@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
 
         if (!SharePrefs.getInstance(this).getBoolean("premium"))
             startActivity(new Intent(this, PaywallActivity.class));
+        else b.appbar.premiumBT.setVisibility(View.GONE);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -127,7 +128,8 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         adjustMargin();
         if (SharePrefs.getInstance(this).isDynamicBackground())
             setBackground();
-        createFragments();
+
+        init();
     }
 
     private void setBackground() {
@@ -159,6 +161,18 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         });
     }
 
+    private void init() {
+        createFragments();
+
+        b.appbar.settingsBT.setOnClickListener(v -> openSettings());
+        b.appbar.premiumBT.setOnClickListener(v -> startActivity(new Intent(this, PaywallActivity.class)));
+        b.appbar.shareBT.setOnClickListener(v -> Utils.shareApp(this));
+        b.appbar.locationBT.setOnClickListener(v -> startActivity(new Intent(this, MyLocationActivity.class)));
+        b.appbar.speedTestBT.setOnClickListener(v -> startActivity(new Intent(this, SpeedTestActivity.class)));
+    }
+
+
+
     private void createFragments() {
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), getLifecycle());
 
@@ -170,8 +184,6 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         b.mainPager.setAdapter(vpAdapter);
 
         b.mainPager.setCurrentItem(1, false);
-
-        b.appbar.settingsBT.setOnClickListener(v -> openSettings());
 
         b.mainNav.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navVpn) {

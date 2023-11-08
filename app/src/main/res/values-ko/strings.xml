@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
 
-    <string name="app_name" translatable="false">Doxy VPN</string>
-
-    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
-
-    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
-
-    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-
-    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
-
-    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-
-    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
-
-    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-
-    <string name="adapty_placement_id" translatable="false">tpid</string>
-
     <string name="connecting">연결 중</string>
 
     <string name="image">영상</string>
@@ -43,8 +25,6 @@
     <string name="settings">설정</string>
 
     <string name="starting">시작</string>
-
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
     <string name="vpn_is_running">VPN이 실행 중입니다. 먼저 VPN을 중지하세요.</string>
 
@@ -99,5 +79,35 @@
     <string name="exit">앱으로 나가기</string>
 
     <string name="no_statistics_found_start_the_vpn_now">통계를 찾을 수 없습니다. 지금 VPN을 시작해보세요!</string>
+
+    <string name="region">지역</string>
+
+    <string name="city">도시</string>
+
+    <string name="country">국가</string>
+
+    <string name="speed_test">속도 테스트</string>
+
+    <string name="latency">지연 시간</string>
+
+    <string name="start">시작</string>
+
+    <string name="stop">멈추다</string>
+
+    <string name="server">섬기는 사람</string>
+
+    <string name="time">시간</string>
+
+    <string name="connection_successful">연결 성공</string>
+
+    <string name="connection_report">연결 보고서</string>
+
+    <string name="rating_text">무료 VPN 앱이 마음에 드시나요?\n우리에게 평가를 주십시오.</string>
+
+    <string name="share_with_your_friends">친구들과 공유하세요</string>
+
+    <string name="limitless_fast_secure">무한하고 빠르며 &amp; 안전한</string>
+
+    <string name="share">공유하다</string>
 
 </resources>

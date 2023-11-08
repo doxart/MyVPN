@@ -1,103 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-
-    <string name="app_name" translatable="false">Doxy VPN</string>
-
-    <string name="admob_id">ca-app-pub-5937643397203975~8036074590</string>
-
-    <string name="banner_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
-
-    <string name="banner_test_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-
-    <string name="rewarded_id" translatable="false">ca-app-pub-5937643397203975/6301989399</string>
-
-    <string name="rewarded_test_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-
-    <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
-
-    <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-
-    <string name="adapty_placement_id" translatable="false">tpid</string>
-
+<resources>
     <string name="connecting">Conectando</string>
-
     <string name="image">imagen</string>
-
     <string name="disconnected">Desconectado</string>
-
     <string name="tap_to_connect">Toca para conectarte</string>
-
     <string name="connected">Conectado</string>
-
     <string name="try_different_server">Pruebe con un servidor diferente</string>
-
     <string name="loading">Cargando..</string>
-
     <string name="invalid_device">Dispositivo no válido</string>
-
     <string name="authenticating">Autenticación</string>
-
     <string name="vpn">vpn</string>
-
     <string name="browser">Navegador</string>
-
     <string name="settings">Ajustes</string>
-
     <string name="starting">A partir de</string>
-
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
     <string name="vpn_is_running">La VPN está funcionando. Primero detenga la VPN.</string>
-
-    <string name="launch_phase_0">Comprobando la conexión a Internet...</string>
-
-    <string name="launch_phase_1">Apareciendo configuración...</string>
-
+    <string name="launch_phase_0">Comprobando la conexión a Internet…</string>
+    <string name="launch_phase_1">Apareciendo configuración…</string>
     <string name="launch_phase_2">Recibiendo configuración remota…</string>
-
     <string name="launch_phase_3">Accediendo a los servidores…</string>
-
-    <string name="launch_phase_4">Comprobando tu suscripción...</string>
-
+    <string name="launch_phase_4">Comprobando tu suscripción…</string>
     <string name="launch_phase_5">Hecho</string>
-
     <string name="auto_ms_format">Automático . %s</string>
-
     <string name="premium">De primera calidad</string>
-
     <string name="basic">Básico</string>
-
     <string name="location">Ubicación</string>
-
     <string name="search_location">Buscar ubicación</string>
-
     <string name="connection">Conexión</string>
-
     <string name="statistics">Estadísticas</string>
-
     <string name="dynamic_background">Fondo dinámico</string>
-
     <string name="auto_connect">Autoconectar</string>
-
     <string name="usage">Uso</string>
-
     <string name="icon">icono</string>
-
     <string name="yes">Sí</string>
-
     <string name="no">No</string>
-
     <string name="later">Más tarde</string>
-
     <string name="no_connection">Sin conexión</string>
-
     <string name="no_connection_detail">No tienes conexión a Internet. Por favor verifique sus conexiones e inténtelo nuevamente.</string>
-
     <string name="go_network_settings">Ir a configuración de red</string>
-
     <string name="try_again">Intentar otra vez</string>
-
     <string name="exit">Salir a la aplicación</string>
-
     <string name="no_statistics_found_start_the_vpn_now">No se encontraron estadísticas. ¡Inicie la VPN ahora!</string>
-
+    <string name="region">Región</string>
+    <string name="city">Ciudad</string>
+    <string name="country">País</string>
+    <string name="speed_test">Prueba de velocidad</string>
+    <string name="latency">Latencia</string>
+    <string name="start">Comenzar</string>
+    <string name="stop">Detener</string>
+    <string name="server">Servidor</string>
+    <string name="time">Tiempo</string>
+    <string name="connection_successful">Conexión exitosa</string>
+    <string name="connection_report">Informe de conexión</string>
+    <string name="rating_text">¿Te gusta nuestra aplicación VPN gratuita?\nDanos calificación.</string>
+    <string name="share_with_your_friends">compartir con tus amigos</string>
+    <string name="limitless_fast_secure">Ilimitado, rápido y fácil. seguro</string>
+    <string name="share">Compartir</string>
 </resources>
