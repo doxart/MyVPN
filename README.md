@@ -24,7 +24,7 @@ We're excited to share this project with you and welcome your feedback, bug repo
 1. Clone this repository.
 2. Build the project using Android Studio.
 3. Install the app on your Android device.
-4. Connect to a VPN server and enjoy a secure browsing experience.
+4. Install firebase and setup app (Important).
 
 ### Getting Started with Firebase Integration:
 
