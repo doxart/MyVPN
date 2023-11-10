@@ -2,7 +2,7 @@
 
 ![Doxy VPN](https://i.ibb.co/NNfkBts/Frame-100.png)  
 
-![Doxy VPN](https://play.google.com/store/apps/details?id=com.doxart.ivpn)
+![Play Store](https://play.google.com/store/apps/details?id=com.doxart.ivpn)
 
 ## Doxy VPN
 
