@@ -103,7 +103,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
         super.onCreate();
 
         MobileAds.initialize(this);
-        Adapty.activate(this, "Insert your Adapty App Key", false, SharePrefs.getInstance(this).getUid());
+        Adapty.activate(this, "Insert your Adapty App Key", false);
      }
      }
      ```
