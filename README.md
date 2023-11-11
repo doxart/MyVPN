@@ -2,7 +2,6 @@
 
 ![Doxy VPN](https://i.ibb.co/NNfkBts/Frame-100.png)  
 
-[Play Store](https://play.google.com/store/apps/details?id=com.doxart.ivpn)
 [<img src="https://www.freepnglogos.com/uploads/play-store-logo-png/play-store-logo-nisi-filters-australia-11.png">](https://play.google.com/store/apps/details?id=com.doxart.ivpn)
 
 ## Doxy VPN
