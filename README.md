@@ -95,6 +95,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
 
 8. **Add Adapty Paywall SDK (Optional)**:
    - Create Adapty account and follow documentation about installing app.
+   - Visit the [Adapty](https://docs.adapty.io/docs/what-is-adapty).
    - Create Application class to app.
      ```java
      public class MyApplication extends Application {
