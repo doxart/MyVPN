@@ -74,11 +74,11 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
    - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
      ```xml
      <resources
-          <string name="admob_id" translatable="false">ca-app-pub-5937643397203975~8036074590</string>
+          <string name="admob_id" translatable="false">Insert your banner App ID</string>
      
-          <string name="banner_id">Insert your banner ad id</string>
-          <string name="rewarded_id">Insert your rewarded ad id</string>
-          <string name="interstitial_id">Insert your interstitial ad id</string>
+          <string name="banner_id">Insert your banner Ad ID</string>
+          <string name="rewarded_id">Insert your rewarded Ad ID</string>
+          <string name="interstitial_id">Insert your interstitial Ad ID</string>
      </resources>
      ```
    - Create Application class to app.
@@ -116,7 +116,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
    - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
       ```xml
      <resources
-          <string name="adapty_placement_id">tpid</string>
+          <string name="adapty_placement_id">Insert your Adapty Placement ID</string>
      </resources>
      ```
 
