@@ -20,7 +20,6 @@ import com.adapty.models.AdaptyViewConfiguration;
 import com.adapty.ui.AdaptyPaywallInsets;
 import com.adapty.ui.AdaptyPaywallView;
 import com.adapty.ui.AdaptyUI;
-import com.adapty.ui.internal.Products;
 import com.adapty.ui.listeners.AdaptyUiEventListener;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.PaywallViewUtils;
