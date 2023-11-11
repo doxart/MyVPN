@@ -74,7 +74,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
    - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
      ```xml
      <resources
-          <string name="admob_id" translatable="false">Insert your banner App ID</string>
+          <string name="admob_id" translatable="false">Insert your Admob App ID</string>
      
           <string name="banner_id">Insert your banner Ad ID</string>
           <string name="rewarded_id">Insert your rewarded Ad ID</string>
