@@ -115,9 +115,23 @@
                     android:layout_centerVertical="true"
                     app:drawableTint="@color/colorWhite"
                     android:gravity="center"
+                    android:id="@+id/acText"
                     app:drawableStartCompat="@drawable/ic_web_24"
                     android:drawablePadding="10dp"
                     android:text="@string/auto_connect"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:id="@+id/cStatusTxt"
+                    android:background="@drawable/card_premium_bg"
+                    android:text="@string/premium"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/acText"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="1dp"
+                    android:layout_marginStart="5dp"/>
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:layout_width="wrap_content"

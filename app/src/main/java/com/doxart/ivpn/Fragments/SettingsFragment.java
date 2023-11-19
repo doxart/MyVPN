@@ -2,6 +2,7 @@ package com.doxart.ivpn.Fragments;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -17,6 +18,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.doxart.ivpn.Activities.MainActivity;
+import com.doxart.ivpn.Activities.PaywallActivity;
 import com.doxart.ivpn.Adapter.UsageAdapter;
 import com.doxart.ivpn.BootCompleteReceiver;
 import com.doxart.ivpn.DB.Usage;
@@ -102,8 +104,13 @@ public class SettingsFragment extends Fragment {
 
         b.autoConnectSwitch.setChecked(sharePrefs.isAutoConnect());
         b.autoConnectSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharePrefs.setAutoConnect(isChecked);
-            setAutoConnect(isChecked);
+            if (sharePrefs.getBoolean("premium")) {
+                sharePrefs.setAutoConnect(isChecked);
+                setAutoConnect(isChecked);
+            } else {
+                buttonView.setChecked(sharePrefs.isAutoConnect());
+                startActivity(new Intent(context, PaywallActivity.class).putExtra("timer", 0));
+            }
         });
     }
 
