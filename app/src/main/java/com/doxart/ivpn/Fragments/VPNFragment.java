@@ -289,7 +289,9 @@ public class VPNFragment extends Fragment implements ChangeServer {
             return;
         }
 
-        sharePrefs.putServer(server);
+        if (server != null) {
+            sharePrefs.putServer(server);
+        }
 
         updateCurrentServerLay(server, true);
 

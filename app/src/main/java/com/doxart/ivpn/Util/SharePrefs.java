@@ -101,11 +101,14 @@ public class SharePrefs {
     }
 
     public void putServer(ServerModel server) {
-        sharedPreferences.edit().putString("serverOVPN", server.getOvpn()).apply();
-        sharedPreferences.edit().putString("serverCountry", server.getCountry()).apply();
-        sharedPreferences.edit().putString("serverUsername", server.getOvpnUserName()).apply();
-        sharedPreferences.edit().putString("serverPassword", server.getOvpnUserPassword()).apply();
-        sharedPreferences.edit().putBoolean("serverIsPremium", server.isPremium()).apply();
+        if (server.getOvpn() == null & server.getCountry() != null) server.setOvpn(server.getCountry() + ".ovpn");
+        if (server.getOvpn() != null & server.getCountry() != null & server.getOvpnUserName() != null & server.getOvpnUserPassword() != null) {
+            sharedPreferences.edit().putString("serverOVPN", server.getOvpn()).apply();
+            sharedPreferences.edit().putString("serverCountry", server.getCountry()).apply();
+            sharedPreferences.edit().putString("serverUsername", server.getOvpnUserName()).apply();
+            sharedPreferences.edit().putString("serverPassword", server.getOvpnUserPassword()).apply();
+            sharedPreferences.edit().putBoolean("serverIsPremium", server.isPremium()).apply();
+        }
     }
 
     public ServerModel getServer() {
