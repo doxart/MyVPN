@@ -1,6 +1,8 @@
 package com.doxart.ivpn.Fragments;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.doxart.ivpn.Activities.MainActivity;
 import com.doxart.ivpn.Adapter.UsageAdapter;
+import com.doxart.ivpn.BootCompleteReceiver;
 import com.doxart.ivpn.DB.Usage;
 import com.doxart.ivpn.DB.UsageViewModel;
 import com.doxart.ivpn.Util.SharePrefs;
@@ -98,6 +101,17 @@ public class SettingsFragment extends Fragment {
         b.dynamicBgSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sharePrefs.setDynamicBackground(isChecked));
 
         b.autoConnectSwitch.setChecked(sharePrefs.isAutoConnect());
-        b.autoConnectSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sharePrefs.setAutoConnect(isChecked));
+        b.autoConnectSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            sharePrefs.setAutoConnect(isChecked);
+            setAutoConnect(isChecked);
+        });
+    }
+
+    private void setAutoConnect(boolean on) {
+        int flag = (on ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
+
+        ComponentName comp = new ComponentName(context, BootCompleteReceiver.class);
+
+        context.getPackageManager().setComponentEnabledSetting(comp, flag, PackageManager.DONT_KILL_APP);
     }
 }

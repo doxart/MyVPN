@@ -41,6 +41,7 @@
             android:src="@drawable/ic_gem_24"
             android:foreground="@drawable/ripple"
             android:layout_gravity="end|center"
+            android:background="@color/colorWhite"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
             app:tint="@color/primary"
             android:layout_marginStart="5dp"

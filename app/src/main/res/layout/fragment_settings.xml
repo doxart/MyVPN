@@ -64,7 +64,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/card_premium_bg"
+                android:background="@color/primary_dark"
                 android:padding="20dp"
                 android:orientation="vertical"
                 android:gravity="center|start"
@@ -104,7 +104,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/card_bg"
+                android:background="@color/colorPrimary"
                 android:padding="20dp"
                 android:clipToPadding="false"
                 android:layout_margin="10dp">
@@ -130,14 +130,14 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     app:trackTint="@color/plat1"
-                    app:thumbTint="@color/primary"/>
+                    app:thumbTint="@color/colorWhite"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/card_bg"
+                android:background="@color/colorPrimary"
                 android:padding="20dp"
                 android:clipToPadding="false"
                 android:layout_margin="10dp">
@@ -163,7 +163,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     app:trackTint="@color/plat1"
-                    app:thumbTint="@color/primary"/>
+                    app:thumbTint="@color/colorWhite"/>
 
             </RelativeLayout>
 

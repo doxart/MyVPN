@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.VPNFragment">
 
     <LinearLayout
@@ -44,15 +45,14 @@
 
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.ads.nativetemplates.TemplateView
         android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/countryLay"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_id"/>
+        app:gnt_template_type="@layout/gnt_small_template_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include
         layout="@layout/country_view"

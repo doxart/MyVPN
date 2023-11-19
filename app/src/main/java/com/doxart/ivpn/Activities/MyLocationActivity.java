@@ -17,7 +17,12 @@ import com.doxart.ivpn.R;
 import com.doxart.ivpn.RetroFit.GetIPDataService;
 import com.doxart.ivpn.RetroFit.MyIP;
 import com.doxart.ivpn.RetroFit.RetrofitClient;
+import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.databinding.ActivityMyLocationBinding;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -80,11 +85,30 @@ public class MyLocationActivity extends AppCompatActivity {
             return false;
         });
 
+        if (!SharePrefs.getInstance(this).getBoolean("premium")) {
+            if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
+        }
+
         b.closeBT.setOnClickListener(v -> finish());
         b.refreshBT.setOnClickListener(v -> getIPLocation());
 
         getIPLocation();
     }
+
+    private void loadAds() {
+        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_id))
+                .forNativeAd(nativeAd -> {
+                    NativeTemplateStyle styles = new
+                            NativeTemplateStyle.Builder().build();
+                    TemplateView template = b.myTemplate;
+                    template.setStyles(styles);
+                    template.setNativeAd(nativeAd);
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
 
     private void getIPLocation() {
         GetIPDataService service = RetrofitClient.getRetrofitInstance().create(GetIPDataService.class);

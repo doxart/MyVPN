@@ -3,6 +3,8 @@ package com.doxart.ivpn.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.doxart.ivpn.Model.ServerModel;
+
 import java.util.UUID;
 
 public class SharePrefs {
@@ -96,5 +98,24 @@ public class SharePrefs {
 
     public void setAutoConnect(Boolean val) {
         sharedPreferences.edit().putBoolean("autoConnect", val).apply();
+    }
+
+    public void putServer(ServerModel server) {
+        sharedPreferences.edit().putString("serverOVPN", server.getOvpn()).apply();
+        sharedPreferences.edit().putString("serverCountry", server.getCountry()).apply();
+        sharedPreferences.edit().putString("serverUsername", server.getOvpnUserName()).apply();
+        sharedPreferences.edit().putString("serverPassword", server.getOvpnUserPassword()).apply();
+        sharedPreferences.edit().putBoolean("serverIsPremium", server.isPremium()).apply();
+    }
+
+    public ServerModel getServer() {
+        ServerModel s = new ServerModel();
+        s.setOvpn(sharedPreferences.getString("serverOVPN", ""));
+        s.setCountry(sharedPreferences.getString("serverCountry", ""));
+        s.setOvpnUserName(sharedPreferences.getString("serverUsername", ""));
+        s.setOvpnUserPassword(sharedPreferences.getString("serverPassword", ""));
+        s.setPremium(sharedPreferences.getBoolean("serverIsPremium", false));
+
+        return s;
     }
 }

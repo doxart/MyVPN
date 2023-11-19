@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
-import android.net.Uri;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -29,7 +27,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.bumptech.glide.Glide;
 import com.doxart.ivpn.Activities.ConnectionReportActivity;
 import com.doxart.ivpn.Activities.MainActivity;
-import com.doxart.ivpn.BuildConfig;
 import com.doxart.ivpn.DB.ServerDB;
 import com.doxart.ivpn.Interfaces.ChangeServer;
 import com.doxart.ivpn.Model.ServerModel;
@@ -38,7 +35,10 @@ import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.Util.VPNCountdownTimer;
 import com.doxart.ivpn.databinding.FragmentVPNBinding;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
@@ -234,6 +234,20 @@ public class VPNFragment extends Fragment implements ChangeServer {
         }
     }
 
+    private void loadAds() {
+        AdLoader adLoader = new AdLoader.Builder(context, getString(R.string.native_id))
+                .forNativeAd(nativeAd -> {
+                    NativeTemplateStyle styles = new
+                            NativeTemplateStyle.Builder().build();
+                    TemplateView template = b.adView;
+                    template.setStyles(styles);
+                    template.setNativeAd(nativeAd);
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
 
     int initTry = 0;
     private void init() {
@@ -275,10 +289,12 @@ public class VPNFragment extends Fragment implements ChangeServer {
             return;
         }
 
+        sharePrefs.putServer(server);
+
         updateCurrentServerLay(server, true);
 
         if (!premium) {
-            if (sharePrefs.getBoolean("showBannerAds")) b.adView.loadAd(new AdRequest.Builder().build());
+            if (sharePrefs.getBoolean("showBannerAds")) loadAds();
         }
 
         b.vpnBtn.getRoot().setOnClickListener(v -> {

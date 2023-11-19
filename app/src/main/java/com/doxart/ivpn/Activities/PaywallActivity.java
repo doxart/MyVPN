@@ -1,8 +1,13 @@
 package com.doxart.ivpn.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -21,16 +26,9 @@ import com.adapty.ui.AdaptyPaywallInsets;
 import com.adapty.ui.AdaptyPaywallView;
 import com.adapty.ui.AdaptyUI;
 import com.adapty.ui.listeners.AdaptyUiEventListener;
-import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.PaywallViewUtils;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.databinding.ActivityPaywallBinding;
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.util.List;
 
@@ -38,9 +36,6 @@ public class PaywallActivity extends AppCompatActivity {
 
     private final String TAG = "APPTAG";
     ActivityPaywallBinding b;
-
-    InterstitialAd mInterstitialAd;
-    int showTry = 0;
 
     boolean isPremium = false;
 
@@ -65,8 +60,10 @@ public class PaywallActivity extends AppCompatActivity {
         init();
     }
 
+    int iTimer = 3000;
+
     private void init() {
-        buildInterstitial();
+        b.closeBT.setOnClickListener(v -> onBackPressed());
 
         b.payFrame.removeAllViews();
 
@@ -74,30 +71,52 @@ public class PaywallActivity extends AppCompatActivity {
         List<AdaptyPaywallProduct> products = PaywallViewUtils.getInstance().getPaywallHolder().getProducts();
         AdaptyViewConfiguration viewConfiguration = PaywallViewUtils.getInstance().getPaywallHolder().getViewConfiguration();
 
+        iTimer = getIntent().getIntExtra("timer", 3000);
+
         if (paywall != null & products != null & viewConfiguration != null) {
             getInsets(paywall, products, viewConfiguration);
-        } else finish();
+            new CountDownTimer(iTimer, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    b.closeBTCounter.setText(String.valueOf(millisUntilFinished / 1000));
+                }
+
+                @Override
+                public void onFinish() {
+                    b.closeBT.setVisibility(View.VISIBLE);
+                    b.closeBTCounter.setVisibility(View.GONE);
+                }
+            }.start();
+        } else onBackPressed();
     }
 
     private void getInsets(AdaptyPaywall paywall, List<AdaptyPaywallProduct> products, AdaptyViewConfiguration viewConfiguration) {
         ViewCompat.setOnApplyWindowInsetsListener(b.getRoot(), (v, insets) -> {
-            final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top; // in px
-            final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom; // in px
+            final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+            final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
 
             int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-            if (paywall != null) {
-                b.payFrame.setEventListener(eventListener);
-                b.payFrame.showPaywall(paywall, products,
-                        viewConfiguration,
-                        AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
+            try {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) b.closeBT.getLayoutParams();
+                ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) b.closeBTCounter.getLayoutParams();
+                params.setMargins(statusBarHeight, pxToDp + statusBarHeight, 0, 0);
+                params1.setMargins(statusBarHeight, pxToDp + statusBarHeight, 0, 0);
 
-                Adapty.logShowPaywall(paywall);
+                b.closeBT.setLayoutParams(params);
+                b.closeBTCounter.setLayoutParams(params);
+                b.closeBT.requestLayout();
+                b.closeBTCounter.requestLayout();
+            } catch (Exception e) {
+                Log.d(TAG, "getInsets: " + e);
             }
 
-            //b.payFrame.setPadding(0, statusBarHeight, 0, navigationBarHeight + pxToDp);
-            //b.payFrame.addView(paywallView);
-            //Adapty.logShowPaywall(paywall);
+            b.payFrame.setEventListener(eventListener);
+            b.payFrame.showPaywall(paywall, products,
+                    viewConfiguration,
+                    AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
+
+            Adapty.logShowPaywall(paywall);
 
             return WindowInsetsCompat.CONSUMED;
         });
@@ -107,9 +126,7 @@ public class PaywallActivity extends AppCompatActivity {
         @Override
         public void onActionPerformed(@NonNull AdaptyUI.Action action, @NonNull AdaptyPaywallView adaptyPaywallView) {
             if (action instanceof AdaptyUI.Action.Close) {
-                if (sharePrefs.getBoolean("showPaywallCloseAd")) {
-                    showInterstitial();
-                } else onBackPressed();
+                onBackPressed();
             }
             Log.d(TAG, "onActionPerformed: " + action);
         }
@@ -168,52 +185,11 @@ public class PaywallActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         sharePrefs.putBoolean("premium", isPremium);
+
+        Intent data = new Intent();
+        data.putExtra("showAD", sharePrefs.getBoolean("showPaywallCloseAd"));
+        setResult(Activity.RESULT_OK, data);
+
         super.onBackPressed();
-    }
-
-    private void buildInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        InterstitialAd.load(this, getString(R.string.interstitial_id), adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        mInterstitialAd = interstitialAd;
-                        Log.i(TAG, "onAdLoaded");
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-
-                        Log.d(TAG, loadAdError.toString());
-                        mInterstitialAd = null;
-                    }
-                });
-    }
-
-    private void showInterstitial() {
-        if (mInterstitialAd != null) {
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                    super.onAdFailedToShowFullScreenContent(adError);
-                    showTry++;
-                    if (showTry < 3) showInterstitial();
-                    else onBackPressed();
-                }
-
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    onBackPressed();
-                }
-            });
-
-            mInterstitialAd.show(this);
-        } else {
-            showTry++;
-            if (showTry < 3) showInterstitial();
-            else onBackPressed();
-        }
     }
 }

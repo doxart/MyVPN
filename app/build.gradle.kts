@@ -19,8 +19,8 @@ android {
         applicationId = "com.doxart.ivpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 18
-        versionName = "1.1"
+        versionCode = 19
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -61,6 +61,7 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.6.0")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation("com.android.volley:volley:1.2.1")
+    implementation(project(mapOf("path" to ":nativetemplates")))
     annotationProcessor ("androidx.room:room-compiler:2.6.0")
 
     implementation ("org.osmdroid:osmdroid-android:6.1.17")
@@ -91,7 +92,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
     implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 

@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,16 +36,26 @@ import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.Util.ViewModelHolder;
 import com.doxart.ivpn.databinding.ActivityMainBinding;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements NavItemClickListener {
+    private final String TAG = "MAIN_ACTIVITY";
     private static MainActivity instance;
     ActivityMainBinding b;
 
     WindowInsetsCompat insetsCompat;
 
     Dialog connectionDialog;
+
+    InterstitialAd mInterstitialAd;
+    int showTry = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +101,16 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         }
     });
 
+    private final ActivityResultLauncher<Intent> activityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            if (o.getData() != null) {
+                if (!SharePrefs.getInstance(MainActivity.this).getBoolean("premium") &
+                        o.getData().getBooleanExtra("showAD", false)) showInterstitial();
+            }
+        }
+    });
+
     private void showConnectionDialog() {
         connectionDialog = Utils.askQuestion(this, getString(R.string.no_connection), getString(R.string.no_connection_detail), getString(R.string.go_network_settings),
                 getString(R.string.try_again), getString(R.string.exit), null, false, new OnAnswerListener() {
@@ -113,17 +134,18 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     }
 
     private void inflate() {
-
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
+        buildInterstitial();
+
         if (!SharePrefs.getInstance(this).getBoolean("premium"))
-            startActivity(new Intent(this, PaywallActivity.class));
+            activityLauncher.launch(new Intent(this, PaywallActivity.class).putExtra("timer", 3000));
         else b.appbar.premiumBT.setVisibility(View.GONE);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) resultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
 
         adjustMargin();
         if (SharePrefs.getInstance(this).isDynamicBackground())
@@ -133,12 +155,18 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     }
 
     private void setBackground() {
-        int[] bg = new int[] {R.drawable.main_background1, R.drawable.main_background2, R.drawable.main_background3, R.drawable.main_background4};
+        int[] bg = new int[] {R.drawable.main_background1, R.drawable.main_background2,
+                R.drawable.main_background3, R.drawable.main_background4,
+                R.drawable.main_background5, R.drawable.main_background6,
+                R.drawable.main_background7, R.drawable.main_background7,
+                R.drawable.main_background1, R.drawable.main_background2,
+                R.drawable.main_background3, R.drawable.main_background4,
+                R.drawable.main_background5, R.drawable.main_background6};
 
         b.getRoot().setBackgroundResource(bg[new Random().nextInt(bg.length-1)]);
     }
 
-    private final ActivityResultLauncher<String> resultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), o -> {});
+    private final ActivityResultLauncher<String> permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), o -> {});
 
     private void adjustMargin() {
         ViewCompat.setOnApplyWindowInsetsListener(b.getRoot(), (v, insets) -> {
@@ -165,13 +193,11 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         createFragments();
 
         b.appbar.settingsBT.setOnClickListener(v -> openSettings());
-        b.appbar.premiumBT.setOnClickListener(v -> startActivity(new Intent(this, PaywallActivity.class)));
+        b.appbar.premiumBT.setOnClickListener(v -> activityLauncher.launch(new Intent(this, PaywallActivity.class).putExtra("timer", 0)));
         b.appbar.shareBT.setOnClickListener(v -> Utils.shareApp(this));
         b.appbar.locationBT.setOnClickListener(v -> startActivity(new Intent(this, MyLocationActivity.class)));
-        b.appbar.speedTestBT.setOnClickListener(v -> startActivity(new Intent(this, SpeedTestActivity.class)));
+        b.appbar.speedTestBT.setOnClickListener(v -> activityLauncher.launch(new Intent(this, SpeedTestActivity.class)));
     }
-
-
 
     private void createFragments() {
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), getLifecycle());
@@ -237,6 +263,45 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     public void setInsetsCompat(WindowInsetsCompat insetsCompat) {
         this.insetsCompat = insetsCompat;
     }
+
+    private void buildInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, getString(R.string.interstitial_id), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+
+                        Log.d(TAG, loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
+    }
+
+    private void showInterstitial() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    super.onAdFailedToShowFullScreenContent(adError);
+                    showTry++;
+                    if (showTry < 3) showInterstitial();
+                }
+            });
+
+            mInterstitialAd.show(this);
+        } else {
+            showTry++;
+            if (showTry < 3) showInterstitial();
+        }
+    }
+
 
     public static MainActivity getInstance() {
         return instance;

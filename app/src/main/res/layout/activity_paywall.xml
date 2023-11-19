@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.adapty.ui.AdaptyPaywallView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/payFrame"
-    tools:context=".Activities.PaywallActivity"/>
+    tools:context=".Activities.PaywallActivity">
+
+    <com.adapty.ui.AdaptyPaywallView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/payFrame"
+        tools:context=".Activities.PaywallActivity"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
+        android:id="@+id/closeBT"
+        android:visibility="gone"
+        android:background="@color/plat1"
+        app:tint="@color/colorWhite"
+        app:contentPadding="8dp"
+        android:src="@drawable/ic_close_24"/>
+
+    <TextView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:text="3"
+        android:id="@+id/closeBTCounter"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/oval_shape"
+        android:gravity="center"/>
+
+</RelativeLayout>

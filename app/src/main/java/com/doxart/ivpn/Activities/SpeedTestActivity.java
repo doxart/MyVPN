@@ -1,8 +1,11 @@
 package com.doxart.ivpn.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.doxart.ivpn.R;
+import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.databinding.ActivitySpeedTestBinding;
 import com.ekn.gruzer.gaugelibrary.Range;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
 
 import java.text.DecimalFormat;
 
@@ -41,6 +49,20 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         init();
     }
 
+    private void loadAds() {
+        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_id))
+                .forNativeAd(nativeAd -> {
+                    NativeTemplateStyle styles = new
+                            NativeTemplateStyle.Builder().build();
+                    TemplateView template = findViewById(R.id.my_template);
+                    template.setStyles(styles);
+                    template.setNativeAd(nativeAd);
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
     private void adjustMargins() {
         int statusBarHeight = MainActivity.getInstance().getInsetsCompat().getInsets(WindowInsetsCompat.Type.statusBars()).top;
         int navigationBarHeight = MainActivity.getInstance().getInsetsCompat().getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
@@ -48,7 +70,7 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
         b.appbar.setPadding(0, statusBarHeight, 0, 0);
-        b.relativeView.setPaddingRelative(pxToDp, pxToDp, pxToDp, navigationBarHeight + pxToDp);
+        b.getRoot().setPaddingRelative(0, 0, 0, navigationBarHeight + pxToDp);
     }
 
     private void init() {
@@ -56,8 +78,12 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
 
         setupGauge();
 
+        if (!SharePrefs.getInstance(this).getBoolean("premium")) {
+            if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
+        }
+
         b.startTestBT.setOnClickListener(v -> {
-            b.startTestBT.setText(getString(R.string.stop));
+            b.startTestBT.setVisibility(View.GONE);
             new Thread(this::getNetSpeed).start();
         });
     }
@@ -86,11 +112,15 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         b.speedGauge.setMaxValue(150d);
         b.speedGauge.setValue(0d);
 
-        b.speedGauge.setValueColor(ContextCompat.getColor(this, R.color.colorWhite));
+        b.speedGauge.setValueColor(ContextCompat.getColor(this, android.R.color.transparent));
     }
 
+    int test = 0;
     private void getNetSpeed() {
+        test = 99;
         SpeedTestSocket speedTestSocket = new SpeedTestSocket();
+
+        b.speedGauge.setValueColor(ContextCompat.getColor(this, R.color.colorWhite));
 
         startTime = System.currentTimeMillis();
         speedTestSocket.addSpeedTestListener(this);
@@ -102,6 +132,9 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         float r = report.getTransferRateBit().floatValue() / 1000000;
         runOnUiThread(() -> {
             b.speedGauge.setValue(Math.floor(r));
+
+            b.startTestBT.setVisibility(View.VISIBLE);
+            b.speedGauge.setValueColor(ContextCompat.getColor(this, android.R.color.transparent));
 
             b.speedTxt.setText(String.format("%s MB/s", new DecimalFormat("##").format(r)));
             b.latencyTxt.setText(String.format("%s ms", (System.currentTimeMillis() - startTime) / 600));
@@ -120,5 +153,13 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
     @Override
     public void onError(SpeedTestError speedTestError, String errorMessage) {
         Log.d("2AGDDGSGSGSDFSDG", "onError: " + errorMessage);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        data.putExtra("showAD", test > 0);
+        setResult(Activity.RESULT_OK, data);
+        super.onBackPressed();
     }
 }

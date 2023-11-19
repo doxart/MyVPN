@@ -12,6 +12,9 @@
     <string name="interstitial_id" translatable="false">ca-app-pub-5937643397203975/1297074729</string>
     <string name="interstitial_test_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
 
+    <string name="native_id" translatable="false">ca-app-pub-5937643397203975/4056486468</string>
+    <string name="native_test_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+
     <string name="adapty_placement_id" translatable="false">tpid</string>
 
     <string name="connecting">Connecting</string>
@@ -72,4 +75,5 @@
     <string name="share_with_your_friends">Share with your friends</string>
     <string name="limitless_fast_secure"><![CDATA[Limitless, fast & secure]]></string>
     <string name="share">Share</string>
+    <string name="tap_to_start">Tap to Start</string>
 </resources>

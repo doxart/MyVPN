@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
+    android:gravity="center|top"
     tools:context=".Activities.SpeedTestActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -113,34 +114,44 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/relativeView"
-        android:padding="40dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <com.ekn.gruzer.gaugelibrary.ArcGauge
             android:id="@+id/speedGauge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/startTestBT"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="50dp" />
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="10dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/primary"
-            android:text="@string/start"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:id="@+id/startTestBT"
-            app:cornerRadius="13dp"
-            android:textSize="18dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="@string/tap_to_start"
+            android:textSize="16dp"
             android:textStyle="bold"
-            android:fontFamily="@font/quicksand_bold"/>
+            app:backgroundTint="@android:color/transparent"
+            app:cornerRadius="13dp" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <com.google.android.ads.nativetemplates.TemplateView
+            android:id="@+id/my_template"
+            android:layout_margin="20dp"
+            app:gnt_template_type="@layout/gnt_medium_template_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </LinearLayout>
