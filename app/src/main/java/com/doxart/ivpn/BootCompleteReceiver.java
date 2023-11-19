@@ -44,7 +44,9 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 
             br.readLine();
 
-            OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
+            if (server.getOvpn() != null & server.getCountry() != null & server.getOvpnUserName() != null & server.getOvpnUserPassword() != null) {
+                OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
+            }
 
         } catch (IOException | RemoteException e) {
             Log.d("AutoConnectException", "startVpn: " + e);
