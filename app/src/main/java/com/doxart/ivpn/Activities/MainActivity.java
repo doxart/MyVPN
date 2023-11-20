@@ -31,6 +31,7 @@ import com.doxart.ivpn.Fragments.SettingsFragment;
 import com.doxart.ivpn.Fragments.VPNFragment;
 import com.doxart.ivpn.Interfaces.NavItemClickListener;
 import com.doxart.ivpn.Interfaces.OnAnswerListener;
+import com.doxart.ivpn.Model.ServerModel;
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
@@ -251,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     }
 
     @Override
-    public void clickedItem(int index) {
+    public void clickedItem(ServerModel index) {
         closeServerList();
         VPNFragment.getInstance().changeServer(index);
     }

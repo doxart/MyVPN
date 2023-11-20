@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
@@ -67,12 +70,16 @@ public class ConnectionReportActivity extends AppCompatActivity {
         } else finish();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init() {
         b.adView.loadAd(new AdRequest.Builder().build());
         b.closeBT.setOnClickListener(v -> finish());
 
         b.shareBT.setOnClickListener(v -> Utils.shareApp(this));
-        b.ratingView.setOnClickListener(v -> Utils.openAppInPlayStore(this));
+        b.ratingView.setOnTouchListener((v, event) -> {
+            Utils.openAppInPlayStore(ConnectionReportActivity.this);
+            return false;
+        });
     }
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

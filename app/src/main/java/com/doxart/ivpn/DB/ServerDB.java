@@ -42,28 +42,28 @@ public class ServerDB {
         FirebaseFirestore.getInstance().collection("servers").whereEqualTo("active", true).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot snapshot : task.getResult()) {
-                    ServerModel serverModel = snapshot.toObject(ServerModel.class);
+                    ServerModel serverModel = new ServerModel();
 
-                    File file = new File(context.getFilesDir().toString() + "/" + serverModel.getOvpn());
-
+                    serverModel.setOvpn(snapshot.getString("ovpn"));
+                    serverModel.setRegion(snapshot.getString("region"));
+                    serverModel.setFlagUrl(snapshot.getString("flagUrl"));
+                    serverModel.setOvpnUserName(snapshot.getString("ovpnUserName"));
+                    serverModel.setOvpnUserPassword(snapshot.getString("ovpnUserPassword"));
+                    serverModel.setCountry(snapshot.getString("country"));
                     serverModel.setPremium(Boolean.TRUE.equals(snapshot.getBoolean("premium")));
                     serverModel.setUrlToOVPN(snapshot.getString("urlToOVPN"));
                     serverModel.setIpv4(snapshot.getString("ipv4"));
                     serverModel.setPort(Objects.requireNonNull(snapshot.getLong("port")).intValue());
 
-                    Thread thread = new Thread(() -> serverModel.setLatency(getPing(serverModel.getIpv4(),  serverModel.getPort())));
-                    thread.start();
+                    new Thread(() -> serverModel.setLatency(getPing(serverModel.getIpv4(),  serverModel.getPort()))).start();
 
+                    File file = new File(context.getFilesDir().toString() + "/" + serverModel.getOvpn());
                     if (!file.exists()) new Thread(() -> downloadOVPN(context, serverModel.getUrlToOVPN(), serverModel.getOvpn())).start();
 
                     list.add(serverModel);
                 }
 
-                for (ServerModel s : list) {
-                    Log.d("ASGASFASDASXAXA", "getServers: name: " + s.getOvpn() + " latency: " + s.getLatency());
-                }
-
-                list.sort(Comparator.comparing(ServerModel::isPremium));
+                list.sort(Comparator.comparing(ServerModel::getLatency));
 
                 setServerList(list);
                 if (onServerReadyListener != null) onServerReadyListener.onReady();
@@ -127,7 +127,7 @@ public class ServerDB {
         d.setContentView(b.getRoot());
         d.show();
 
-        ServerListRVAdapter adapter = new ServerListRVAdapter(context, ServerDB.getInstance().getServerList(), navItemClickListener);
+        ServerListRVAdapter adapter = new ServerListRVAdapter(context, ServerDB.getInstance().getServerList(), navItemClickListener, 0);
 
         b.serverRecycler.setHasFixedSize(true);
         b.serverRecycler.setAdapter(adapter);

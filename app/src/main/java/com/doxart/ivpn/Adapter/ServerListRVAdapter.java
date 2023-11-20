@@ -28,17 +28,20 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
     private final List<ServerModel> serverLists;
     private final Context context;
     private final NavItemClickListener listener;
+    int type = 0;
 
-    public ServerListRVAdapter(Context context, List<ServerModel> serverLists, NavItemClickListener listener) {
+    public ServerListRVAdapter(Context context, List<ServerModel> serverLists, NavItemClickListener listener, int type) {
         this.serverLists = serverLists;
         this.context = context;
         this.listener = listener;
+        this.type = type;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.country_item, parent, false));
+        if (type == 0) return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.country_item, parent, false));
+        else return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.vip_country_item, parent, false));
     }
 
     @Override
@@ -53,7 +56,7 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
 
         if (m.isPremium()) {
             h.status.setText(context.getString(R.string.premium));
-            h.status.setBackgroundResource(R.drawable.card_premium_bg);
+            h.status.setBackgroundResource(R.drawable.card_basic_bg);
         } else {
             h.status.setText(context.getString(R.string.basic));
             h.status.setBackgroundResource(R.drawable.card_basic_bg);
@@ -64,9 +67,9 @@ public class ServerListRVAdapter extends RecyclerView.Adapter<ServerListRVAdapte
         h.itemView.setOnClickListener(v -> {
             if (m.isPremium()) {
                 if (SharePrefs.getInstance(context).getBoolean("premium")) {
-                    listener.clickedItem(p);
-                } else context.startActivity(new Intent(context, PaywallActivity.class));
-            } else listener.clickedItem(p);
+                    listener.clickedItem(m);
+                } else context.startActivity(new Intent(context, PaywallActivity.class).putExtra("timer", 0));
+            } else listener.clickedItem(m);
         });
     }
 

@@ -351,23 +351,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         } else {
             nBuilder.setSmallIcon(R.drawable.app_icon);
         }
-        if (status == LEVEL_WAITING_FOR_USER_INPUT) {
-            PendingIntent pIntent;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-            }
-            else{
-                pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-            }
-            nBuilder.setContentIntent(pIntent);
-        } else {
-            PendingIntent contentPendingIntent = getContentIntent();
-            if (contentPendingIntent != null) {
-                nBuilder.setContentIntent(contentPendingIntent);
-            } else {
-                nBuilder.setContentIntent(getGraphPendingIntent());
-            }
-        }
 
         if (when != 0)
             nBuilder.setWhen(when);
@@ -410,17 +393,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Check if running on a TV
         if (runningOnAndroidTV() && !(priority < 0))
-            guiHandler.post(new Runnable() {
+            guiHandler.post(() -> {
 
-                @Override
-                public void run() {
-
-                    if (mlastToast != null)
-                        mlastToast.cancel();
-                    String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
-                    mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
-                    mlastToast.show();
-                }
+                if (mlastToast != null)
+                    mlastToast.cancel();
+                String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
+                mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
+                mlastToast.show();
             });
     }
 
@@ -462,7 +441,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         try {
             if (priority != 0) {
                 Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
-                setpriority.invoke(nbuilder, priority);
+                setpriority.invoke(nbuilder, PRIORITY_DEFAULT);
 
                 Method setUsesChronometer = nbuilder.getClass().getMethod("setUsesChronometer", boolean.class);
                 setUsesChronometer.invoke(nbuilder, true);

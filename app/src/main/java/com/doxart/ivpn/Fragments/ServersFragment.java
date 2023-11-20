@@ -60,17 +60,23 @@ public class ServersFragment extends Fragment {
         if (navItemClickListener != null) {
             List<ServerModel> nativeList = ServerDB.getInstance().getServerList();
             List<ServerModel> adjustedList = new ArrayList<>();
+            List<ServerModel> adjustedVipList = new ArrayList<>();
 
             for (ServerModel sv : nativeList) {
-                if (sv.getLatency() > 0) adjustedList.add(sv);
+                if (sv.getLatency() > 0 & !sv.isPremium()) adjustedList.add(sv);
+                if (sv.getLatency() > 0 & sv.isPremium()) adjustedVipList.add(sv);
             }
 
             adjustedList.sort(Comparator.comparing(ServerModel::getLatency));
 
-            ServerListRVAdapter adapter = new ServerListRVAdapter(context, adjustedList, navItemClickListener);
+            ServerListRVAdapter adapter = new ServerListRVAdapter(context, adjustedList, navItemClickListener, 0);
+            ServerListRVAdapter adapter1 = new ServerListRVAdapter(context, adjustedVipList, navItemClickListener, 1);
 
             b.serverRecycler.setHasFixedSize(true);
             b.serverRecycler.setAdapter(adapter);
+
+            b.vipServerRecycler.setHasFixedSize(true);
+            b.vipServerRecycler.setAdapter(adapter1);
 
             b.closeBT.setOnClickListener(v -> MainActivity.getInstance().closeServerList());
         }

@@ -1,5 +1,7 @@
 package com.doxart.ivpn.Interfaces;
 
+import com.doxart.ivpn.Model.ServerModel;
+
 public interface NavItemClickListener {
-    void clickedItem(int index);
+    void clickedItem(ServerModel index);
 }

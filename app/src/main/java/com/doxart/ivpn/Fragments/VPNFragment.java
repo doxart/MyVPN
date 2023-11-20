@@ -260,6 +260,8 @@ public class VPNFragment extends Fragment implements ChangeServer {
             for (ServerModel sv : nativeList) {
                 if (sv.getLatency() > 0) serverList.add(sv);
             }
+
+            makeServerList();
         } else {
             initTry++;
 
@@ -270,33 +272,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
                     init();
                 });
             }
-        }
-
-        serverList.sort(Comparator.comparing(ServerModel::getLatency));
-
-        if (serverList != null) {
-            if (serverList.size() > 0) {
-                if (!sharePrefs.getBoolean("premium")) {
-                    for (ServerModel sv : serverList) {
-                        if (!sv.isPremium()) {
-                            server = sv;
-                            break;
-                        }
-                    }
-                } else server = serverList.get(0);
-            }
-        } else {
-            return;
-        }
-
-        if (server != null) {
-            sharePrefs.putServer(server);
-        }
-
-        updateCurrentServerLay(server, true);
-
-        if (!premium) {
-            if (sharePrefs.getBoolean("showBannerAds")) loadAds();
         }
 
         b.vpnBtn.getRoot().setOnClickListener(v -> {
@@ -328,8 +303,36 @@ public class VPNFragment extends Fragment implements ChangeServer {
         VpnStatus.initLogCache(context.getCacheDir());
     }
 
-    public void changeServer(int index) {
-        changeServer.newServer(serverList.get(index));
+    private void makeServerList() {
+        serverList.sort(Comparator.comparing(ServerModel::getLatency));
+
+        if (serverList != null) {
+            if (serverList.size() > 0) {
+                if (!sharePrefs.getBoolean("premium")) {
+                    for (ServerModel sv : serverList) {
+                        if (!sv.isPremium()) {
+                            server = sv;
+                            break;
+                        }
+                    }
+                } else server = serverList.get(0);
+            }
+        } else {
+            return;
+        }
+
+        if (server != null) {
+            sharePrefs.putServer(server);
+            updateCurrentServerLay(server, true);
+        }
+
+        if (!premium) {
+            if (sharePrefs.getBoolean("showBannerAds")) loadAds();
+        }
+    }
+
+    public void changeServer(ServerModel index) {
+        changeServer.newServer(index);
     }
 
     private void prepareVpn() {
@@ -374,34 +377,37 @@ public class VPNFragment extends Fragment implements ChangeServer {
     }
 
     private void startVpn() {
-        File file = new File(context.getFilesDir().toString() + "/" + server.getOvpn());
+        if (server != null) {
+            File file = new File(context.getFilesDir().toString() + "/" + server.getOvpn());
 
-        try {
-            //InputStream conf = context.getAssets().open(server.getOvpn());
-            InputStream conf;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                conf = Files.newInputStream(file.toPath());
-            } else conf = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(conf);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder config = new StringBuilder();
-            String line;
+            Log.d(TAG, "startVpn: " + server.getCountry() + " ovpn: " + server.getOvpn() + " passid: " + server.getOvpnUserPassword() + " " + server.getOvpnUserName());
 
-            while (true) {
-                line = br.readLine();
-                if (line == null) break;
-                config.append(line).append("\n");
+            try {
+                InputStream conf;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    conf = Files.newInputStream(file.toPath());
+                } else conf = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(conf);
+                BufferedReader br = new BufferedReader(isr);
+                StringBuilder config = new StringBuilder();
+                String line;
+
+                while (true) {
+                    line = br.readLine();
+                    if (line == null) break;
+                    config.append(line).append("\n");
+                }
+
+                br.readLine();
+
+                OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
+
+                b.vpnStatus.setText(getString(R.string.starting));
+                vpnRunning = true;
+            } catch (IOException | RemoteException e) {
+                Log.d(TAG, "startVpn: " + e);
+                status("connect");
             }
-
-            br.readLine();
-
-            OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
-
-            b.vpnStatus.setText(getString(R.string.starting));
-            vpnRunning = true;
-        } catch (IOException | RemoteException e) {
-            Log.d(TAG, "startVpn: " + e);
-            status("connect");
         }
     }
 
