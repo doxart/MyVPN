@@ -80,7 +80,8 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
 
         if (!SharePrefs.getInstance(this).getBoolean("premium")) {
             if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
-        }
+            else b.myTemplate.setVisibility(View.GONE);
+        } else b.myTemplate.setVisibility(View.GONE);
 
         b.startTestBT.setOnClickListener(v -> {
             b.startTestBT.setVisibility(View.GONE);

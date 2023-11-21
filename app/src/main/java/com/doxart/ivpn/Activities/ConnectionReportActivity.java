@@ -18,8 +18,12 @@ import android.view.WindowManager;
 import com.bumptech.glide.Glide;
 import com.doxart.ivpn.Model.ServerModel;
 import com.doxart.ivpn.R;
+import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.databinding.ActivityConnectionReportBinding;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 
 public class ConnectionReportActivity extends AppCompatActivity {
@@ -72,7 +76,11 @@ public class ConnectionReportActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-        b.adView.loadAd(new AdRequest.Builder().build());
+        if (!SharePrefs.getInstance(this).getBoolean("premium")) {
+            if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
+            else b.myTemplate.setVisibility(View.GONE);
+        } else b.myTemplate.setVisibility(View.GONE);
+
         b.closeBT.setOnClickListener(v -> finish());
 
         b.shareBT.setOnClickListener(v -> Utils.shareApp(this));
@@ -81,6 +89,21 @@ public class ConnectionReportActivity extends AppCompatActivity {
             return false;
         });
     }
+
+    private void loadAds() {
+        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_id))
+                .forNativeAd(nativeAd -> {
+                    NativeTemplateStyle styles = new
+                            NativeTemplateStyle.Builder().build();
+                    TemplateView template = findViewById(R.id.my_template);
+                    template.setStyles(styles);
+                    template.setNativeAd(nativeAd);
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+    }
+
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

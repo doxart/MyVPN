@@ -82,7 +82,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
     private InterstitialAd mInterstitialAd;
 
-    private int showTry = 0;
     private int adMode = 0;
 
     private boolean premium = false;
@@ -139,7 +138,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
     private void buildInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        InterstitialAd.load(context, getString(R.string.interstitial_id), adRequest,
+        InterstitialAd.load(context, getString(R.string.interstitial_test_id), adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -157,80 +156,60 @@ public class VPNFragment extends Fragment implements ChangeServer {
     }
 
     private void showInterstitial() {
+        long lastAd = sharePrefs.getLastAd();
+
+        if (new Date().getTime() < lastAd) {
+            goConnectionReport();
+            return;
+        }
+
         if (mInterstitialAd != null) {
             mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                 @Override
                 public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                     super.onAdFailedToShowFullScreenContent(adError);
-                    showTry++;
-                    if (showTry < 3) showInterstitial();
-                    else {
-                        if (vpnRunning) {
-                            stopVpn();
-                        } else {
-                            prepareVpn();
-                        }
-                    }
+                    goConnectionReport();
                 }
 
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
-                    long m = (long) sharePrefs.getInt("delayTimeBetweenAds") * 1000 * 60;
                     sharePrefs.putLong("lastAd", new Date().getTime() + m);
-                    if (vpnRunning) {
-                        stopVpn();
-                    } else {
-                        prepareVpn();
-                    }
+                    goConnectionReport();
                 }
             });
 
             mInterstitialAd.show(requireActivity());
         } else {
-            showTry++;
-            if (showTry < 3) showInterstitial();
-            else {
-                if (vpnRunning) {
-                    stopVpn();
-                } else {
-                    prepareVpn();
-                }
-            }
+            goConnectionReport();
+        }
+    }
+
+    private void goConnectionReport() {
+        if (server != null) {
+            Intent i = new Intent(context, ConnectionReportActivity.class);
+            i.putExtra("isConnection", true);
+            startActivity(i);
+            ConnectionReportActivity.server = server;
         }
     }
 
     private void showAd() {
         long lastAd = sharePrefs.getLastAd();
-        Log.d(TAG, "showAd: " + lastAd);
 
-        if (new Date().getTime() >= lastAd) {
-            if (rewardedAd != null) {
-                rewardedAd.show(requireActivity(), rewardItem -> {
-                    if (vpnRunning) {
-                        stopVpn();
-                    } else {
-                        prepareVpn();
-                    }
-                    long m = (long) sharePrefs.getInt("delayTimeBetweenAds") * 1000 * 60;
-                    sharePrefs.putLong("lastAd", new Date().getTime() + m);
-                    buildRewarded();
-                });
-            } else {
-                Log.d(TAG, "The rewarded ad wasn't ready yet.");
-                if (vpnRunning) {
-                    stopVpn();
-                } else {
-                    prepareVpn();
-                }
-                buildRewarded();
-            }
+        if (new Date().getTime() < lastAd) {
+            goConnectionReport();
+            return;
+        }
+
+        if (rewardedAd != null) {
+            rewardedAd.show(requireActivity(), rewardItem -> {
+                goConnectionReport();
+                sharePrefs.putLong("lastAd", new Date().getTime() + m);
+            });
         } else {
-            if (vpnRunning) {
-                stopVpn();
-            } else {
-                prepareVpn();
-            }
+            goConnectionReport();
+            buildRewarded();
         }
     }
 
@@ -247,7 +226,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
         adLoader.loadAd(new AdRequest.Builder().build());
     }
-
 
     int initTry = 0;
     private void init() {
@@ -275,21 +253,10 @@ public class VPNFragment extends Fragment implements ChangeServer {
         }
 
         b.vpnBtn.getRoot().setOnClickListener(v -> {
-            if (premium) {
-                if (vpnRunning) {
-                    stopVpn();
-                } else {
-                    prepareVpn();
-                }
+            if (vpnRunning) {
+                stopVpn();
             } else {
-                switch (adMode){
-                    case 0:
-                        showAd();
-                        break;
-                    case 1:
-                        showInterstitial();
-                        break;
-                }
+                prepareVpn();
             }
         });
 
@@ -328,7 +295,8 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
         if (!premium) {
             if (sharePrefs.getBoolean("showBannerAds")) loadAds();
-        }
+            else b.adView.setVisibility(View.GONE);
+        } else b.adView.setVisibility(View.GONE);
     }
 
     public void changeServer(ServerModel index) {
@@ -436,12 +404,16 @@ public class VPNFragment extends Fragment implements ChangeServer {
                     status("connected");
                     context.startService(new Intent(context, VPNCountdownTimer.class));
 
-                    if (server != null) {
-                        Intent i = new Intent(context, ConnectionReportActivity.class);
-                        i.putExtra("isConnection", true);
-                        startActivity(i);
-                        ConnectionReportActivity.server = server;
-                    }
+                    if (!premium) {
+                        switch (adMode) {
+                            case 0:
+                                showAd();
+                                break;
+                            case 1:
+                                showInterstitial();
+                                break;
+                        }
+                    } else goConnectionReport();
                     break;
                 case "WAIT":
                     status("connecting");

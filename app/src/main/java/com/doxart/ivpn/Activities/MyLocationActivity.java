@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -87,7 +88,8 @@ public class MyLocationActivity extends AppCompatActivity {
 
         if (!SharePrefs.getInstance(this).getBoolean("premium")) {
             if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
-        }
+            else b.myTemplate.setVisibility(View.GONE);
+        } else b.myTemplate.setVisibility(View.GONE);
 
         b.closeBT.setOnClickListener(v -> finish());
         b.refreshBT.setOnClickListener(v -> getIPLocation());

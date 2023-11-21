@@ -55,7 +55,8 @@ public class ServerDB {
                     serverModel.setIpv4(snapshot.getString("ipv4"));
                     serverModel.setPort(Objects.requireNonNull(snapshot.getLong("port")).intValue());
 
-                    new Thread(() -> serverModel.setLatency(getPing(serverModel.getIpv4(),  serverModel.getPort()))).start();
+                    Thread thread = new Thread(() -> serverModel.setLatency(getPing(serverModel.getIpv4(),  serverModel.getPort())));
+                    thread.start();
 
                     File file = new File(context.getFilesDir().toString() + "/" + serverModel.getOvpn());
                     if (!file.exists()) new Thread(() -> downloadOVPN(context, serverModel.getUrlToOVPN(), serverModel.getOvpn())).start();
