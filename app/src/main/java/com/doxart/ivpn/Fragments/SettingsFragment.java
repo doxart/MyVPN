@@ -24,6 +24,7 @@ import com.doxart.ivpn.BootCompleteReceiver;
 import com.doxart.ivpn.DB.Usage;
 import com.doxart.ivpn.DB.UsageViewModel;
 import com.doxart.ivpn.Util.SharePrefs;
+import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.databinding.FragmentSettingsBinding;
 
 import java.util.ArrayList;
@@ -56,17 +57,12 @@ public class SettingsFragment extends Fragment {
     }
 
     private void adjustMargin() {
-        WindowInsetsCompat insets = MainActivity.getInstance().getInsetsCompat();
-        if (insets != null) {
-            final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-            final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+        final int statusBarHeight = Utils.getStatusBarHeight(context);
+        final int navigationBarHeight = Utils.getStatusBarHeight(context);
 
-            int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-            b.appbar.setPaddingRelative(0, statusBarHeight + pxToDp, 0, 0);
-
-            b.scrollView.setPaddingRelative(0, 0, 0, navigationBarHeight + pxToDp);
-        }
+        b.appbar.setPaddingRelative(0, statusBarHeight, 0, 0);
     }
 
     private void getUsage() {

@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/cMsTxt"
+            android:layout_toStartOf="@id/cMsHolder"
             android:layout_toEndOf="@id/cFlagImg"
             android:layout_marginHorizontal="10dp"
             android:gravity="center|start">
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
+                    android:textSize="17dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"
@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12dp"
                     android:id="@+id/cStatusTxt"
+                    android:visibility="gone"
                     android:paddingHorizontal="4dp"
                     android:paddingVertical="1dp"
                     android:layout_marginStart="5dp"/>
@@ -82,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:id="@+id/cMsHolder"
             android:orientation="vertical"
             android:gravity="center">
 

@@ -1,11 +1,15 @@
 package com.doxart.ivpn.Activities;
 
+import static com.doxart.ivpn.Util.Utils.getNavigationBarHeight;
+import static com.doxart.ivpn.Util.Utils.getStatusBarHeight;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,13 +68,28 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
     }
 
     private void adjustMargins() {
-        int statusBarHeight = MainActivity.getInstance().getInsetsCompat().getInsets(WindowInsetsCompat.Type.statusBars()).top;
-        int navigationBarHeight = MainActivity.getInstance().getInsetsCompat().getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+        ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int statusBarHeight = getStatusBarHeight(getApplicationContext());
+                int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
 
-        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+                int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-        b.appbar.setPadding(0, statusBarHeight, 0, 0);
-        b.getRoot().setPaddingRelative(0, 0, 0, navigationBarHeight + pxToDp);
+                b.getRoot().setPadding(
+                        0,
+                        statusBarHeight,
+                        0,
+                        navigationBarHeight + pxToDp
+                );
+
+                b.getRoot().getViewTreeObserver().removeOnPreDrawListener(this);
+
+                return true;
+            }
+        };
+
+        b.getRoot().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
     }
 
     private void init() {

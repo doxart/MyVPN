@@ -1,5 +1,8 @@
 package com.doxart.ivpn.Activities;
 
+import static com.doxart.ivpn.Util.Utils.getNavigationBarHeight;
+import static com.doxart.ivpn.Util.Utils.getStatusBarHeight;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import androidx.activity.result.ActivityResult;
@@ -114,6 +118,47 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         }
     });
 
+    private void adjustMargins() {
+        ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int statusBarHeight = getStatusBarHeight(getApplicationContext());
+                int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
+
+                int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+
+                Log.d(TAG, "onPreDraw: " + statusBarHeight + " nav: " + navigationBarHeight);
+                b.appbar.getRoot().setPadding(
+                        0,
+                        statusBarHeight,
+                        0,
+                        0
+                );
+
+                b.mainPager.setPadding(0, 0, 0, navigationBarHeight + pxToDp);
+
+                b.getRoot().getViewTreeObserver().removeOnPreDrawListener(this);
+
+                return true;
+            }
+        };
+
+        int statusBarHeight = getStatusBarHeight(getApplicationContext());
+        int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
+
+        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+
+        Log.d(TAG, "onPreDraw: " + statusBarHeight + " nav: " + navigationBarHeight);
+        b.getRoot().setPadding(
+                0,
+                statusBarHeight,
+                0,
+                navigationBarHeight + pxToDp
+        );
+
+        b.getRoot().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+    }
+
     private void showConnectionDialog() {
         connectionDialog = Utils.askQuestion(this, getString(R.string.no_connection), getString(R.string.no_connection_detail), getString(R.string.go_network_settings),
                 getString(R.string.try_again), getString(R.string.exit), null, false, new OnAnswerListener() {
@@ -148,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        adjustMargin();
+        adjustMargins();
         if (SharePrefs.getInstance(this).isDynamicBackground())
             setBackground();
 
@@ -168,27 +213,6 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     }
 
     private final ActivityResultLauncher<String> permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), o -> {});
-
-    private void adjustMargin() {
-        ViewCompat.setOnApplyWindowInsetsListener(b.getRoot(), (v, insets) -> {
-            final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-            final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
-
-            int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-
-            b.appbar.getRoot().setPadding(0, statusBarHeight, 0, 0);
-
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) b.mainPager.getLayoutParams();
-            params.setMargins(0,  0, 0, navigationBarHeight + pxToDp);
-
-            b.mainNav.setLayoutParams(params);
-            b.mainNav.requestLayout();
-
-            setInsetsCompat(insets);
-
-            return WindowInsetsCompat.CONSUMED;
-        });
-    }
 
     private void init() {
         createFragments();

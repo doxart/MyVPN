@@ -17,6 +17,7 @@ import com.doxart.ivpn.Adapter.ServerListRVAdapter;
 import com.doxart.ivpn.DB.ServerDB;
 import com.doxart.ivpn.Interfaces.NavItemClickListener;
 import com.doxart.ivpn.Model.ServerModel;
+import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.databinding.FragmentServersBinding;
 
 import java.util.ArrayList;
@@ -43,15 +44,12 @@ public class ServersFragment extends Fragment {
     }
 
     private void adjustMargin() {
-        WindowInsetsCompat insets = MainActivity.getInstance().getInsetsCompat();
-        final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-        final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+        final int statusBarHeight = Utils.getStatusBarHeight(context);
+        final int navigationBarHeight = Utils.getNavigationBarHeight(context);
 
         int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-        b.appbar.setPaddingRelative(0, statusBarHeight + pxToDp, 0, 0);
-
-        b.serverRecycler.setPaddingRelative(0, 0, 0, pxToDp);
+        b.appbar.setPaddingRelative(0, statusBarHeight, 0, 0);
     }
 
     private void init() {

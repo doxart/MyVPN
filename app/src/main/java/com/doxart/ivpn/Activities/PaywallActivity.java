@@ -28,6 +28,7 @@ import com.adapty.ui.AdaptyUI;
 import com.adapty.ui.listeners.AdaptyUiEventListener;
 import com.doxart.ivpn.Util.PaywallViewUtils;
 import com.doxart.ivpn.Util.SharePrefs;
+import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.databinding.ActivityPaywallBinding;
 
 import java.util.List;
@@ -91,35 +92,31 @@ public class PaywallActivity extends AppCompatActivity {
     }
 
     private void getInsets(AdaptyPaywall paywall, List<AdaptyPaywallProduct> products, AdaptyViewConfiguration viewConfiguration) {
-        ViewCompat.setOnApplyWindowInsetsListener(b.getRoot(), (v, insets) -> {
-            final int statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
-            final int navigationBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+        final int statusBarHeight = Utils.getStatusBarHeight(this);
+        final int navigationBarHeight = Utils.getNavigationBarHeight(this);
 
-            int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-            try {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) b.closeBT.getLayoutParams();
-                ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) b.closeBTCounter.getLayoutParams();
-                params.setMargins(statusBarHeight, pxToDp + statusBarHeight, 0, 0);
-                params1.setMargins(statusBarHeight, pxToDp + statusBarHeight, 0, 0);
+        try {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) b.closeBT.getLayoutParams();
+            ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) b.closeBTCounter.getLayoutParams();
+            params.setMargins(statusBarHeight, pxToDp + statusBarHeight, 0, 0);
+            params1.setMargins(statusBarHeight, pxToDp + statusBarHeight, 0, 0);
 
-                b.closeBT.setLayoutParams(params);
-                b.closeBTCounter.setLayoutParams(params);
-                b.closeBT.requestLayout();
-                b.closeBTCounter.requestLayout();
-            } catch (Exception e) {
-                Log.d(TAG, "getInsets: " + e);
-            }
+            b.closeBT.setLayoutParams(params);
+            b.closeBTCounter.setLayoutParams(params);
+            b.closeBT.requestLayout();
+            b.closeBTCounter.requestLayout();
+        } catch (Exception e) {
+            Log.d(TAG, "getInsets: " + e);
+        }
 
-            b.payFrame.setEventListener(eventListener);
-            b.payFrame.showPaywall(paywall, products,
-                    viewConfiguration,
-                    AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
+        b.payFrame.setEventListener(eventListener);
+        b.payFrame.showPaywall(paywall, products,
+                viewConfiguration,
+                AdaptyPaywallInsets.of(statusBarHeight, navigationBarHeight + pxToDp), adaptyPaywallProduct -> false);
 
-            Adapty.logShowPaywall(paywall);
-
-            return WindowInsetsCompat.CONSUMED;
-        });
+        Adapty.logShowPaywall(paywall);
     }
 
     private final AdaptyUiEventListener eventListener = new AdaptyUiEventListener() {
