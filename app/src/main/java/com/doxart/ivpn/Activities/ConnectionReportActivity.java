@@ -1,8 +1,7 @@
 package com.doxart.ivpn.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import static com.doxart.ivpn.Util.Utils.getNavigationBarHeight;
+import static com.doxart.ivpn.Util.Utils.getStatusBarHeight;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -11,9 +10,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
 import com.doxart.ivpn.Model.ServerModel;
@@ -30,7 +32,6 @@ public class ConnectionReportActivity extends AppCompatActivity {
 
     ActivityConnectionReportBinding b;
     public static ServerModel server;
-    private boolean isConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +51,33 @@ public class ConnectionReportActivity extends AppCompatActivity {
     }
 
     private void adjustMargins() {
-        int statusBarHeight = MainActivity.getInstance().getInsetsCompat().getInsets(WindowInsetsCompat.Type.statusBars()).top;
-        int navigationBarHeight = MainActivity.getInstance().getInsetsCompat().getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+        ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int statusBarHeight = getStatusBarHeight(getApplicationContext());
+                int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
 
-        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+                int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
-        b.appbar.setPadding(0, statusBarHeight, 0, 0);
+                b.getRoot().setPadding(
+                        0,
+                        statusBarHeight,
+                        0,
+                        navigationBarHeight + pxToDp
+                );
+
+                b.getRoot().getViewTreeObserver().removeOnPreDrawListener(this);
+
+                return true;
+            }
+        };
+
+        b.getRoot().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
     }
 
     private void setupView() {
         if (server != null) {
-            isConnection = getIntent().getBooleanExtra("isConnection", true);
+            boolean isConnection = getIntent().getBooleanExtra("isConnection", true);
 
             if (isConnection) b.connectionTypeTxt.setText(getString(R.string.connection_successful));
             else {
@@ -76,8 +93,12 @@ public class ConnectionReportActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-        if (!SharePrefs.getInstance(this).getBoolean("premium")) {
-            if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
+        SharePrefs sharePrefs = new SharePrefs(this);
+
+        boolean premium = sharePrefs.getBoolean("premium");
+
+        if (!premium) {
+            if (sharePrefs.getBoolean("showBannerAds")) loadAds();
             else b.myTemplate.setVisibility(View.GONE);
         } else b.myTemplate.setVisibility(View.GONE);
 
@@ -89,6 +110,7 @@ public class ConnectionReportActivity extends AppCompatActivity {
             return false;
         });
     }
+
 
     private void loadAds() {
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_id))

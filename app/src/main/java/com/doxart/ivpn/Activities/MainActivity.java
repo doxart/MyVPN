@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
                 if (!SharePrefs.getInstance(MainActivity.this).getBoolean("premium") &
                         o.getData().getBooleanExtra("showAD", false)) showInterstitial();
             }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
         }
     });
 
@@ -145,8 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         else b.appbar.premiumBT.setVisibility(View.GONE);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
 
         adjustMargin();
         if (SharePrefs.getInstance(this).isDynamicBackground())

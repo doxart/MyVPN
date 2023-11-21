@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
+import androidx.core.view.ViewCompat;
 
 import com.doxart.ivpn.Interfaces.OnAnswerListener;
 import com.doxart.ivpn.R;
@@ -59,6 +61,24 @@ public class Utils {
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         context.startActivity(shareIntent);
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    public static int getNavigationBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     public static void openAppInPlayStore(Context context) {

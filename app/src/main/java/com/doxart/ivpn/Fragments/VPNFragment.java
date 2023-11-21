@@ -120,7 +120,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
     private void buildRewarded() {
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(context, getString(R.string.rewarded_id),
+        RewardedAd.load(context, getString(R.string.rewarded_test_id),
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
@@ -138,7 +138,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
     private void buildInterstitial() {
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        InterstitialAd.load(context, getString(R.string.interstitial_test_id), adRequest,
+        InterstitialAd.load(context, getString(R.string.interstitial_id), adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -155,11 +155,11 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 });
     }
 
-    private void showInterstitial() {
+    private void showInterstitial(boolean forConnect) {
         long lastAd = sharePrefs.getLastAd();
 
         if (new Date().getTime() < lastAd) {
-            goConnectionReport();
+            goConnectionReport(forConnect);
             return;
         }
 
@@ -168,49 +168,56 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 @Override
                 public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                     super.onAdFailedToShowFullScreenContent(adError);
-                    goConnectionReport();
+                    goConnectionReport(forConnect);
+
                 }
 
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
                     sharePrefs.putLong("lastAd", new Date().getTime() + m);
-                    goConnectionReport();
+                    goConnectionReport(forConnect);
+
                 }
             });
 
             mInterstitialAd.show(requireActivity());
-        } else {
-            goConnectionReport();
-        }
+        } else goConnectionReport(forConnect);
+
     }
 
-    private void goConnectionReport() {
+    private void goConnectionReport(boolean isConnection) {
         if (server != null) {
             Intent i = new Intent(context, ConnectionReportActivity.class);
-            i.putExtra("isConnection", true);
+            i.putExtra("isConnection", isConnection);
+            if (isConnection) {
+                i.putExtra("sessionM", m);
+                i.putExtra("sessionS", s);
+            }
             startActivity(i);
             ConnectionReportActivity.server = server;
         }
     }
 
-    private void showAd() {
+    private void showAd(boolean forConnect) {
         long lastAd = sharePrefs.getLastAd();
 
         if (new Date().getTime() < lastAd) {
-            goConnectionReport();
+            goConnectionReport(forConnect);
             return;
         }
 
         if (rewardedAd != null) {
             rewardedAd.show(requireActivity(), rewardItem -> {
-                goConnectionReport();
+                goConnectionReport(forConnect);
                 sharePrefs.putLong("lastAd", new Date().getTime() + m);
+                goConnectionReport(forConnect);
             });
         } else {
-            goConnectionReport();
+            goConnectionReport(forConnect);
             buildRewarded();
         }
+
     }
 
     private void loadAds() {
@@ -304,6 +311,16 @@ public class VPNFragment extends Fragment implements ChangeServer {
     }
 
     private void prepareVpn() {
+        if (!premium) {
+            switch (adMode) {
+                case 0:
+                    showAd(true);
+                    break;
+                case 1:
+                    showInterstitial(true);
+                    break;
+            }
+        }
         if (!vpnRunning) {
             if (getInternetStatus()) {
                 Intent intent = VpnService.prepare(context);
@@ -322,6 +339,16 @@ public class VPNFragment extends Fragment implements ChangeServer {
     });
 
     public boolean stopVpn() {
+        if (!premium) {
+            switch (adMode) {
+                case 0:
+                    showAd(false);
+                    break;
+                case 1:
+                    showInterstitial(false);
+                    break;
+            }
+        }
         try {
             OpenVPNThread.stop();
 
@@ -389,31 +416,12 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
                     context.stopService(new Intent(context, VPNCountdownTimer.class));
 
-                    if (server != null) {
-                        Intent i = new Intent(context, ConnectionReportActivity.class);
-                        i.putExtra("isConnection", false);
-                        i.putExtra("sessionM", m);
-                        i.putExtra("sessionS", s);
-                        startActivity(i);
-                        ConnectionReportActivity.server = server;
-                    }
-
                     break;
                 case "CONNECTED":
                     vpnRunning = true;
                     status("connected");
                     context.startService(new Intent(context, VPNCountdownTimer.class));
 
-                    if (!premium) {
-                        switch (adMode) {
-                            case 0:
-                                showAd();
-                                break;
-                            case 1:
-                                showInterstitial();
-                                break;
-                        }
-                    } else goConnectionReport();
                     break;
                 case "WAIT":
                     status("connecting");
@@ -430,7 +438,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
                     vpnRunning = false;
                     break;
             }
-
     }
 
     public void status(String status) {
@@ -556,9 +563,9 @@ public class VPNFragment extends Fragment implements ChangeServer {
     }
 
     @Override
-    public void onPause() {
+    public void onDestroy() {
         LocalBroadcastManager.getInstance(context).unregisterReceiver(broadcastReceiver);
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override
