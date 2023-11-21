@@ -120,7 +120,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
     private void buildRewarded() {
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(context, getString(R.string.rewarded_test_id),
+        RewardedAd.load(context, getString(R.string.rewarded_id),
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
@@ -208,10 +208,15 @@ public class VPNFragment extends Fragment implements ChangeServer {
         }
 
         if (rewardedAd != null) {
+            rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent();
+                    goConnectionReport(forConnect);
+                }
+            });
             rewardedAd.show(requireActivity(), rewardItem -> {
-                goConnectionReport(forConnect);
                 sharePrefs.putLong("lastAd", new Date().getTime() + m);
-                goConnectionReport(forConnect);
             });
         } else {
             goConnectionReport(forConnect);
