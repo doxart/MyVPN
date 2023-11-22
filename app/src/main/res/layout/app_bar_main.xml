@@ -2,7 +2,7 @@
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@android:color/transparent"
+    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -35,62 +35,56 @@
             android:textStyle="bold"
             android:letterSpacing="0.2"/>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_gem_24"
-            android:foreground="@drawable/ripple"
-            android:layout_gravity="end|center"
-            android:background="@color/colorWhite"
-            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-            app:tint="@color/primary"
-            android:layout_marginStart="5dp"
-            app:contentPadding="5dp"
-            android:id="@+id/premiumBT"/>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="32dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
-            android:src="@drawable/ic_settings_24"
-            android:foreground="@drawable/ripple"
-            android:layout_gravity="end|center"
-            app:tint="@color/colorWhite"
+            android:layout_gravity="end"
+            app:cardCornerRadius="16dp"
+            android:id="@+id/premiumBT"
+            app:cardBackgroundColor="@color/colorPrimary"
             android:layout_marginStart="5dp"
-            app:contentPadding="5dp"
-            android:id="@+id/settingsBT"/>
+            app:cardElevation="0dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_speed_gauge_24"
-            android:foreground="@drawable/ripple"
-            android:layout_marginStart="5dp"
-            android:layout_gravity="end|center"
-            app:tint="@color/colorWhite"
-            app:contentPadding="5dp"
-            android:id="@+id/speedTestBT"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get Premium"
+                    android:textSize="10dp"
+                    android:textColor="@color/orange"
+                    android:layout_marginStart="7dp"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_gem_24"
+                    android:foreground="@drawable/ripple"
+                    android:layout_gravity="end|center"
+                    android:background="@drawable/card_premium_bg"
+                    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
+                    app:tint="@color/colorWhite"
+                    android:layout_marginStart="5dp"
+                    app:contentPadding="5dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_share_24"
             android:foreground="@drawable/ripple"
-            android:layout_marginStart="5dp"
             android:layout_gravity="end|center"
             app:tint="@color/colorWhite"
             app:contentPadding="5dp"
             android:id="@+id/shareBT"/>
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_location_pin_24"
-            android:foreground="@drawable/ripple"
-            android:layout_marginStart="5dp"
-            android:layout_gravity="end|center"
-            app:tint="@color/colorWhite"
-            app:contentPadding="5dp"
-            android:id="@+id/locationBT"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 

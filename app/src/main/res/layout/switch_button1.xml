@@ -10,19 +10,18 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/switch_bg"
-        android:id="@+id/switchLay"
-        android:gravity="center|bottom"
-        android:padding="10dp"
-        android:clipToPadding="false">
+        android:padding="8dp"
+        android:id="@+id/switchBtnBg"
+        android:background="@drawable/switch_bg1">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/switchBtn"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
-            android:background="@color/colorWhite"
-            app:contentPadding="20dp"
+            android:background="@color/primary"
+            app:contentPadding="24dp"
+            app:tint="@color/colorWhite"
             android:src="@drawable/ic_power_24"/>
 
     </LinearLayout>

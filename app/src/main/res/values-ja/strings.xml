@@ -20,8 +20,6 @@
 
     <string name="vpn">VPN</string>
 
-    <string name="browser">ブラウザ</string>
-
     <string name="settings">設定</string>
 
     <string name="starting">起動</string>
@@ -40,8 +38,6 @@
 
     <string name="launch_phase_5">終わり</string>
 
-    <string name="auto_ms_format">自動。%s</string>
-
     <string name="premium">プレミアム</string>
 
     <string name="basic">基本</string>
@@ -50,15 +46,11 @@
 
     <string name="search_location">検索場所</string>
 
-    <string name="connection">繋がり</string>
-
     <string name="statistics">統計</string>
 
     <string name="dynamic_background">ダイナミックな背景</string>
 
     <string name="auto_connect">自動接続</string>
-
-    <string name="usage">使用法</string>
 
     <string name="icon">アイコン</string>
 
@@ -91,8 +83,6 @@
     <string name="latency">レイテンシー</string>
 
     <string name="start">始める</string>
-
-    <string name="stop">停止</string>
 
     <string name="server">サーバ</string>
 

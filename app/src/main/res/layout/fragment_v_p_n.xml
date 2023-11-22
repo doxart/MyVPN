@@ -6,59 +6,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.VPNFragment">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        app:cardCornerRadius="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blat"
+            android:layout_marginHorizontal="15dp"
+            android:textSize="18dp"
+            android:id="@+id/myIpTxt"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/adView"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="19dp"
+        android:layout_above="@id/countryLay"
+        android:layout_marginVertical="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/durationTxt"
+        <include
+            android:id="@+id/vpnBtn"
+            layout="@layout/switch_button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/tap_to_connect"
-            android:textAllCaps="true"
-            android:textSize="32dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="30dp" />
 
         <TextView
             android:id="@+id/vpnStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/disconnected"
+            android:text="@string/tap_to_connect"
             android:textAllCaps="true"
-            android:textColor="@color/plat"
-            android:textSize="14dp"
+            android:textColor="@color/primary"
+            android:textSize="18dp"
+            android:fontFamily="@font/quicksand_bold"
             android:textStyle="bold" />
 
-        <include
-            android:id="@+id/vpnBtn"
-            layout="@layout/switch_button"
+        <TextView
+            android:id="@+id/durationTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="10dp"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <com.google.android.ads.nativetemplates.TemplateView
-        android:id="@+id/adView"
-        android:layout_margin="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/countryLay"
-        app:gnt_template_type="@layout/gnt_small_template_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <include
-        layout="@layout/country_view"
+        layout="@layout/country_view1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/countryLay"/>
 

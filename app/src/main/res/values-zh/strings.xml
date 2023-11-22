@@ -20,8 +20,6 @@
 
     <string name="vpn">VPN</string>
 
-    <string name="browser">浏览器</string>
-
     <string name="settings">设置</string>
 
     <string name="starting">开始</string>
@@ -40,8 +38,6 @@
 
     <string name="launch_phase_5">完毕</string>
 
-    <string name="auto_ms_format">汽车 。%s</string>
-
     <string name="premium">优质的</string>
 
     <string name="basic">基本的</string>
@@ -50,15 +46,11 @@
 
     <string name="search_location">搜索地点</string>
 
-    <string name="connection">联系</string>
-
     <string name="statistics">统计数据</string>
 
     <string name="dynamic_background">动态背景</string>
 
     <string name="auto_connect">自动连接</string>
-
-    <string name="usage">用法</string>
 
     <string name="icon">图标</string>
 
@@ -91,8 +83,6 @@
     <string name="latency">潜伏</string>
 
     <string name="start">开始</string>
-
-    <string name="stop">停止</string>
 
     <string name="server">服务器</string>
 

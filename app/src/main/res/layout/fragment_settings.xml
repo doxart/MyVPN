@@ -1,188 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
+    android:fillViewport="true"
+    android:scrollbars="none"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.SettingsFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:orientation="vertical"
-        android:background="@android:color/transparent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/appbar"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:background="@android:color/transparent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:contentInsetEnd="10dp"
-            app:contentInsetStart="10dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_close_24"
-                android:foreground="@drawable/ripple"
-                app:tint="@color/plat1"
-                app:contentPadding="5dp"
-                android:id="@+id/closeBT"/>
+            android:background="@color/primary_dark"
+            android:padding="20dp"
+            android:orientation="vertical"
+            android:gravity="center|start"
+            android:clipToPadding="false"
+            android:layout_margin="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:fontFamily="@font/poppins_bold"
-                android:letterSpacing="0.2"
-                android:text="@string/settings"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:text="@string/statistics"
+                app:drawableTint="@color/colorWhite"
+                app:drawableStartCompat="@drawable/ic_chart_24"
+                android:drawablePadding="10dp"/>
 
-        </com.google.android.material.appbar.MaterialToolbar>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:id="@+id/noStatistics"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:alpha="0.5"
+                android:text="@string/no_statistics_found_start_the_vpn_now"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:id="@+id/scrollView">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primary_dark"
-                android:padding="20dp"
-                android:orientation="vertical"
-                android:gravity="center|start"
-                android:clipToPadding="false"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/statistics"
-                    app:drawableTint="@color/colorWhite"
-                    app:drawableStartCompat="@drawable/ic_chart_24"
-                    android:drawablePadding="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:gravity="center"
-                    android:id="@+id/noStatistics"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dp"
-                    android:alpha="0.5"
-                    android:text="@string/no_statistics_found_start_the_vpn_now"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/usageRecycler"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:padding="20dp"
-                android:clipToPadding="false"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    app:drawableTint="@color/colorWhite"
-                    android:gravity="center"
-                    android:id="@+id/acText"
-                    app:drawableStartCompat="@drawable/ic_web_24"
-                    android:drawablePadding="10dp"
-                    android:text="@string/auto_connect"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12dp"
-                    android:id="@+id/cStatusTxt"
-                    android:background="@drawable/card_premium_bg"
-                    android:text="@string/premium"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/acText"
-                    android:paddingHorizontal="4dp"
-                    android:paddingVertical="1dp"
-                    android:layout_marginStart="5dp"/>
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    app:switchPadding="0dp"
-                    android:id="@+id/autoConnectSwitch"
-                    app:thumbTextPadding="0dp"
-                    android:checked="false"
-                    android:padding="0dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    app:trackTint="@color/plat1"
-                    app:thumbTint="@color/colorWhite"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:padding="20dp"
-                android:clipToPadding="false"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    app:drawableTint="@color/colorWhite"
-                    android:gravity="center"
-                    app:drawableStartCompat="@drawable/ic_image_24"
-                    android:drawablePadding="10dp"
-                    android:text="@string/dynamic_background"/>
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    app:switchPadding="0dp"
-                    android:id="@+id/dynamicBgSwitch"
-                    app:thumbTextPadding="0dp"
-                    android:checked="false"
-                    android:padding="0dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    app:trackTint="@color/plat1"
-                    app:thumbTint="@color/colorWhite"/>
-
-            </RelativeLayout>
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="10dp"
+                android:id="@+id/usageRecycler"/>
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="20dp"
+            android:clipToPadding="false"
+            android:layout_margin="10dp">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:drawableTint="@color/colorWhite"
+                android:gravity="center"
+                android:id="@+id/acText"
+                app:drawableStartCompat="@drawable/ic_web_24"
+                android:drawablePadding="10dp"
+                android:text="@string/auto_connect"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:id="@+id/cStatusTxt"
+                android:background="@drawable/card_premium_bg"
+                android:text="@string/premium"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/acText"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="1dp"
+                android:layout_marginStart="5dp"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:switchPadding="0dp"
+                android:id="@+id/autoConnectSwitch"
+                app:thumbTextPadding="0dp"
+                android:checked="false"
+                android:padding="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:trackTint="@color/plat1"
+                app:thumbTint="@color/colorWhite"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="20dp"
+            android:visibility="gone"
+            android:clipToPadding="false"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:drawableTint="@color/colorWhite"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/ic_image_24"
+                android:drawablePadding="10dp"
+                android:text="@string/dynamic_background"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:switchPadding="0dp"
+                android:id="@+id/dynamicBgSwitch"
+                app:thumbTextPadding="0dp"
+                android:checked="false"
+                android:padding="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:trackTint="@color/plat1"
+                app:thumbTint="@color/colorWhite"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

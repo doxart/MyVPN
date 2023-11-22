@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/main_background2"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Activities.MainActivity">
 
     <include
@@ -27,8 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/card_bg"
-        android:visibility="gone"
+        android:background="@color/colorPrimary"
         app:labelVisibilityMode="unlabeled"
         app:itemIconSize="26dp"
         app:itemTextAppearanceActive="@style/TextAppearance.MaterialComponents.Subtitle2"

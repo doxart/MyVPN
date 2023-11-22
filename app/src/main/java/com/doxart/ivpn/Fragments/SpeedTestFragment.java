@@ -1,24 +1,22 @@
-package com.doxart.ivpn.Activities;
-
-import static com.doxart.ivpn.Util.Utils.getNavigationBarHeight;
-import static com.doxart.ivpn.Util.Utils.getStatusBarHeight;
+package com.doxart.ivpn.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.SharePrefs;
-import com.doxart.ivpn.databinding.ActivitySpeedTestBinding;
+import com.doxart.ivpn.databinding.FragmentSpeedTestBinding;
 import com.ekn.gruzer.gaugelibrary.Range;
 import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
@@ -32,33 +30,32 @@ import fr.bmartel.speedtest.SpeedTestSocket;
 import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
 
-public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestListener {
+public class SpeedTestFragment extends Fragment implements ISpeedTestListener {
 
-    ActivitySpeedTestBinding b;
+    FragmentSpeedTestBinding b;
+    Context context;
+
     private long startTime;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        inflate();
-    }
+    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
-    private void inflate() {
-        b = ActivitySpeedTestBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        b = FragmentSpeedTestBinding.inflate(inflater, container, false);
+        context = getContext();
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        adjustMargins();
         init();
+
+        return b.getRoot();
     }
 
     private void loadAds() {
-        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_id))
+        AdLoader adLoader = new AdLoader.Builder(context, getString(R.string.native_id))
                 .forNativeAd(nativeAd -> {
                     NativeTemplateStyle styles = new
                             NativeTemplateStyle.Builder().build();
-                    TemplateView template = findViewById(R.id.my_template);
+                    TemplateView template = b.myTemplate;
                     template.setStyles(styles);
                     template.setNativeAd(nativeAd);
                 })
@@ -67,38 +64,11 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         adLoader.loadAd(new AdRequest.Builder().build());
     }
 
-    private void adjustMargins() {
-        ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int statusBarHeight = getStatusBarHeight(getApplicationContext());
-                int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
-
-                int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-
-                b.getRoot().setPadding(
-                        0,
-                        statusBarHeight,
-                        0,
-                        navigationBarHeight + pxToDp
-                );
-
-                b.getRoot().getViewTreeObserver().removeOnPreDrawListener(this);
-
-                return true;
-            }
-        };
-
-        b.getRoot().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
-    }
-
     private void init() {
-        b.closeBT.setOnClickListener(v -> finish());
-
         setupGauge();
 
-        if (!SharePrefs.getInstance(this).getBoolean("premium")) {
-            if (SharePrefs.getInstance(this).getBoolean("showBannerAds")) loadAds();
+        if (!SharePrefs.getInstance(context).getBoolean("premium")) {
+            if (SharePrefs.getInstance(context).getBoolean("showBannerAds")) loadAds();
             else b.myTemplate.setVisibility(View.GONE);
         } else b.myTemplate.setVisibility(View.GONE);
 
@@ -110,17 +80,17 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
 
     private void setupGauge() {
         Range range = new Range();
-        range.setColor(ContextCompat.getColor(this, R.color.red));
+        range.setColor(ContextCompat.getColor(context, R.color.red));
         range.setFrom(0d);
         range.setTo(50d);
 
         Range range1 = new Range();
-        range1.setColor(ContextCompat.getColor(this, R.color.orange));
+        range1.setColor(ContextCompat.getColor(context, R.color.orange));
         range1.setFrom(50d);
         range1.setTo(100d);
 
         Range range2 = new Range();
-        range2.setColor(ContextCompat.getColor(this, R.color.green));
+        range2.setColor(ContextCompat.getColor(context, R.color.green));
         range2.setFrom(100d);
         range2.setTo(150d);
 
@@ -132,7 +102,7 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         b.speedGauge.setMaxValue(150d);
         b.speedGauge.setValue(0d);
 
-        b.speedGauge.setValueColor(ContextCompat.getColor(this, android.R.color.transparent));
+        b.speedGauge.setValueColor(ContextCompat.getColor(context, android.R.color.transparent));
     }
 
     int test = 0;
@@ -140,7 +110,7 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
         test = 99;
         SpeedTestSocket speedTestSocket = new SpeedTestSocket();
 
-        b.speedGauge.setValueColor(ContextCompat.getColor(this, R.color.colorWhite));
+        b.speedGauge.setValueColor(ContextCompat.getColor(context, R.color.colorWhite));
 
         startTime = System.currentTimeMillis();
         speedTestSocket.addSpeedTestListener(this);
@@ -150,11 +120,11 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
     @Override
     public void onCompletion(SpeedTestReport report) {
         float r = report.getTransferRateBit().floatValue() / 1000000;
-        runOnUiThread(() -> {
+        getActivity().runOnUiThread(() -> {
             b.speedGauge.setValue(Math.floor(r));
 
             b.startTestBT.setVisibility(View.VISIBLE);
-            b.speedGauge.setValueColor(ContextCompat.getColor(this, android.R.color.transparent));
+            b.speedGauge.setValueColor(ContextCompat.getColor(context, android.R.color.transparent));
 
             b.speedTxt.setText(String.format("%s MB/s", new DecimalFormat("##").format(r)));
             b.latencyTxt.setText(String.format("%s ms", (System.currentTimeMillis() - startTime) / 600));
@@ -166,20 +136,12 @@ public class SpeedTestActivity extends AppCompatActivity implements ISpeedTestLi
     @Override
     public void onProgress(float percent, SpeedTestReport report) {
         float r = report.getTransferRateBit().floatValue() / 1000000;
-        runOnUiThread(() -> b.speedGauge.setValue(Math.floor(r)));
+        getActivity().runOnUiThread(() -> b.speedGauge.setValue(Math.floor(r)));
         Log.d("AGDDGSGSGSDFSDG", "onProgress: " + r / 1000000);
     }
 
     @Override
     public void onError(SpeedTestError speedTestError, String errorMessage) {
         Log.d("2AGDDGSGSGSDFSDG", "onError: " + errorMessage);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent data = new Intent();
-        data.putExtra("showAD", test > 0);
-        setResult(Activity.RESULT_OK, data);
-        super.onBackPressed();
     }
 }

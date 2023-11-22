@@ -16,8 +16,6 @@
     <color name="primary">#5E41D1</color>
     <color name="blat">#837C7C</color>
     <color name="blat1">#706C6C</color>
+    <color name="plat2">#40B2B3B2</color>
 
-    <color name="colorConnectButton">#4CAF50</color>
-    <color name="colorDisconnectButton">#FF5252</color>
-    <color name="colorPowerButton">#2196F3</color>
 </resources>

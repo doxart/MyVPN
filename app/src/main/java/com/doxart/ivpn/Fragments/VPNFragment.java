@@ -6,12 +6,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,21 +30,19 @@ import com.doxart.ivpn.DB.ServerDB;
 import com.doxart.ivpn.Interfaces.ChangeServer;
 import com.doxart.ivpn.Model.ServerModel;
 import com.doxart.ivpn.R;
+import com.doxart.ivpn.RetroFit.GetIPDataService;
+import com.doxart.ivpn.RetroFit.MyIP;
+import com.doxart.ivpn.RetroFit.RetrofitClient;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;
 import com.doxart.ivpn.Util.VPNCountdownTimer;
 import com.doxart.ivpn.databinding.FragmentVPNBinding;
-import com.google.android.ads.nativetemplates.NativeTemplateStyle;
-import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -58,11 +55,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import de.blinkt.openvpn.OpenVpnApi;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.OpenVPNThread;
 import de.blinkt.openvpn.core.VpnStatus;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VPNFragment extends Fragment implements ChangeServer {
 
@@ -76,17 +78,15 @@ public class VPNFragment extends Fragment implements ChangeServer {
     private List<ServerModel> serverList;
     boolean vpnRunning = false;
 
-    private RewardedAd rewardedAd;
-
     private final String TAG = "VPNApp";
 
     private InterstitialAd mInterstitialAd;
 
-    private int adMode = 0;
-
     private boolean premium = false;
 
     private SharePrefs sharePrefs;
+    private MyIP myIP;
+    int adDelay = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,38 +101,35 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
         sharePrefs = new SharePrefs(context);
 
-        adMode = sharePrefs.getInt("vpnButtonAdMode");
         premium = sharePrefs.getBoolean("premium");
+        adDelay = sharePrefs.getInt("delayTimeBetweenAds");
 
-        switch (adMode) {
-            case 0:
-                buildRewarded();
-                break;
-            case 1:
-                buildInterstitial();
-                break;
-        }
+        if (!premium) buildInterstitial();
 
+        getIPLocation();
         init();
 
         return b.getRoot();
     }
 
-    private void buildRewarded() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(context, getString(R.string.rewarded_id),
-                adRequest, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        rewardedAd = null;
-                        Log.d(TAG, "onAdFailedToLoad: " + loadAdError);
-                    }
+    private void getIPLocation() {
+        GetIPDataService service = RetrofitClient.getRetrofitInstance().create(GetIPDataService.class);
 
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd ad) {
-                        rewardedAd = ad;
-                    }
-                });
+        Call<MyIP> call = service.getMyIP();
+
+        call.enqueue(new Callback<MyIP>() {
+            @Override
+            public void onResponse(@NonNull Call<MyIP> call, @NonNull Response<MyIP> response) {
+                myIP = response.body();
+
+                if (myIP != null) b.myIpTxt.setText(myIP.getQuery());
+            }
+            @Override
+            public void onFailure(@NonNull Call<MyIP> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t);
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void buildInterstitial() {
@@ -158,8 +155,11 @@ public class VPNFragment extends Fragment implements ChangeServer {
     private void showInterstitial(boolean forConnect) {
         long lastAd = sharePrefs.getLastAd();
 
+        Log.d(TAG, "showInterstitial: now: " + new Date().getTime() + " then: " + lastAd);
+
         if (new Date().getTime() < lastAd) {
             goConnectionReport(forConnect);
+            Log.d(TAG, "showInterstitial: getTime");
             return;
         }
 
@@ -168,21 +168,27 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 @Override
                 public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                     super.onAdFailedToShowFullScreenContent(adError);
+                    Log.d(TAG, "showInterstitial: fail");
                     goConnectionReport(forConnect);
-
                 }
 
                 @Override
                 public void onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent();
-                    sharePrefs.putLong("lastAd", new Date().getTime() + m);
+                    sharePrefs.putLong("lastAd", new Date().getTime() + (long) adDelay * 60 * 1000);
                     goConnectionReport(forConnect);
+                    buildInterstitial();
+                    Log.d(TAG, "showInterstitial: dismiss");
 
                 }
             });
 
             mInterstitialAd.show(requireActivity());
-        } else goConnectionReport(forConnect);
+        } else {
+            goConnectionReport(forConnect);
+            Log.d(TAG, "showInterstitial: null");
+            buildInterstitial();
+        }
 
     }
 
@@ -197,46 +203,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
             startActivity(i);
             ConnectionReportActivity.server = server;
         }
-    }
-
-    private void showAd(boolean forConnect) {
-        long lastAd = sharePrefs.getLastAd();
-
-        if (new Date().getTime() < lastAd) {
-            goConnectionReport(forConnect);
-            return;
-        }
-
-        if (rewardedAd != null) {
-            rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    goConnectionReport(forConnect);
-                }
-            });
-            rewardedAd.show(requireActivity(), rewardItem -> {
-                sharePrefs.putLong("lastAd", new Date().getTime() + m);
-            });
-        } else {
-            goConnectionReport(forConnect);
-            buildRewarded();
-        }
-
-    }
-
-    private void loadAds() {
-        AdLoader adLoader = new AdLoader.Builder(context, getString(R.string.native_id))
-                .forNativeAd(nativeAd -> {
-                    NativeTemplateStyle styles = new
-                            NativeTemplateStyle.Builder().build();
-                    TemplateView template = b.adView;
-                    template.setStyles(styles);
-                    template.setNativeAd(nativeAd);
-                })
-                .build();
-
-        adLoader.loadAd(new AdRequest.Builder().build());
     }
 
     int initTry = 0;
@@ -302,13 +268,8 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
         if (server != null) {
             sharePrefs.putServer(server);
-            updateCurrentServerLay(server, true);
+            updateCurrentServerLay(server);
         }
-
-        if (!premium) {
-            if (sharePrefs.getBoolean("showBannerAds")) loadAds();
-            else b.adView.setVisibility(View.GONE);
-        } else b.adView.setVisibility(View.GONE);
     }
 
     public void changeServer(ServerModel index) {
@@ -316,16 +277,6 @@ public class VPNFragment extends Fragment implements ChangeServer {
     }
 
     private void prepareVpn() {
-        if (!premium) {
-            switch (adMode) {
-                case 0:
-                    showAd(true);
-                    break;
-                case 1:
-                    showInterstitial(true);
-                    break;
-            }
-        }
         if (!vpnRunning) {
             if (getInternetStatus()) {
                 Intent intent = VpnService.prepare(context);
@@ -344,18 +295,15 @@ public class VPNFragment extends Fragment implements ChangeServer {
     });
 
     public boolean stopVpn() {
-        if (!premium) {
-            switch (adMode) {
-                case 0:
-                    showAd(false);
-                    break;
-                case 1:
-                    showInterstitial(false);
-                    break;
-            }
-        }
         try {
+            b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.orange), PorterDuff.Mode.SRC_ATOP);
+            b.vpnStatus.setText(getString(R.string.disconnecting));
+            b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.orange));
             OpenVPNThread.stop();
+
+            if (!premium) {
+                showInterstitial(false);
+            } else goConnectionReport(false);
 
             status("connect");
 
@@ -402,6 +350,10 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
                 OpenVpnApi.startVpn(context, config.toString(), server.getCountry(), server.getOvpnUserName(), server.getOvpnUserPassword());
 
+                if (!premium) {
+                    showInterstitial(true);
+                } else goConnectionReport(true);
+
                 b.vpnStatus.setText(getString(R.string.starting));
                 vpnRunning = true;
             } catch (IOException | RemoteException e) {
@@ -415,7 +367,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
         if (connectionState!= null)
             switch (connectionState) {
                 case "DISCONNECTED":
-                    status("connect");
+                    status("disconnected");
                     vpnRunning = false;
                     OpenVPNService.setDefaultStatus();
 
@@ -447,58 +399,58 @@ public class VPNFragment extends Fragment implements ChangeServer {
 
     public void status(String status) {
         switch (status) {
-            case "connect":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimary)));
+            case "disconnected":
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.disconnected));
-                b.durationTxt.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                b.durationTxt.setText("");
+                if (myIP != null) b.myIpTxt.setText(myIP.getQuery());
+                b.myIpTxt.setTextColor(ContextCompat.getColor(context, R.color.blat));
+                if (LocationFragment.getInstance() != null) LocationFragment.getInstance().getIPLocation();
                 break;
             case "connecting":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.TOP);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.primary));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorWhite)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.orange), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.connecting));
+                b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.orange));
                 break;
             case "connected":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.TOP);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.primary));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorWhite)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.green), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.connected));
+                b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.green));
+                if (myIP != null) b.myIpTxt.setText(server.getIpv4());
+                b.myIpTxt.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+                if (LocationFragment.getInstance() != null) LocationFragment.getInstance().getIPLocation();
                 break;
             case "tryDifferentServer":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimary)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.try_different_server));
-                b.durationTxt.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                b.durationTxt.setText("");
                 break;
             case "loading":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.TOP);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.primary));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorWhite)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.loading));
                 break;
             case "invalidDevice":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimary)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.invalid_device));
-                b.durationTxt.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                b.durationTxt.setText("");
                 break;
             case "authenticationCheck":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.TOP);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.primary));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorWhite)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.authenticating));
-                b.durationTxt.setText(getString(R.string.tap_to_connect));
+                b.durationTxt.setText("");
                 break;
             case "nonetwork":
-                b.vpnBtn.switchLay.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-                b.vpnBtn.switchBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
-                b.vpnBtn.switchBtn.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimary)));
+                b.vpnBtn.switchBtnBg.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
                 b.vpnStatus.setText(getString(R.string.disconnected));
-                b.durationTxt.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setText(getString(R.string.tap_to_connect));
+                b.vpnStatus.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                b.durationTxt.setText("");
                 break;
         }
     }
@@ -512,7 +464,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
                 e.printStackTrace();
             }
 
-            if (intent.getAction().equals("usage_data_updated")) {
+            if (Objects.requireNonNull(intent.getAction()).equals("usage_data_updated")) {
                 int m = intent.getIntExtra("usageMinutes", 0);
                 int s = intent.getIntExtra("usageSeconds", 0);
                 updateConnectionStatus(m, s);
@@ -526,7 +478,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
         int totalSeconds = mm * 60 + ss;
         m = totalSeconds / 60;
         s = totalSeconds % 60;
-        String formattedTime = String.format("%02d.%02d", m, s);
+        String formattedTime = String.format(Locale.getDefault(), "%02d.%02d", m, s);
         if (vpnRunning) {
             b.durationTxt.setText(formattedTime);
         }
@@ -536,11 +488,9 @@ public class VPNFragment extends Fragment implements ChangeServer {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void updateCurrentServerLay(ServerModel m, boolean auto) {
+    public void updateCurrentServerLay(ServerModel m) {
         if (m != null) {
             if (m.getFlagUrl() != null) Glide.with(context).load("https://flagcdn.com/h80/" + m.getFlagUrl() + ".png").centerCrop().into(b.countryLay.cFlagImg);
-            if (auto) b.countryLay.cMsTxt.setText(String.format(getString(R.string.auto_ms_format), m.getLatency() + "ms"));
-            else b.countryLay.cMsTxt.setText(String.format("%sms", m.getLatency()));
             b.countryLay.cCountryTxt.setText(m.getCountry());
 
             Utils.setSignalView(context, b.countryLay.s1, b.countryLay.s2, b.countryLay.s3, m.getLatency());
@@ -550,7 +500,7 @@ public class VPNFragment extends Fragment implements ChangeServer {
     @Override
     public void newServer(ServerModel server) {
         this.server = server;
-        updateCurrentServerLay(server, false);
+        updateCurrentServerLay(server);
 
         if (vpnRunning) {
             stopVpn();

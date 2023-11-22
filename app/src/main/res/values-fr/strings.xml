@@ -20,8 +20,6 @@
 
     <string name="vpn">VPN</string>
 
-    <string name="browser">Navigateur</string>
-
     <string name="settings">Paramètres</string>
 
     <string name="starting">Départ</string>
@@ -40,8 +38,6 @@
 
     <string name="launch_phase_5">Fait</string>
 
-    <string name="auto_ms_format">Automatique . %s</string>
-
     <string name="premium">Prime</string>
 
     <string name="basic">Basique</string>
@@ -50,15 +46,11 @@
 
     <string name="search_location">Rechercher un emplacement</string>
 
-    <string name="connection">Connexion</string>
-
     <string name="statistics">Statistiques</string>
 
     <string name="dynamic_background">Fond dynamique</string>
 
     <string name="auto_connect">Connexion automatique</string>
-
-    <string name="usage">Usage</string>
 
     <string name="icon">icône</string>
 
@@ -91,8 +83,6 @@
     <string name="latency">Latence</string>
 
     <string name="start">Commencer</string>
-
-    <string name="stop">Arrêt</string>
 
     <string name="server">Serveur</string>
 

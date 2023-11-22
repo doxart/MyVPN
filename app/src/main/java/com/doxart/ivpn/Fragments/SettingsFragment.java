@@ -49,20 +49,10 @@ public class SettingsFragment extends Fragment {
 
         sharePrefs = new SharePrefs(context);
 
-        adjustMargin();
         getUsage();
         init();
 
         return b.getRoot();
-    }
-
-    private void adjustMargin() {
-        final int statusBarHeight = Utils.getStatusBarHeight(context);
-        final int navigationBarHeight = Utils.getStatusBarHeight(context);
-
-        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-
-        b.appbar.setPaddingRelative(0, statusBarHeight, 0, 0);
     }
 
     private void getUsage() {
@@ -93,8 +83,6 @@ public class SettingsFragment extends Fragment {
     }
 
     private void init() {
-        b.closeBT.setOnClickListener(v -> MainActivity.getInstance().closeSettings());
-
         b.dynamicBgSwitch.setChecked(sharePrefs.isDynamicBackground());
         b.dynamicBgSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> sharePrefs.setDynamicBackground(isChecked));
 

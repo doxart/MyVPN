@@ -1,54 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center|top"
-    tools:context=".Activities.SpeedTestActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:orientation="vertical"
-        android:background="@android:color/transparent"
-        android:layout_width="match_parent"
-        android:id="@+id/appbar"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:background="@android:color/transparent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:contentInsetEnd="10dp"
-            app:contentInsetStart="10dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_close_24"
-                android:foreground="@drawable/ripple"
-                app:tint="@color/plat1"
-                app:contentPadding="5dp"
-                android:id="@+id/closeBT"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:fontFamily="@font/poppins_bold"
-                android:letterSpacing="0.2"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp"
-                android:text="@string/speed_test"
-                android:textStyle="bold" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    tools:context=".Fragments.SpeedTestFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

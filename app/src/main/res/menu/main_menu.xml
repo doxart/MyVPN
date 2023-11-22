@@ -5,9 +5,13 @@
         android:title="@string/vpn"
         android:icon="@drawable/ic_power_24"/>
 
-    <item android:id="@+id/navBrowser"
-        android:title="@string/browser"
-        android:icon="@drawable/ic_compass_24"/>
+    <item android:id="@+id/navLocation"
+        android:title="@string/location"
+        android:icon="@drawable/ic_location_pin_24"/>
+
+    <item android:id="@+id/navSpeedTest"
+        android:title="@string/speed_test"
+        android:icon="@drawable/ic_gauge_24"/>
 
     <item android:id="@+id/navSettings"
         android:title="@string/settings"

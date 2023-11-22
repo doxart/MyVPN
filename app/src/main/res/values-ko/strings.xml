@@ -20,8 +20,6 @@
 
     <string name="vpn">VPN</string>
 
-    <string name="browser">브라우저</string>
-
     <string name="settings">설정</string>
 
     <string name="starting">시작</string>
@@ -40,8 +38,6 @@
 
     <string name="launch_phase_5">완료</string>
 
-    <string name="auto_ms_format">자동 . %s</string>
-
     <string name="premium">프리미엄</string>
 
     <string name="basic">기초적인</string>
@@ -50,15 +46,11 @@
 
     <string name="search_location">위치 검색</string>
 
-    <string name="connection">연결</string>
-
     <string name="statistics">통계</string>
 
     <string name="dynamic_background">동적 배경</string>
 
     <string name="auto_connect">자동 연결</string>
-
-    <string name="usage">용법</string>
 
     <string name="icon">상</string>
 
@@ -91,8 +83,6 @@
     <string name="latency">지연 시간</string>
 
     <string name="start">시작</string>
-
-    <string name="stop">멈추다</string>
 
     <string name="server">섬기는 사람</string>
 

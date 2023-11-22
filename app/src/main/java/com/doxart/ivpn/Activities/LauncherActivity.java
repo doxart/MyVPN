@@ -90,8 +90,6 @@ public class LauncherActivity extends AppCompatActivity {
             return;
         }
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
         sharePrefs = new SharePrefs(this);
 
         b.adjustingTxt.setText(getString(R.string.launch_phase_0));
@@ -129,6 +127,7 @@ public class LauncherActivity extends AppCompatActivity {
                 sharePrefs.putBoolean("showPaywallCloseAd", remoteConfig.getBoolean("showPaywallCloseAd"));
                 sharePrefs.putBoolean("showBannerAds", remoteConfig.getBoolean("showBannerAds"));
                 sharePrefs.putInt("vpnButtonAdMode", ((Long)remoteConfig.getLong("vpnButtonAdMode")).intValue());
+                sharePrefs.putInt("delayTimeBetweenAds", ((Long)remoteConfig.getLong("delayTimeBetweenAds")).intValue());
             }
 
             b.adjustingTxt.setText(getString(R.string.launch_phase_3));

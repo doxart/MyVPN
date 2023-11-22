@@ -6,18 +6,22 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorWhite</item>
 
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowLightStatusBar">false</item>
 
         <item name="android:navigationBarColor">@color/colorPrimary</item>
 
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
 
         <item name="fontFamily">@font/poppins</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="TranslucentView">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="Theme.IVPN" parent="Base.Theme.IVPN" />

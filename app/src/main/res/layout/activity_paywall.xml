@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    style="@style/TranslucentView"
     tools:context=".Activities.PaywallActivity">
 
     <com.adapty.ui.AdaptyPaywallView
@@ -18,7 +20,7 @@
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
         android:id="@+id/closeBT"
         android:visibility="gone"
-        android:background="@color/plat1"
+        android:background="@color/plat2"
         app:tint="@color/colorWhite"
         app:contentPadding="8dp"
         android:src="@drawable/ic_close_24"/>

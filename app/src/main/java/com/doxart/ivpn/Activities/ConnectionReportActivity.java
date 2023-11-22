@@ -1,20 +1,17 @@
 package com.doxart.ivpn.Activities;
 
-import static com.doxart.ivpn.Util.Utils.getNavigationBarHeight;
-import static com.doxart.ivpn.Util.Utils.getStatusBarHeight;
-
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
@@ -28,10 +25,14 @@ import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 
+import java.util.Locale;
+
 public class ConnectionReportActivity extends AppCompatActivity {
 
     ActivityConnectionReportBinding b;
     public static ServerModel server;
+    private Dialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,36 +44,13 @@ public class ConnectionReportActivity extends AppCompatActivity {
         b = ActivityConnectionReportBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        loadAds();
 
-        adjustMargins();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
         setupView();
         init();
-    }
-
-    private void adjustMargins() {
-        ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int statusBarHeight = getStatusBarHeight(getApplicationContext());
-                int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
-
-                int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-
-                b.getRoot().setPadding(
-                        0,
-                        statusBarHeight,
-                        0,
-                        navigationBarHeight + pxToDp
-                );
-
-                b.getRoot().getViewTreeObserver().removeOnPreDrawListener(this);
-
-                return true;
-            }
-        };
-
-        b.getRoot().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
     }
 
     private void setupView() {
@@ -113,6 +91,7 @@ public class ConnectionReportActivity extends AppCompatActivity {
 
 
     private void loadAds() {
+        b.myTemplate.setVisibility(View.GONE);
         AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.native_id))
                 .forNativeAd(nativeAd -> {
                     NativeTemplateStyle styles = new
@@ -124,6 +103,7 @@ public class ConnectionReportActivity extends AppCompatActivity {
                 .build();
 
         adLoader.loadAd(new AdRequest.Builder().build());
+        b.myTemplate.setVisibility(View.VISIBLE);
     }
 
 
@@ -140,7 +120,7 @@ public class ConnectionReportActivity extends AppCompatActivity {
 
     public void updateConnectionStatus(int m, int s) {
         int totalSeconds = m * 60 + s;
-        String formattedTime = String.format("%02d s", totalSeconds % 60);
+        String formattedTime = String.format(Locale.getDefault(), "%02d s", totalSeconds % 60);
         b.serverTime.setText(formattedTime);
     }
 

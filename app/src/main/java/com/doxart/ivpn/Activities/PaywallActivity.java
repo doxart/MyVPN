@@ -13,8 +13,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
 import com.adapty.Adapty;
 import com.adapty.errors.AdaptyError;
@@ -26,6 +25,7 @@ import com.adapty.ui.AdaptyPaywallInsets;
 import com.adapty.ui.AdaptyPaywallView;
 import com.adapty.ui.AdaptyUI;
 import com.adapty.ui.listeners.AdaptyUiEventListener;
+import com.doxart.ivpn.R;
 import com.doxart.ivpn.Util.PaywallViewUtils;
 import com.doxart.ivpn.Util.SharePrefs;
 import com.doxart.ivpn.Util.Utils;

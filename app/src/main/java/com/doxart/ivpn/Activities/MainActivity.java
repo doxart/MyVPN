@@ -1,8 +1,5 @@
 package com.doxart.ivpn.Activities;
 
-import static com.doxart.ivpn.Util.Utils.getNavigationBarHeight;
-import static com.doxart.ivpn.Util.Utils.getStatusBarHeight;
-
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,10 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import androidx.activity.result.ActivityResult;
@@ -26,12 +20,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
 import com.doxart.ivpn.Adapter.VPAdapter;
+import com.doxart.ivpn.Fragments.LocationFragment;
 import com.doxart.ivpn.Fragments.ServersFragment;
 import com.doxart.ivpn.Fragments.SettingsFragment;
+import com.doxart.ivpn.Fragments.SpeedTestFragment;
 import com.doxart.ivpn.Fragments.VPNFragment;
 import com.doxart.ivpn.Interfaces.NavItemClickListener;
 import com.doxart.ivpn.Interfaces.OnAnswerListener;
@@ -48,19 +43,18 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
-import java.util.Random;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavItemClickListener {
     private final String TAG = "MAIN_ACTIVITY";
     private static MainActivity instance;
     ActivityMainBinding b;
 
-    WindowInsetsCompat insetsCompat;
-
     Dialog connectionDialog;
 
     InterstitialAd mInterstitialAd;
-    int showTry = 0;
+    SharePrefs sharePrefs;
+    int adDelay = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,47 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         }
     });
 
-    private void adjustMargins() {
-        ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int statusBarHeight = getStatusBarHeight(getApplicationContext());
-                int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
-
-                int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-
-                Log.d(TAG, "onPreDraw: " + statusBarHeight + " nav: " + navigationBarHeight);
-                b.appbar.getRoot().setPadding(
-                        0,
-                        statusBarHeight,
-                        0,
-                        0
-                );
-
-                b.mainPager.setPadding(0, 0, 0, navigationBarHeight + pxToDp);
-
-                b.getRoot().getViewTreeObserver().removeOnPreDrawListener(this);
-
-                return true;
-            }
-        };
-
-        int statusBarHeight = getStatusBarHeight(getApplicationContext());
-        int navigationBarHeight = getNavigationBarHeight(getApplicationContext());
-
-        int pxToDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-
-        Log.d(TAG, "onPreDraw: " + statusBarHeight + " nav: " + navigationBarHeight);
-        b.getRoot().setPadding(
-                0,
-                statusBarHeight,
-                0,
-                navigationBarHeight + pxToDp
-        );
-
-        b.getRoot().getViewTreeObserver().addOnPreDrawListener(preDrawListener);
-    }
-
     private void showConnectionDialog() {
         connectionDialog = Utils.askQuestion(this, getString(R.string.no_connection), getString(R.string.no_connection_detail), getString(R.string.go_network_settings),
                 getString(R.string.try_again), getString(R.string.exit), null, false, new OnAnswerListener() {
@@ -185,31 +138,22 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        buildInterstitial();
+        sharePrefs = new SharePrefs(this);
+        adDelay = sharePrefs.getInt("delayTimeBetweenAds");
+
+        if (!sharePrefs.getBoolean("premium")) buildInterstitial();
 
         if (!SharePrefs.getInstance(this).getBoolean("premium"))
             activityLauncher.launch(new Intent(this, PaywallActivity.class).putExtra("timer", 3000));
         else b.appbar.premiumBT.setVisibility(View.GONE);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
 
-        adjustMargins();
-        if (SharePrefs.getInstance(this).isDynamicBackground())
-            setBackground();
+        //if (SharePrefs.getInstance(this).isDynamicBackground()) setBackground();
 
         init();
-    }
-
-    private void setBackground() {
-        int[] bg = new int[] {R.drawable.main_background1, R.drawable.main_background2,
-                R.drawable.main_background3, R.drawable.main_background4,
-                R.drawable.main_background5, R.drawable.main_background6,
-                R.drawable.main_background7, R.drawable.main_background7,
-                R.drawable.main_background1, R.drawable.main_background2,
-                R.drawable.main_background3, R.drawable.main_background4,
-                R.drawable.main_background5, R.drawable.main_background6};
-
-        b.getRoot().setBackgroundResource(bg[new Random().nextInt(bg.length-1)]);
     }
 
     private final ActivityResultLauncher<String> permissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), o -> {});
@@ -217,11 +161,8 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     private void init() {
         createFragments();
 
-        b.appbar.settingsBT.setOnClickListener(v -> openSettings());
         b.appbar.premiumBT.setOnClickListener(v -> activityLauncher.launch(new Intent(this, PaywallActivity.class).putExtra("timer", 0)));
         b.appbar.shareBT.setOnClickListener(v -> Utils.shareApp(this));
-        b.appbar.locationBT.setOnClickListener(v -> startActivity(new Intent(this, MyLocationActivity.class)));
-        b.appbar.speedTestBT.setOnClickListener(v -> activityLauncher.launch(new Intent(this, SpeedTestActivity.class)));
     }
 
     private void createFragments() {
@@ -229,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
 
         vpAdapter.addFragment(new ServersFragment());
         vpAdapter.addFragment(new VPNFragment());
+        vpAdapter.addFragment(new LocationFragment());
+        vpAdapter.addFragment(new SpeedTestFragment());
         vpAdapter.addFragment(new SettingsFragment());
 
         b.mainPager.setUserInputEnabled(false);
@@ -240,12 +183,17 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
             if (item.getItemId() == R.id.navVpn) {
                 b.mainNav.getMenu().findItem(R.id.navVpn).setChecked(true);
                 b.mainPager.setCurrentItem(1);
-            } else if (item.getItemId() == R.id.navBrowser) {
-                b.mainNav.getMenu().findItem(R.id.navBrowser).setChecked(true);
+            } else if (item.getItemId() == R.id.navLocation) {
+                b.mainNav.getMenu().findItem(R.id.navLocation).setChecked(true);
                 b.mainPager.setCurrentItem(2);
+                if (LocationFragment.getInstance() != null) LocationFragment.getInstance().setIPLocation();
+
+            } else if (item.getItemId() == R.id.navSpeedTest){
+                b.mainNav.getMenu().findItem(R.id.navSpeedTest).setChecked(true);
+                b.mainPager.setCurrentItem(3);
             } else {
                 b.mainNav.getMenu().findItem(R.id.navSettings).setChecked(true);
-                b.mainPager.setCurrentItem(3);
+                b.mainPager.setCurrentItem(4);
             }
             return false;
         });
@@ -263,30 +211,10 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
         b.appbar.getRoot().setVisibility(View.VISIBLE);
     }
 
-    public void openSettings() {
-        b.mainPager.setCurrentItem(2);
-        //b.mainNav.setVisibility(View.GONE);
-        b.appbar.getRoot().setVisibility(View.GONE);
-    }
-
-    public void closeSettings() {
-        b.mainPager.setCurrentItem(1);
-        //b.mainNav.setVisibility(View.GONE);
-        b.appbar.getRoot().setVisibility(View.VISIBLE);
-    }
-
     @Override
     public void clickedItem(ServerModel index) {
         closeServerList();
         VPNFragment.getInstance().changeServer(index);
-    }
-
-    public WindowInsetsCompat getInsetsCompat() {
-        return insetsCompat;
-    }
-
-    public void setInsetsCompat(WindowInsetsCompat insetsCompat) {
-        this.insetsCompat = insetsCompat;
     }
 
     private void buildInterstitial() {
@@ -310,23 +238,43 @@ public class MainActivity extends AppCompatActivity implements NavItemClickListe
     }
 
     private void showInterstitial() {
+        long lastAd = sharePrefs.getLastAd();
+
+        if (new Date().getTime() < lastAd) return;
+
         if (mInterstitialAd != null) {
             mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                 @Override
                 public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
                     super.onAdFailedToShowFullScreenContent(adError);
-                    showTry++;
-                    if (showTry < 3) showInterstitial();
+                    Log.d(TAG, "showInterstitial: fail");
+                }
+
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent();
+                    sharePrefs.putLong("lastAd", new Date().getTime() + (long) adDelay * 60 * 1000);
+                    buildInterstitial();
+                    Log.d(TAG, "showInterstitial: dismiss");
+
                 }
             });
 
             mInterstitialAd.show(this);
         } else {
-            showTry++;
-            if (showTry < 3) showInterstitial();
+            Log.d(TAG, "showInterstitial: null");
+            buildInterstitial();
         }
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+    }
 
     public static MainActivity getInstance() {
         return instance;
