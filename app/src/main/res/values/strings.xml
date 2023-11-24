@@ -9,6 +9,8 @@
 
     <string name="native_id" translatable="false">ca-app-pub-5937643397203975/4056486468</string>
 
+    <string name="banner_ad_id" translatable="false">ca-app-pub-5937643397203975/3364000711</string>
+
     <string name="adapty_placement_id" translatable="false">tpid</string>
 
     <string name="connecting">Connecting</string>
@@ -63,8 +65,8 @@
     <string name="share_with_your_friends">Share with your friends</string>
     <string name="limitless_fast_secure"><![CDATA[Limitless, fast & secure]]></string>
     <string name="share">Share</string>
-    <string name="tap_to_start">Tap to Start</string>
-    <string name="ip">IP</string>
+    <string name="ip" translatable="false">IP</string>
     <string name="refresh">Refresh</string>
     <string name="disconnecting">Disconnecting</string>
+    <string name="tap_to_start">Tap to Start</string>
 </resources>

@@ -99,5 +99,8 @@
     <string name="limitless_fast_secure">Illimité, rapide et amp; sécurisé</string>
 
     <string name="share">Partager</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="disconnecting">Déconnexion</string>
+    <string name="tap_to_start">Tapez sur pour démarrer</string>
 
 </resources>

@@ -99,5 +99,8 @@
     <string name="limitless_fast_secure">無制限、高速、そして高速安全な</string>
 
     <string name="share">共有</string>
+    <string name="refresh">リフレッシュ</string>
+    <string name="disconnecting">切断</string>
+    <string name="tap_to_start">タップしてスタート</string>
 
 </resources>

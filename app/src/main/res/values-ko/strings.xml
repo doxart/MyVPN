@@ -99,5 +99,8 @@
     <string name="limitless_fast_secure">무한하고 빠르며 &amp; 안전한</string>
 
     <string name="share">공유하다</string>
+    <string name="refresh">새로 고침</string>
+    <string name="disconnecting">연결 해제</string>
+    <string name="tap_to_start">탭하여 시작</string>
 
 </resources>

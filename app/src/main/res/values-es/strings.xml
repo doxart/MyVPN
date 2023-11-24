@@ -49,4 +49,7 @@
     <string name="share_with_your_friends">compartir con tus amigos</string>
     <string name="limitless_fast_secure">Ilimitado, rápido y fácil. seguro</string>
     <string name="share">Compartir</string>
+    <string name="refresh">Actualizar</string>
+    <string name="disconnecting">Desconectando</string>
+    <string name="tap_to_start">Pulse para empezar</string>
 </resources>

@@ -162,9 +162,18 @@
                 android:layout_height="4dp"
                 android:background="@color/colorPrimary"/>
 
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                android:layout_marginVertical="10dp"
+                ads:adUnitId="@string/banner_ad_id"/>
+
             <com.google.android.ads.nativetemplates.TemplateView
                 android:id="@+id/my_template"
                 android:layout_margin="20dp"
+                android:visibility="gone"
                 app:gnt_template_type="@layout/gnt_small_template_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
