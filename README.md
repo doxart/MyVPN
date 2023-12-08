@@ -1,10 +1,6 @@
-![badge](https://flat.badgen.net/badge/DoxyVPN/Still%20in%20development/red) ![badge](https://flat.badgen.net/badge/License/Free/green)
+![badge](https://flat.badgen.net/badge/MyVPN/Still%20in%20development/red) ![badge](https://flat.badgen.net/badge/License/Free/green)
 
-![Doxy VPN](https://i.ibb.co/NNfkBts/Frame-100.png)  
-
-[<img src="https://www.freepnglogos.com/uploads/play-store-logo-png/play-store-logo-nisi-filters-australia-11.png">](https://play.google.com/store/apps/details?id=com.doxart.ivpn)
-
-## Doxy VPN
+## My VPN
 
 Welcome to my VPN application for Android, an open-source project that aims to provide a seamless and secure VPN experience on your Android device. This project was born out of the need for a reliable VPN solution with a focus on ease of use and privacy.
 
@@ -58,20 +54,20 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
      ```
 
 5. **Use Firestore in the Project**:
-   - This project uses Firestore to manage server configurations. You can find the code related to Firestore in [this file](https://github.com/doxart/DoxyVPN/blob/master/firestore-collection-template.json). You need to create Firestore documents like that if you want to change it (collection id, document fields e.g..) you need to change codes inside of app. 
+   - This project uses Firestore to manage server configurations. You can find the code related to Firestore in [this file](https://github.com/doxart/MyVPN/blob/master/firestore-collection-template.json). You need to create Firestore documents like that if you want to change it (collection id, document fields e.g..) you need to change codes inside of app. 
 
-     ![Document template](https://github.com/doxart/DoxyVPN/blob/master/firestore-document-template.png)   
+     ![Document template](https://github.com/doxart/MyVPN/blob/master/firestore-document-template.png)   
 
 6. **Enable Remote Config**:
    - In the Firebase Console, navigate to the "Remote Config" section.
    - Click on "Get Started" and follow the on-screen instructions to set up Remote Config for your project.
 
 7. **Add Default Parameters**:
-   - To get started, upload [this file](https://github.com/doxart/DoxyVPN/blob/master/remote_config_DoxyVPN.json) to Remote Config.
+   - To get started, upload [this file](https://github.com/doxart/MyVPN/blob/master/remote_config_DoxyVPN.json) to Remote Config.
 
 8. **Add Google AdMob (Optional)**:
    - Create AdMob interstitial, rewarded and banner ads
-   - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
+   - Enter the ad IDs in the field specified [strings.xml](https://github.com/doxart/MyVPN/blob/master/app/src/main/res/values/strings.xml) file.
      ```xml
      <resources
           <string name="admob_id" translatable="false">Insert your Admob App ID</string>
@@ -108,13 +104,13 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
      }
      }
      ```
-   - And add app class in your [AndroidManifest.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/AndroidManifest.xml).
+   - And add app class in your [AndroidManifest.xml](https://github.com/doxart/MyVPN/blob/master/app/src/main/AndroidManifest.xml).
      ```xml
      <application
           android:name=".MyApplication"
      </application>
      ```
-   - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/DoxyVPN/blob/master/app/src/main/res/values/strings.xml) file.
+   - Enter the placement ID in the field specified [strings.xml](https://github.com/doxart/MyVPN/blob/master/app/src/main/res/values/strings.xml) file.
       ```xml
      <resources
           <string name="adapty_placement_id">Insert your Adapty Placement ID</string>
@@ -145,7 +141,7 @@ We appreciate any contributions to this project, whether it's fixing a bug, impr
 This project is open-source and licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the license terms.
 
 ### Contact:
-If you have any questions or need assistance, please [open an issue](https://github.com/doxart/DoxyVPN/issues) or reach out to us via email at gkdnzssmn@doxart.com.tr.
+If you have any questions or need assistance, please [open an issue](https://github.com/doxart/MyVPN/issues) or reach out to us via email at gkdnzssmn@doxart.com.tr.
 
 We hope you find this VPN application useful, and thank you for your support!
 
