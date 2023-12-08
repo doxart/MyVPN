@@ -63,7 +63,7 @@ To enhance the capabilities of this VPN app, we have integrated Firebase, a comp
    - Click on "Get Started" and follow the on-screen instructions to set up Remote Config for your project.
 
 7. **Add Default Parameters**:
-   - To get started, upload [this file](https://github.com/doxart/MyVPN/blob/master/remote_config_DoxyVPN.json) to Remote Config.
+   - To get started, upload [this file](https://github.com/doxart/MyVPN/blob/master/remote_config_ivpn.json) to Remote Config.
 
 8. **Add Google AdMob (Optional)**:
    - Create AdMob interstitial, rewarded and banner ads
