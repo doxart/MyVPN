@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DOXY"
+            android:text="MY"
             android:textColor="@color/plat1"
             android:letterSpacing="0.2"
             android:fontFamily="@font/poppins_semibold"
