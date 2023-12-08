@@ -140,7 +140,7 @@ public interface IOpenVPNAPIService extends android.os.IInterface
         {
           java.util.List<de.blinkt.openvpn.api.APIVpnProfile> _result = this.getProfiles();
           reply.writeNoException();
-          reply.writeTypedList(_result);
+          _Parcel.writeTypedList(reply, _result, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
           break;
         }
         case TRANSACTION_startProfile:
@@ -613,6 +613,20 @@ public interface IOpenVPNAPIService extends android.os.IInterface
         value.writeToParcel(parcel, parcelableFlags);
       } else {
         parcel.writeInt(0);
+      }
+    }
+    static private <T extends android.os.Parcelable> void writeTypedList(
+        android.os.Parcel parcel, java.util.List<T> value, int parcelableFlags) {
+      if (value == null) {
+        parcel.writeInt(-1);
+      } else {
+        int N = value.size();
+        int i = 0;
+        parcel.writeInt(N);
+        while (i < N) {
+    writeTypedObject(parcel, value.get(i), parcelableFlags);
+          i++;
+        }
       }
     }
   }

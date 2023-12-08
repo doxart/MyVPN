@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".DoxyVPN"
+        android:name=".MyVPN"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:exported="false"
@@ -26,12 +26,6 @@
         tools:targetApi="34">
         <activity
             android:name=".Activities.ConnectionReportActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.SpeedTestActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.MyLocationActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.LauncherActivity"
@@ -94,7 +88,7 @@
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_id" />
+            android:value="CHANGE WITH YOUR ADMOB APP ID" />
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ plugins {
 
 @Suppress("unstableapiusage")
 android {
-    namespace = "com.doxart.ivpn"
+    namespace = "com.doxart.myvpn"
     compileSdk = 34
 
     packaging {
@@ -16,11 +16,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.doxart.ivpn"
+        applicationId = "com.doxart.myvpn"
         minSdk = 24
         targetSdk = 34
-        versionCode = 29
-        versionName = "1.2"
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -58,11 +58,11 @@ dependencies {
     implementation("com.google.firebase:firebase-config")
     implementation("com.google.android.gms:play-services-ads:22.5.0")
 
-    implementation ("androidx.room:room-runtime:2.6.0")
+    implementation ("androidx.room:room-runtime:2.6.1")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation("com.android.volley:volley:1.2.1")
     implementation(project(mapOf("path" to ":nativetemplates")))
-    annotationProcessor ("androidx.room:room-compiler:2.6.0")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1")
 
     implementation ("org.osmdroid:osmdroid-android:6.1.17")
 

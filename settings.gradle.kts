@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "iVPN"
+rootProject.name = "MyVPN"
 include(":app", ":vpnLib")
  
