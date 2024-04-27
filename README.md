@@ -1,6 +1,8 @@
-![badge](https://flat.badgen.net/badge/MyVPN/Still%20in%20development/red) ![badge](https://flat.badgen.net/badge/License/Free/green)
+![badge](https://flat.badgen.net/badge/License/Free/green)
 
 ## My VPN
+
+*This project was made fast and without maps, so the code can be complex and unorganized. You can keep the main library and write your own using the same logic.*
 
 Welcome to my VPN application for Android, an open-source project that aims to provide a seamless and secure VPN experience on your Android device. This project was born out of the need for a reliable VPN solution with a focus on ease of use and privacy.
 
